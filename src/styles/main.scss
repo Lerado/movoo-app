@@ -1,6 +1,11 @@
 /* ----------------------------------------------------------------------------------------------------- */
-/*  @ Import/write your custom styles here.
-/*  @ Styles from this file will override 'vendors.scss' and base styles.
+/*  @ Main styles file.
 /* ----------------------------------------------------------------------------------------------------- */
 
-/* You can add global styles to this file, and also import other style files */
+@import './themes.scss';
+
+@import './vendors.scss';
+
+@import './tailwind.scss';
+
+@import './styles.scss';
