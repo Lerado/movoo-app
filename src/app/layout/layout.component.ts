@@ -191,6 +191,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
         });
 
         // Add class name for the currently selected theme
-        this._document.body.classList.add(`theme-${this.theme}`);
+        this._document.body.classList.add(this.theme);
     }
 }
