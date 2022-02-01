@@ -2,8 +2,10 @@
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "version": 1,
     "cli": {
-        "packageManager": "npm",
-        "defaultCollection": "@angular-eslint/schematics"
+        "defaultCollection": "@angular-eslint/schematics",
+        "cache": {
+            "enabled": false
+        }
     },
     "newProjectRoot": "projects",
     "projects": {
@@ -40,7 +42,12 @@
                             }
                         ],
                         "styles": [
-                            "src/styles/main.scss"
+                            "src/@movoo/styles/tailwind.scss",
+                            "src/@movoo/styles/themes.scss",
+                            "src/styles/vendors.scss",
+                            "src/@movoo/styles/main.scss",
+                            "src/styles/styles.scss",
+                            "src/styles/tailwind.scss"
                         ],
                         "scripts": []
                     },
@@ -108,7 +115,7 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles/main.scss"
+                            "src/styles/styles.scss"
                         ],
                         "scripts": []
                     }
