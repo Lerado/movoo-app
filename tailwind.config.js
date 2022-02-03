@@ -10,7 +10,7 @@ const generatePalette = require(path.resolve(__dirname, ('src/@movoo/tailwind/ut
  * Tailwind-like color palettes automatically
  */
 const customPalettes = {
-    brand: generatePalette(colors.yellow)
+    brand: generatePalette('#fada49')
 };
 
 /**

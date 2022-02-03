@@ -191,9 +191,12 @@ const theming = plugin.withOptions((options) => ({
                                 'bg-status-bar': colors.slate[300]
                             },
                             dark : {
-                                'bg-app-bar'   : colors.slate[900],
+                                'bg-app-bar'   : '#0f0f11',
+                                // 'bg-app-bar'   : colors.slate[900],
+                                'bg-nav-bar'   : '#171719',
                                 'bg-card'      : colors.slate[800],
-                                'bg-default'   : colors.slate[900],
+                                'bg-default'   : '#212023',
+                                // 'bg-default'   : colors.slate[900],
                                 'bg-dialog'    : colors.slate[800],
                                 'bg-hover'     : 'rgba(255, 255, 255, 0.05)',
                                 'bg-status-bar': colors.slate[900]

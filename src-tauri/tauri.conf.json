@@ -7,7 +7,8 @@
     "distDir": "../dist/movoo-app",
     "devPath": "http://localhost:4200",
     "beforeDevCommand": "npm run start",
-    "beforeBuildCommand": "npm run build"
+    "beforeBuildCommand": "npm run build",
+    "withGlobalTauri": false
   },
   "tauri": {
     "bundle": {
@@ -56,8 +57,21 @@
         "title": "Movoo App",
         "width": 800,
         "height": 600,
+        "decorations": false,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "center": true,
+        "visible": false
+      },
+      {
+        "title": "Movoo App",
+        "width": 300,
+        "height": 200,
+        "decorations": false,
+        "center": true,
+        "focus": true,
+        "url": "assets/html/splashscreen.html",
+        "label": "splashscreen"
       }
     ],
     "security": {
