@@ -1,0 +1,61 @@
+<div class="movoo-vertical-navigation-wrapper">
+
+    <!-- Header -->
+    <div class="movoo-vertical-navigation-header">
+        <ng-content select="[movooVerticalNavigationHeader]"></ng-content>
+    </div>
+
+    <!-- Content -->
+    <div class="movoo-vertical-navigation-content" movooScrollbar
+        [movooScrollbarOptions]="{wheelPropagation: inner, suppressScrollX: true}" #navigationContent>
+
+        <!-- Content header -->
+        <div class="movoo-vertical-navigation-content-header">
+            <ng-content select="[movooVerticalNavigationContentHeader]"></ng-content>
+        </div>
+
+        <!-- Items -->
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+
+            <!-- Skip the hidden items -->
+            <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+
+
+                <!-- Basic -->
+                <ng-container *ngIf="item.type === 'basic'">
+                    <movoo-vertical-navigation-basic-item [item]="item" [name]="name">
+                    </movoo-vertical-navigation-basic-item>
+                </ng-container>
+
+                <!-- Group -->
+                <ng-container *ngIf="item.type === 'group'">
+                    <movoo-vertical-navigation-group-item
+                        [item]="item"
+                        [name]="name"
+                        [autoCollapse]="autoCollapse"></movoo-vertical-navigation-group-item>
+                </ng-container>
+
+                <!-- Spacer -->
+                <!-- <ng-container *ngIf="item.type === 'spacer'">
+                    <movoo-vertical-navigation-spacer-item
+                        [item]="item"
+                        [name]="name"></movoo-vertical-navigation-spacer-item>
+                </ng-container> -->
+
+            </ng-container>
+
+        </ng-container>
+
+        <!-- Content footer -->
+        <div class="movoo-vertical-navigation-content-footer">
+            <ng-content select="[movooVerticalNavigationContentFooter]"></ng-content>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="movoo-vertical-navigation-footer">
+        <ng-content select="[movooVerticalNavigationFooter]"></ng-content>
+    </div>
+
+</div>

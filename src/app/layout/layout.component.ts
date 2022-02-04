@@ -27,10 +27,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
     constructor(
         private _activatedRoute: ActivatedRoute,
         @Inject(DOCUMENT) private _document: any,
-        private _renderer2: Renderer2,
         private _router: Router,
         private _movooConfigService: MovooConfigService,
-        // private _movooMediaWatcherService: MovooMediaWatcherService
+        private _movooMediaWatcherService: MovooMediaWatcherService
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -45,12 +44,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
         // Set the thene and scheme based on the configuration
         combineLatest([
             this._movooConfigService.config$,
-            // this._movooMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)'])
+            this._movooMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)'])
         ]).pipe(
             takeUntil(this._unsubscribeAll),
             map(([
                 config,
-                // mql
+                mql
             ]) => {
 
                 const options = {
@@ -61,7 +60,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 // If the scheme is set to 'auto'
                 if (config.scheme === 'auto') {
                     // Decide the scheme using the media query
-                    // options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
+                    options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
                 }
 
                 return options;

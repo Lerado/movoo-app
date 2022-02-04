@@ -57,7 +57,7 @@
         "title": "Movoo App",
         "width": 800,
         "height": 600,
-        "decorations": false,
+        "decorations": true,
         "resizable": true,
         "fullscreen": false,
         "center": true,

@@ -1,7 +1,10 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
-    imports: []
+    imports: [
+        IconsModule
+    ]
 })
 export class CoreModule {
 

@@ -24,6 +24,7 @@
         "@angular/router": "~13.2.0",
         "@tauri-apps/api": "^1.0.0-beta.8",
         "lodash-es": "^4.17.21",
+        "perfect-scrollbar": "^1.5.5",
         "rxjs": "~7.5.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.11.4"

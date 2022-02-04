@@ -2,11 +2,13 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { MovooMediaWatcherModule } from '@movoo/services/media-watcher/media-watcher.module';
 import { MovooSplashScreenModule } from '@movoo/services/splash-screen/splash-screen.module';
 import { MovooTauriModule } from '@movoo/services/tauri';
+import { MovooUtilsModule } from './services/utils';
 
 @NgModule({
     imports: [
         MovooSplashScreenModule,
         MovooMediaWatcherModule,
+        MovooUtilsModule,
         MovooTauriModule
     ],
     providers: []
