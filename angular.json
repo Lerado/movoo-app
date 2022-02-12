@@ -39,7 +39,8 @@
                                 "glob": "_redirects",
                                 "input": "src",
                                 "output": "/"
-                            }
+                            },
+                            "src/manifest.webmanifest"
                         ],
                         "styles": [
                             "src/@movoo/styles/tailwind.scss",
@@ -49,20 +50,22 @@
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "serviceWorker": true,
+                        "ngswConfigPath": "ngsw-config.json"
                     },
                     "configurations": {
                         "production": {
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "3mb",
+                                    "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "75kb",
+                                    "maximumError": "90kb"
                                 }
                             ],
                             "fileReplacements": [
@@ -113,7 +116,8 @@
                         "assets": [
                             "src/favicon.ico",
                             "src/assets",
-                            "src/splashscreen.html"
+                            "src/splashscreen.html",
+                            "src/manifest.webmanifest"
                         ],
                         "styles": [
                             "src/styles/styles.scss"
