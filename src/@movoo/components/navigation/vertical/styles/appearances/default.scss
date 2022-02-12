@@ -393,7 +393,7 @@ movoo-vertical-navigation {
 
                 .movoo-vertical-navigation-item-title-wrapper {
                     .movoo-vertical-navigation-item-title {
-                        font-size: 20px;
+                        font-size: 18px;
                         font-weight: 600;
                         letter-spacing: 0.05em;
                     }
@@ -553,7 +553,7 @@ movoo-vertical-navigation-group-item {
         .movoo-vertical-navigation-item {
             .movoo-vertical-navigation-item-title-wrapper {
                 .movoo-vertical-navigation-item-title {
-                    @apply opacity-100 text-primary-600 dark:text-primary-400;
+                    @apply opacity-100;
                 }
             }
         }

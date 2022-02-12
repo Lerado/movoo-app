@@ -44,9 +44,9 @@ export class MovooSplashScreenService {
         this._document.body.classList.add('movoo-splash-screen-hidden');
 
         // Call Tauri to show the main window
-        const timer = setTimeout(() => {
+        // const timer = setTimeout(() => {
             this._movooTauriService.invoke('close_splashscreen').subscribe();
-            clearInterval(timer);
-        }, 5000);
+        //     clearInterval(timer);
+        // }, 5000);
     }
 }

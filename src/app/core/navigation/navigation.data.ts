@@ -8,6 +8,7 @@ export const navigation: Navigation = {
             id: 'explore',
             title: 'Explore',
             type: 'group',
+            classes: { wrapper: 'pt-[48px]' },
 
             children: [
                 {

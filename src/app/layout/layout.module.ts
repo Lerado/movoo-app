@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MovooTitleBarModule } from '@movoo/components/title-bar';
 import { SharedModule } from 'app/shared/shared.module';
 import { LayoutComponent } from './layout.component';
 import { EmptyLayoutModule } from './layouts/empty/empty.module';
@@ -19,6 +20,7 @@ const layoutModules = [
     ],
     imports: [
         SharedModule,
+        MovooTitleBarModule,
         ...layoutModules
     ],
     exports: [

@@ -55,10 +55,11 @@
     "windows": [
       {
         "title": "Movoo App",
-        "width": 800,
+        "width": 1000,
         "height": 600,
-        "decorations": true,
+        "decorations": false,
         "resizable": true,
+        "focus": true,
         "fullscreen": false,
         "center": true,
         "visible": false
