@@ -26,5 +26,19 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+      {
+          "name": "themoviedb-performance",
+          "urls": [
+              "https://api.themoviedb.org/**"
+          ],
+          "version": 3,
+          "cacheConfig": {
+              "maxAge": "3d",
+              "maxSize": 100,
+              "strategy": "performance"
+          }
+      }
   ]
 }

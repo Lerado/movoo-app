@@ -1,8 +1,8 @@
 {
   "name": "movoo-app",
   "short_name": "movoo-app",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#fada49",
+  "background_color": "#212023",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
