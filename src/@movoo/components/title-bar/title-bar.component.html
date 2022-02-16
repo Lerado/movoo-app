@@ -9,7 +9,7 @@
         <div data-tauri-drag-region class="movoo-title-bar-content">
 
             <!-- Close, reduce and resize window -->
-            <div class="movoo-title-bar-window-buttons">
+            <div *ngIf="platform !== 'browser'" class="movoo-title-bar-window-buttons">
                 <div (click)="minimizeWindow()" class="movoo-title-bar-window-button button-minimize"></div>
                 <div (click)="toggleMaximizeWindow()" class="movoo-title-bar-window-button button-toggle-maximize">
                 </div>

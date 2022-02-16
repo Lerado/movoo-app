@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MovooTitleBarComponent } from '@movoo/components/title-bar/title-bar.component';
 
@@ -5,7 +6,9 @@ import { MovooTitleBarComponent } from '@movoo/components/title-bar/title-bar.co
     declarations: [
         MovooTitleBarComponent
     ],
-    imports: [],
+    imports: [
+        CommonModule
+    ],
     exports: [
         MovooTitleBarComponent
     ]
