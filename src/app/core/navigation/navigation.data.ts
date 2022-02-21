@@ -2,8 +2,22 @@ import { Navigation } from './navigation.types';
 
 export const navigation: Navigation = {
 
+    // Explore
+    // Complex search parameters
+    //      Movies
+    //      Watchlists
+
+    // Movies
+    //      now playing,
+    //      popular,
+    //      upcoming,
+    //      top rated,
+    //      genres
+
     // Default navigation
     default: [
+
+        // Explore
         {
             id: 'explore',
             title: 'Explore',
@@ -12,20 +26,65 @@ export const navigation: Navigation = {
 
             children: [
                 {
-                    id: 'tops',
-                    title: 'Tops',
+                    id: 'explore-movies',
+                    title: 'Movies',
                     type: 'basic',
-                    icon: 'heroicons_solid:trending-up',
-                    link: '/tops'
+                    icon: 'heroicons_solid:film',
+                    link: '/explore/movies'
                 },
                 {
-                    id: 'genres',
-                    title: 'Genres',
+                    id: 'explore-watchlists',
+                    title: 'Watchlists',
                     type: 'basic',
-                    icon: 'heroicons_solid:video-camera',
-                    link: '/genres'
+                    icon: 'heroicons_solid:view-grid',
+                    link: '/explore/watchlists'
                 }
             ]
         },
+
+        // Movies
+        {
+            id: 'movies',
+            title: 'Movies',
+            type: 'group',
+
+            children: [
+                {
+                    id: 'movies-now-playing',
+                    title: 'Now playing',
+                    type: 'basic',
+                    icon: 'heroicons_solid:clock',
+                    link: '/movies/now-playing'
+                },
+                {
+                    id: 'movies-upcoming',
+                    title: 'Upcoming',
+                    type: 'basic',
+                    icon: 'heroicons_solid:calendar',
+                    link: '/movies/upcoming'
+                },
+                {
+                    id: 'movies-popular',
+                    title: 'Popular',
+                    type: 'basic',
+                    icon: 'heroicons_solid:trending-up',
+                    link: '/movies/popular'
+                },
+                {
+                    id: 'movies-top-rated',
+                    title: 'Top rated',
+                    type: 'basic',
+                    icon: 'heroicons_solid:star',
+                    link: '/movies/top-rated'
+                },
+                {
+                    id: 'movies-genres',
+                    title: 'Genres',
+                    type: 'basic',
+                    icon: 'heroicons_solid:video-camera',
+                    link: '/movies/genres'
+                }
+            ]
+        }
     ]
 };
