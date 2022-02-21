@@ -60,6 +60,7 @@
         "decorations": false,
         "resizable": true,
         "focus": true,
+        "transparent": true,
         "fullscreen": false,
         "center": true,
         "visible": false
@@ -71,6 +72,7 @@
         "decorations": false,
         "center": true,
         "focus": true,
+        "transparent": true,
         "url": "assets/html/splashscreen.html",
         "label": "splashscreen"
       }
