@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Layout } from 'app/layout/layout.types';
 
 // Types
@@ -10,8 +11,7 @@ export type Themes = { id: string; name: string }[];
  * AppConfig interface. Update this interface to strictly type your config
  * object.
  */
-export interface AppConfig
-{
+export interface AppConfig {
     layout: Layout;
     scheme: Scheme;
     screens: Screens;
@@ -41,11 +41,24 @@ export const appConfig: AppConfig = {
         lg: '1280px',
         xl: '1440px'
     },
-    theme : 'theme-default',
-    themes : [
+    theme: 'theme-default',
+    themes: [
         {
-            id  : 'theme-default',
+            id: 'theme-default',
             name: 'Default'
         }
     ]
 };
+
+export interface TMDBSystemConfig {
+    images?: {
+        base_url?: string;
+        secure_base_url?: string;
+        backdrop_sizes?: string[];
+        logo_sizes?: string[];
+        poster_sizes?: string[];
+        profile_sizes?: string[];
+        still_sizes?: string[];
+    };
+    change_keys?: string[];
+}

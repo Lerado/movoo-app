@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { NowPlayingMoviesResolver } from './movies.resolvers';
 import { MoviesNowPlayingComponent } from './now-playing/now.playing.component';
 
 export const moviesRoutes: Route[] = [
@@ -10,6 +11,9 @@ export const moviesRoutes: Route[] = [
     // Now playing
     {
         path: 'now-playing',
-        component: MoviesNowPlayingComponent
+        component: MoviesNowPlayingComponent,
+        resolve: {
+            movies: NowPlayingMoviesResolver
+        }
     }
 ];
