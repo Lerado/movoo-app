@@ -1,0 +1,6 @@
+<div
+    class="grid w-full grid-rows-1 gap-y-4 gap-x-4 md:gap-x-8 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <ng-container *ngFor="let movie of movies">
+        <movie-card [movie]="movie"></movie-card>
+    </ng-container>
+</div>

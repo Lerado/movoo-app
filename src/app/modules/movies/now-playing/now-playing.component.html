@@ -1,10 +1,18 @@
 <content-layout>
-    <div class="flex flex-col items-center justify-center flex-auto p-4">
-        <div
-            class="grid w-full grid-rows-1 gap-y-4 gap-x-4 md:gap-x-8 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            <ng-container *ngFor="let movie of movies$ | async">
-                <movie-card [movie]="movie"></movie-card>
+
+    <div class="flex flex-col flex-auto">
+
+        <div class=" h-90 lg:h-100 xl:h-120">
+            <movie-banner [movie]="featuredMovie"></movie-banner>
+        </div>
+
+        <div class="flex flex-col items-center p-4">
+            <ng-container *ngIf="movies$ | async as movies">
+                <movies-grid [movies]="movies.slice(1)"></movies-grid>
             </ng-container>
         </div>
+
     </div>
+
+
 </content-layout>

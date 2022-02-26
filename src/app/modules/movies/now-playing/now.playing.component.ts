@@ -10,6 +10,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
 
     movies$: Observable<Movie[]>;
+    featuredMovie: Movie;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -33,7 +34,11 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
         this.movies$ = this._movieService.movies$.pipe(takeUntil(this._unsubscribeAll));
 
         this.movies$.subscribe((movies: Movie[]) => {
-            console.log(movies);
+
+            // Get featured movies
+            if (movies.length && !this.featuredMovie) {
+                this.featuredMovie = movies[0];
+            }
         });
     }
 

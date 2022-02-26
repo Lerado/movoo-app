@@ -2,15 +2,14 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Movie } from 'app/shared/services/movie/movie.types';
 
 @Component({
-    selector: 'movie-card',
-    templateUrl: './card.component.html',
-    styleUrls: ['./card.component.scss'],
+    selector: 'movies-grid',
+    templateUrl: './grid.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class MovieCardComponent {
+export class MoviesGridComponent {
 
     // Inputs
-    @Input() movie: Movie;
+    @Input() movies: Movie[];
 
     /**
      * Constructor
