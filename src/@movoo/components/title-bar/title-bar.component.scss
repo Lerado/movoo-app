@@ -1,3 +1,13 @@
+/* Variables */
+$movoo-vertical-navigation-width: 250px;
+
+@media (min-width: 960px) {
+    .movoo-title-bar-container {
+        margin-left: $movoo-vertical-navigation-width !important;
+        width: calc(100% - $movoo-vertical-navigation-width) !important;
+    }
+}
+
 .movoo-title-bar-container {
     position: fixed;
     width: 100%;
@@ -6,8 +16,9 @@
     z-index: 999;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     flex: 0 1 0;
-    padding: 10px 15px 0px 25px;
+    padding: 0px 15px 0px 25px;
     height: 48px;
     background-color: var(--movoo-bg-app-bar);
 
