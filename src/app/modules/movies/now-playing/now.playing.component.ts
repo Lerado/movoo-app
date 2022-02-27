@@ -30,7 +30,7 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        // Set observable
+        // Set movies observable
         this.movies$ = this._movieService.movies$.pipe(takeUntil(this._unsubscribeAll));
 
         this.movies$.subscribe((movies: Movie[]) => {

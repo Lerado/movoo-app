@@ -43,6 +43,11 @@ export class MovieService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    /**
+     * Get now played movies
+     *
+     * @param params
+     */
     getNowPlayed(params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
         return this._parse(
             this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams })

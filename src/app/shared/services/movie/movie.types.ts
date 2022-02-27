@@ -1,5 +1,3 @@
-import { MovieGenre } from '../genre/genre.types';
-
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Movie {
     id: number;
@@ -30,7 +28,7 @@ export interface Movie {
 
     belongs_to_collection: any;
     spoken_languages: SpokenLanguage[];
-    genres: MovieGenre[];
+    genre_ids: number[];
     production_companies: ProductionCompany[];
     production_countries: ProductionCountry[];
 }

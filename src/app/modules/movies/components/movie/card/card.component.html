@@ -1,23 +1,29 @@
-<div class="flex flex-col w-full p-2 overflow-hidden transition-shadow cursor-pointer movie-card-wrapper hover:shadow-2xl min-h-100 h-100">
-    <div class="w-full h-60 max-h-60">
-        <img loading="lazy" decoding="async" class="object-contain object-top w-full max-h-60 h-60" [src]="movie.poster_path | tmdbImageUrl" alt="movie poster">
+<div
+    class="flex flex-col w-full p-2 overflow-hidden transition-shadow cursor-pointer movie-card-wrapper hover:shadow-2xl min-h-[28rem] h-[28rem]">
+    <div class="w-full h-[17rem] max-h-[17rem]">
+        <img loading="lazy" decoding="async" class="object-contain object-top w-full h-[17rem] max-h-[17rem]"
+            [src]="movie.poster_path | tmdbImageUrl" alt="movie poster">
     </div>
-    <div class="flex flex-col justify-end">
+    <div class="flex flex-col h-full">
         <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-2">{{ movie.original_title }}</h3>
-        <p class="mt-1 tracking-tight opacity-50 text-md text-ellipsis line-clamp-3">
+        <div class="mt-1 text-sm truncate opacity-30">{{ getGenres(movie.genre_ids).join(', ') }}</div>
+        <p class="mt-auto tracking-tight opacity-50 text-md text-ellipsis line-clamp-3">
             {{ movie.overview }}
         </p>
-        <div class="flex flex-row justify-between mt-2 opacity-50 h-max text-md">
+        <div class="flex flex-row justify-between mt-auto opacity-50 h-max text-md">
             <div class="flex flex-row justify-between">
                 <div class="flex flex-row items-center mr-2 lg:mr-3 xl:mr-4">
-                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 icon-size-3"></mat-icon> {{ movie.popularity | number:'1.0-0' }}
+                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 icon-size-3"></mat-icon> {{
+                    movie.popularity | number:'1.0-0' }}
                 </div>
                 <div class="flex flex-row items-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 icon-size-3"></mat-icon> {{ movie.vote_average }}
+                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 icon-size-3"></mat-icon> {{
+                    movie.vote_average }}
                 </div>
             </div>
             <div class="flex flex-row items-center">
-                <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 icon-size-3"></mat-icon> {{ movie.release_date | date:'dd/MM/yy' }}
+                <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 icon-size-3"></mat-icon> {{
+                movie.release_date | date:'dd/MM/yy' }}
             </div>
         </div>
     </div>

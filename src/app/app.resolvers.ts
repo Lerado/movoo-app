@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { forkJoin, Observable } from 'rxjs';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { AppConfigService } from './core/config/app.service';
+import { MovieGenreService } from './shared/services/genre/genre.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,7 @@ export class InitialDataResolver implements Resolve<any>
      * Constructor
      */
     constructor(
+        private _movieGenreService: MovieGenreService,
         private _navigationService: NavigationService,
         private _configService: AppConfigService
     ) {
@@ -32,7 +34,8 @@ export class InitialDataResolver implements Resolve<any>
         // Fork join multiple API endpoint calls to wait all of them to finish
         return forkJoin([
             this._navigationService.get(),
-            this._configService.getSystemConfig()
+            this._configService.getSystemConfig(),
+            this._movieGenreService.get()
         ]);
     }
 }
