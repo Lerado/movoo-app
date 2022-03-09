@@ -2,6 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TMDBSystemConfig, TMDBImagesConfig } from 'app/core/config/app.config';
 import { AppConfigService } from 'app/core/config/app.service';
 
+type ImageType = 'poster' | 'still' | 'logo' | 'profile';
+
 @Pipe({
     name: 'tmdbImageUrl'
 })
@@ -30,9 +32,11 @@ export class TMDBImageUrlPipe implements PipeTransform {
      */
     transform(value: any, ...args: any[]): any {
 
-        const defaultSize = this.imagesConfig.poster_sizes[this.imagesConfig.poster_sizes.length - 2];
-
-        const size = args[0] || defaultSize;
+        const argType: ImageType = args[1] || 'poster';
+        const sizes = this.imagesConfig[`${ argType }_sizes`] || this.imagesConfig.poster_sizes;
+        const defaultSize = sizes[sizes.length - 2];
+        const argSize = args[0] || defaultSize;
+        const size = sizes.includes(argSize) ? argSize : defaultSize;
 
         return `${ this.imagesConfig.secure_base_url }${ size }${ value }`;
     }

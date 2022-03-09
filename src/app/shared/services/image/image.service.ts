@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
-import { MovieGenre } from './genre.types';
+import { ReplaySubject, Observable, tap } from 'rxjs';
+import { MovieImages } from './image.types';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GenreService {
+export class ImageService {
 
-    private _genres: ReplaySubject<MovieGenre[]> = new ReplaySubject<MovieGenre[]>(1);
-    private _genre: ReplaySubject<MovieGenre> = new ReplaySubject<MovieGenre>(1);
+    private _movieImages: ReplaySubject<MovieImages> = new ReplaySubject<MovieImages>(1);
 
     /**
      * Constructor
@@ -23,17 +22,17 @@ export class GenreService {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Getter for genres
+     * Getter for movie credits
      */
-    public get genres$(): Observable<MovieGenre[]> {
-        return this._genres.asObservable();
+     public get movieImages$(): Observable<MovieImages> {
+        return this._movieImages.asObservable();
     }
 
     /**
-     * Setter for genres
+     * Setter for movies
      */
-    public set genres(value: MovieGenre[]) {
-        this._genres.next(value);
+    public set movieImages(value: MovieImages) {
+        this._movieImages.next(value);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -41,13 +40,15 @@ export class GenreService {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Get movies genres
+     * Get images for a movie
+     *
+     * @param movieId
      */
-    get(): Observable<MovieGenre[]> {
-        return this._httpClient.get<{ genres: MovieGenre[] }>('@tmdb/genre/movie/list').pipe(
-            map(response => response.genres),
-            tap((genres: MovieGenre[]) => {
-                this._genres.next(genres);
+    getByMovieId(movieId: number): Observable<MovieImages> {
+        return this._httpClient.get<MovieImages>(`@tmdb/movie/${ movieId }/images`).pipe(
+            tap((movieImages) => {
+                console.log(movieImages);
+                this._movieImages.next(movieImages);
             })
         );
     }

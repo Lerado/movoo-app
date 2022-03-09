@@ -1,12 +1,12 @@
 <div
     class="flex flex-col w-full p-2 overflow-hidden transition-shadow cursor-pointer movie-card-wrapper hover:shadow-2xl min-h-[28rem] h-[28rem]">
     <div class="w-full h-[17rem] max-h-[17rem]">
-        <img loading="lazy" decoding="async" class="object-contain object-top w-full h-[17rem] max-h-[17rem]"
+        <img class="object-contain object-top w-full h-[17rem] max-h-[17rem]"
             [src]="movie.poster_path | tmdbImageUrl" alt="movie poster">
     </div>
     <div class="flex flex-col h-full">
-        <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-2">{{ movie.original_title }}</h3>
-        <div class="mt-1 text-sm truncate opacity-30">{{ getGenres(movie.genre_ids).join(', ') }}</div>
+        <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-2">{{ movie.title }}</h3>
+        <div class="mt-1 text-sm truncate opacity-30">{{ getGenres(movie).join(', ') }}</div>
         <p class="mt-auto tracking-tight opacity-50 text-md text-ellipsis line-clamp-3">
             {{ movie.overview }}
         </p>

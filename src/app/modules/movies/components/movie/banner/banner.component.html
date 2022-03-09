@@ -17,7 +17,7 @@
                     movie.release_date | date:'mediumDate' }}
                 </div>
             </div>
-            <div class="opacity-50 text-md">{{ getGenres(movie.genre_ids).join(', ') }}</div>
+            <div class="opacity-50 text-md">{{ getGenres(movie).join(', ') }}</div>
             <p class="w-full my-4 tracking-tight sm:w-7/12 opacity-60 text-md text-ellipsis line-clamp-5">{{
                 movie.overview }}</p>
             <div class="flex flex-row">

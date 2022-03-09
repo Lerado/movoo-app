@@ -61,7 +61,8 @@ export const navigation: Navigation = {
                     title: 'Upcoming',
                     type: 'basic',
                     icon: 'heroicons_solid:calendar',
-                    link: '/movies/upcoming'
+                    link: '/movies/634649'
+                    // link: '/movies/upcoming'
                 },
                 {
                     id: 'movies-popular',
