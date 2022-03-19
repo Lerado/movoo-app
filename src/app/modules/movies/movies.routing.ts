@@ -24,9 +24,9 @@ export const moviesRoutes: Route[] = [
         component: MovieDetailComponent,
         resolve: {
             movie: MovieDetailResolver,
-            credits: MovieCreditsResolver,
-            images: MovieImagesResolver,
-            videos: MovieVideosResolver,
+            // credits: MovieCreditsResolver,
+            // images: MovieImagesResolver,
+            // videos: MovieVideosResolver,
         }
     }
 ];

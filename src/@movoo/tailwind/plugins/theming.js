@@ -192,11 +192,9 @@ const theming = plugin.withOptions((options) => ({
                             },
                             dark : {
                                 'bg-app-bar'   : '#0f0f11',
-                                // 'bg-app-bar'   : colors.slate[900],
                                 'bg-nav-bar'   : '#171719',
                                 'bg-card'      : colors.slate[800],
                                 'bg-default'   : '#212023',
-                                // 'bg-default'   : colors.slate[900],
                                 'bg-dialog'    : colors.slate[800],
                                 'bg-hover'     : 'rgba(255, 255, 255, 0.05)',
                                 'bg-status-bar': colors.slate[900]
@@ -205,7 +203,7 @@ const theming = plugin.withOptions((options) => ({
                         foreground: {
                             light: {
                                 'text-default'  : colors.slate[800],
-                                'text-secondary': colors.slate[500],
+                                'text-secondary': 'rgba(255, 255, 255, 0.6)',
                                 'text-hint'     : colors.slate[400],
                                 'text-disabled' : colors.slate[400],
                                 'border'        : colors.slate[200],
@@ -215,7 +213,7 @@ const theming = plugin.withOptions((options) => ({
                             },
                             dark : {
                                 'text-default'  : '#FFFFFF',
-                                'text-secondary': colors.slate[400],
+                                'text-secondary': 'rgba(255, 255, 255, 0.6)',
                                 'text-hint'     : colors.slate[500],
                                 'text-disabled' : colors.slate[600],
                                 'border'        : chroma(colors.slate[100]).alpha(0.12).css(),

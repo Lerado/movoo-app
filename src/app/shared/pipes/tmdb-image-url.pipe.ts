@@ -32,6 +32,8 @@ export class TMDBImageUrlPipe implements PipeTransform {
      */
     transform(value: any, ...args: any[]): any {
 
+        if (!value) { return ''; }
+
         const argType: ImageType = args[1] || 'poster';
         const sizes = this.imagesConfig[`${ argType }_sizes`] || this.imagesConfig.poster_sizes;
         const defaultSize = sizes[sizes.length - 2];

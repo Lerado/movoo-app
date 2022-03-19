@@ -1,4 +1,5 @@
 <div
+    (click)="onMovieSelected()"
     class="flex flex-col w-full p-2 overflow-hidden transition-shadow cursor-pointer movie-card-wrapper hover:shadow-2xl min-h-[28rem] h-[28rem]">
     <div class="w-full h-[17rem] max-h-[17rem]">
         <img class="object-contain object-top w-full h-[17rem] max-h-[17rem]"
@@ -6,23 +7,23 @@
     </div>
     <div class="flex flex-col h-full">
         <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-2">{{ movie.title }}</h3>
-        <div class="mt-1 text-sm truncate opacity-30">{{ getGenres(movie).join(', ') }}</div>
-        <p class="mt-auto tracking-tight opacity-50 text-md text-ellipsis line-clamp-3">
+        <div class="mt-1 text-sm truncate text-default text-opacity-30">{{ getGenres(movie).join(', ') }}</div>
+        <p class="mt-auto tracking-tight text-default text-opacity-60 text-md text-ellipsis line-clamp-3">
             {{ movie.overview }}
         </p>
-        <div class="flex flex-row justify-between mt-auto opacity-50 h-max text-md">
-            <div class="flex flex-row justify-between">
+        <div class="flex flex-row justify-between mt-auto h-max text-md">
+            <div class="flex flex-row justify-between text-default text-opacity-60">
                 <div class="flex flex-row items-center mr-2 lg:mr-3 xl:mr-4">
-                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 icon-size-3"></mat-icon> {{
+                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 icon-size-3 text-default text-opacity-60"></mat-icon> {{
                     movie.popularity | number:'1.0-0' }}
                 </div>
                 <div class="flex flex-row items-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 icon-size-3"></mat-icon> {{
+                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 icon-size-3 text-default text-opacity-60"></mat-icon> {{
                     movie.vote_average }}
                 </div>
             </div>
-            <div class="flex flex-row items-center">
-                <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 icon-size-3"></mat-icon> {{
+            <div class="flex flex-row items-center text-opacity-60 text-default">
+                <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 icon-size-3 text-default text-opacity-60"></mat-icon> {{
                 movie.release_date | date:'dd/MM/yy' }}
             </div>
         </div>

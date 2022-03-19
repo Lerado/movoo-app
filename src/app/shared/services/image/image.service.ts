@@ -47,7 +47,6 @@ export class ImageService {
     getByMovieId(movieId: number): Observable<MovieImages> {
         return this._httpClient.get<MovieImages>(`@tmdb/movie/${ movieId }/images`).pipe(
             tap((movieImages) => {
-                console.log(movieImages);
                 this._movieImages.next(movieImages);
             })
         );

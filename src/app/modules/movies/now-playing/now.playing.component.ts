@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MovieService } from 'app/shared/services/movie/movie.service';
 import { Movie } from 'app/shared/services/movie/movie.types';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -18,7 +19,8 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _movieService: MovieService
+        private _movieService: MovieService,
+        private _router: Router
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -54,4 +56,12 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    /**
+     * Show movie details
+     *
+     * @param movie
+     */
+    showDetails(movie: Movie): void {
+        this._router.navigate(['/movies', movie.id]);
+    }
 }

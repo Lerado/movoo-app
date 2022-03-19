@@ -10,7 +10,8 @@ const generatePalette = require(path.resolve(__dirname, ('src/@movoo/tailwind/ut
  * Tailwind-like color palettes automatically
  */
 const customPalettes = {
-    brand: generatePalette('#fada49')
+    brand: generatePalette('#fada49'),
+    white: generatePalette(colors.white)
 };
 
 /**
@@ -23,6 +24,10 @@ const themes = {
             ...customPalettes.brand,
             DEFAULT: customPalettes.brand[600]
         },
+        // secondary: {
+        //     ...customPalettes.white,
+        //     DEFAULT: customPalettes.white[600]
+        // },
         accent: {
             ...colors.slate,
             DEFAULT: colors.slate[800]

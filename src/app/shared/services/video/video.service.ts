@@ -47,7 +47,6 @@ export class VideoService {
     getByMovieId(movieId: number): Observable<MovieVideos> {
         return this._httpClient.get<MovieVideos>(`@tmdb/movie/${movieId}/videos`).pipe(
             tap((movieVideos) => {
-                console.log(movieVideos);
                 this._movieVideos.next(movieVideos);
             })
         );

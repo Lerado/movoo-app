@@ -46,7 +46,6 @@ export class AppConfigService {
         return this._httpClient.get('@tmdb/configuration').pipe(
             tap((config: TMDBSystemConfig) => {
                 this._config.next(config);
-                console.log(config);
             })
         );
     }
