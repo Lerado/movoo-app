@@ -1,3 +1,6 @@
+import { MoviesCollection } from '../collection/collection.types';
+import { MovieGenre } from '../genre/genre.types';
+
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Movie {
     id: number;
@@ -26,9 +29,10 @@ export interface Movie {
     vote_average: number;
     vote_count: number;
 
-    belongs_to_collection: any;
+    belongs_to_collection: MoviesCollection;
     spoken_languages: SpokenLanguage[];
     genre_ids: number[];
+    genres: MovieGenre[];
     production_companies: ProductionCompany[];
     production_countries: ProductionCountry[];
 }

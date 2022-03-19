@@ -33,15 +33,42 @@ export class MovieService {
     }
 
     /**
+     * Getter for movie
+     */
+    public get movie$(): Observable<Movie> {
+        return this._movie.asObservable();
+    }
+
+    /**
      * Setter for movies
      */
     public set movies(value: Movie[]) {
         this._movies.next(value);
     }
 
+    /**
+     * Setter for movies
+     */
+    public set movie(value: Movie) {
+        this._movie.next(value);
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Get movie by ID
+     *
+     * @param id
+     */
+    getById(movieId: number): Observable<Movie> {
+        return this._httpClient.get<Movie>(`@tmdb/movie/${movieId}`).pipe(
+            tap((movie: Movie) => {
+                this._movie.next(movie);
+            })
+        );
+    }
 
     /**
      * Get now played movies
@@ -51,6 +78,30 @@ export class MovieService {
     getNowPlayed(params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
         return this._parse(
             this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams })
+        );
+    }
+
+    /**
+     * Get movies recommended for a movie
+     *
+     * @param movieId
+     * @param params
+     */
+    getRecommended(movieId: number, params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
+        return this._parse(
+            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/recommendations`, { params: params as HttpParams })
+        );
+    }
+
+    /**
+     * Get movies similar to a movie
+     *
+     * @param movieId
+     * @param params
+     */
+    getSimilar(movieId: number, params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
+        return this._parse(
+            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/similar`, { params: params as HttpParams })
         );
     }
 

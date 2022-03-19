@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { forkJoin, Observable } from 'rxjs';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { AppConfigService } from './core/config/app.service';
-import { MovieGenreService } from './shared/services/genre/genre.service';
+import { GenreService } from './shared/services/genre/genre.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class InitialDataResolver implements Resolve<any>
      * Constructor
      */
     constructor(
-        private _movieGenreService: MovieGenreService,
+        private _genreService: GenreService,
         private _navigationService: NavigationService,
         private _configService: AppConfigService
     ) {
@@ -35,7 +35,7 @@ export class InitialDataResolver implements Resolve<any>
         return forkJoin([
             this._navigationService.get(),
             this._configService.getSystemConfig(),
-            this._movieGenreService.get()
+            this._genreService.get()
         ]);
     }
 }

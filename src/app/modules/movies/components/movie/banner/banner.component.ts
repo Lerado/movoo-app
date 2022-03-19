@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MovieGenreService } from 'app/shared/services/genre/genre.service';
+import { GenreService } from 'app/shared/services/genre/genre.service';
 import { MovieGenre } from 'app/shared/services/genre/genre.types';
 import { Movie } from 'app/shared/services/movie/movie.types';
 import { Subject, takeUntil } from 'rxjs';
@@ -22,7 +22,7 @@ export class MovieBannerComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _movieGenreService: MovieGenreService
+        private _genreService: GenreService,
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ export class MovieBannerComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         // Get genres
-        this._movieGenreService.genres$
+        this._genreService.genres$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((genres: MovieGenre[]) => {
                 this.genres = genres;
@@ -57,9 +57,14 @@ export class MovieBannerComponent implements OnInit, OnDestroy {
     /**
      * Map genres ids to genre labels
      *
-     * @param genresIds
+     * @param movie
      */
-    getGenres(genresIds: number[]): string[] {
-        return genresIds.map(genreId => this.genres.find(genre => genre.id === genreId).name);
+    getGenres(movie: Movie): string[] {
+
+        if (movie.genres) {
+            return movie.genres.map(genre => genre.name);
+        }
+
+        return movie.genre_ids.map(genreId => this.genres.find(genre => genre.id === genreId).name);
     }
 }

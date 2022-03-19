@@ -3,25 +3,25 @@
     <div class="flex flex-col items-center w-full h-full bg-opacity-50 bg-top bg-default">
         <div class="flex flex-col w-11/12 py-6 mx-auto mt-auto">
             <h1 class="text-3xl font-bold text-white">{{ movie.title }}</h1>
-            <div class="flex flex-row opacity-50 text-md">
+            <div class="flex flex-row text-opacity-50 text-default text-md">
                 <div class="flex flex-row items-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 icon-size-3"></mat-icon> {{
+                    <mat-icon [svgIcon]="'heroicons_solid:heart'" class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon> {{
                     movie.popularity | number:'1.0-0' }}
                 </div>
                 <div class="flex flex-row items-center mx-2">
-                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 icon-size-3"></mat-icon> {{
+                    <mat-icon [svgIcon]="'heroicons_solid:star'" class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon> {{
                     movie.vote_average }}
                 </div>
                 <div class="flex flex-row items-center">
-                    <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 icon-size-3"></mat-icon> {{
+                    <mat-icon [svgIcon]="'heroicons_solid:clock'" class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon> {{
                     movie.release_date | date:'mediumDate' }}
                 </div>
             </div>
-            <div class="opacity-50 text-md">{{ getGenres(movie.genre_ids).join(', ') }}</div>
-            <p class="w-full my-4 tracking-tight sm:w-7/12 opacity-60 text-md text-ellipsis line-clamp-5">{{
+            <div class="text-opacity-50 text-default text-md">{{ getGenres(movie).join(', ') }}</div>
+            <p class="w-full my-4 tracking-tight sm:w-7/12 text-default text-opacity-60 text-md text-ellipsis line-clamp-5">{{
                 movie.overview }}</p>
             <div class="flex flex-row">
-                <button mat-stroked-button class="border text-primary border-primary">View more</button>
+                <button [routerLink]="['/movies', movie.id]" mat-stroked-button class="border text-primary border-primary">View more</button>
             </div>
         </div>
     </div>

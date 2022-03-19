@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Movie } from 'app/shared/services/movie/movie.types';
 
 @Component({
@@ -10,6 +10,7 @@ export class MoviesGridComponent {
 
     // Inputs
     @Input() movies: Movie[];
+    @Output() selected: EventEmitter<Movie> = new EventEmitter<Movie>();
 
     /**
      * Constructor
@@ -23,5 +24,22 @@ export class MoviesGridComponent {
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Track by function for ngFor loops
+     *
+     * @param index
+     * @param item
+     */
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
+
+    /**
+     * Navigate to details for a movie
+     */
+    onMovieSelected(movie): void {
+        this.selected.emit(movie);
+    }
 
 }
