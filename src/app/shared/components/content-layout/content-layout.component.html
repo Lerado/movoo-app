@@ -1,4 +1,4 @@
-<div infiniteScroll [infiniteScrollDistance]="infiniteSrollOptions.infiniteScrollDistance || 2" [scrollWindow]="false" [immediateCheck]="true" (scrolled)="onScrolled($event)" #scrollElement
+<div infiniteScroll [infiniteScrollDistance]="infiniteSrollOptions?.infiniteScrollDistance || 2" [scrollWindow]="false" [immediateCheck]="true" (scrolled)="onScrolled($event)" #scrollElement
     class="absolute inset-0 flex flex-col w-full min-w-0" movooScrollbar
     [movooScrollbarOptions]="{wheelPropagation: false, suppressScrollX: true}">
     <ng-content></ng-content>
