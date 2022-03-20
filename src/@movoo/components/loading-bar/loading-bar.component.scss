@@ -1,0 +1,13 @@
+$movoo-loading-bar-color: #fada49;
+
+movoo-loading-bar {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 6px;
+
+    mat-progress-bar .mat-progress-bar-fill::after {
+        background: $movoo-loading-bar-color;
+      }
+}
