@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -7,7 +7,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild }
 })
 export class ContentLayoutComponent implements AfterViewInit {
 
+    @Input() infiniteSrollOptions: { [key: string]: any };
+
     @Output() scrollElement: EventEmitter<ElementRef<HTMLDivElement>> = new EventEmitter<ElementRef<HTMLDivElement>>();
+    @Output() scrolled: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('scrollElement') scrollElementRef;
 
@@ -23,7 +26,7 @@ export class ContentLayoutComponent implements AfterViewInit {
     /**
      * After view init
      */
-     ngAfterViewInit(): void {
+    ngAfterViewInit(): void {
         this.scrollElement.emit(this.scrollElementRef);
     }
 
@@ -31,4 +34,12 @@ export class ContentLayoutComponent implements AfterViewInit {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    /**
+     * Emits when grid is scrolled till the end
+     *
+     * @param $event
+     */
+    onScrolled($event: any): void {
+        this.scrolled.emit($event);
+    }
 }

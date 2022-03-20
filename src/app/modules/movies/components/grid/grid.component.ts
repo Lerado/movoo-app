@@ -36,7 +36,9 @@ export class MoviesGridComponent {
     }
 
     /**
-     * Navigate to details for a movie
+     * Emits when a movie is clicked
+     *
+     * @param movie
      */
     onMovieSelected(movie): void {
         this.selected.emit(movie);

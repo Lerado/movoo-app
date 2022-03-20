@@ -68,7 +68,7 @@ interface SpokenLanguage {
 export interface MoviesPagination {
     page: number;
     dates: { minimum: string; maximum: string };
-    results: Movie[];
+    results?: Movie[];
     total_pages: number;
     total_results: number;
 }

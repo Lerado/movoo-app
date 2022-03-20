@@ -1,0 +1,22 @@
+<div class="flex flex-col p-2 overflow-hidden min-h-[28rem] h-[28rem]">
+    <div class="w-full h-[17rem] max-h-[17rem]">
+        <content-loader [viewBox]="'0 0 1000 1000'" class="flex items-center w-full h-[17rem] max-h-[17rem]" [backgroundColor]="'#fff'"
+            [backgroundOpacity]="0.3" [foregroundColor]="'#fff'" [foregroundOpacity]="0.4">
+            <svg:circle cx="50%" cy="50%" r="500" />
+        </content-loader>
+    </div>
+    <div class="flex flex-col h-full">
+        <content-loader [viewBox]="'0 0 200 200'" class="w-full mt-3 overflow-hidden" [backgroundColor]="'#fff'"
+            [backgroundOpacity]="0.3" [foregroundColor]="'#fff'" [foregroundOpacity]="0.4">
+            <svg:rect x="0" y="0" rx="3" ry="3" width="100%" height="12" />
+            <svg:rect x="0" y="22" rx="3" ry="3" width="60%" height="8" />
+
+            <svg:rect x="0" y="55" rx="3" ry="3" width="100%" height="10" />
+            <svg:rect x="0" y="75" rx="3" ry="3" width="70%" height="10" />
+            <svg:rect x="0" y="95" rx="3" ry="3" width="90%" height="10" />
+
+            <svg:rect x="0" y="127" rx="3" ry="3" width="40%" height="10" />
+            <svg:rect x="70%" y="127" rx="3" ry="3" width="30%" height="10" />
+        </content-loader>
+    </div>
+</div>

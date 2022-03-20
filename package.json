@@ -27,6 +27,7 @@
     "@tauri-apps/api": "^1.0.0-beta.8",
     "lodash-es": "^4.17.21",
     "ngx-embed-video": "^1.0.4",
+    "ngx-infinite-scroll": "^10.0.1",
     "perfect-scrollbar": "^1.5.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

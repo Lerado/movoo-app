@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { Movie, MoviesPagination } from './movie.types';
 import { GetMoviesDto, getMoviesDtoDefault } from './movies.dtos';
 
@@ -9,7 +10,7 @@ import { GetMoviesDto, getMoviesDtoDefault } from './movies.dtos';
 })
 export class MovieService {
 
-    private _movies: ReplaySubject<Movie[]> = new ReplaySubject<Movie[]>(1);
+    private _movies: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
     private _movie: ReplaySubject<Movie> = new ReplaySubject<Movie>(1);
 
     private _pagination: ReplaySubject<MoviesPagination> = new ReplaySubject<MoviesPagination>(1);
@@ -37,6 +38,13 @@ export class MovieService {
      */
     public get movie$(): Observable<Movie> {
         return this._movie.asObservable();
+    }
+
+    /**
+     * Getter for movies pagination
+     */
+    public get moviesPagination$(): Observable<MoviesPagination> {
+        return this._pagination.asObservable();
     }
 
     /**
@@ -75,9 +83,10 @@ export class MovieService {
      *
      * @param params
      */
-    getNowPlayed(params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
+    getNowPlayed(params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
         return this._parse(
-            this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams })
+            this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams }),
+            keepState
         );
     }
 
@@ -87,9 +96,10 @@ export class MovieService {
      * @param movieId
      * @param params
      */
-    getRecommended(movieId: number, params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
+    getRecommended(movieId: number, params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
         return this._parse(
-            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/recommendations`, { params: params as HttpParams })
+            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/recommendations`, { params: params as HttpParams }),
+            keepState
         );
     }
 
@@ -99,9 +109,10 @@ export class MovieService {
      * @param movieId
      * @param params
      */
-    getSimilar(movieId: number, params: GetMoviesDto = getMoviesDtoDefault): Observable<Movie[]> {
+    getSimilar(movieId: number, params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
         return this._parse(
-            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/similar`, { params: params as HttpParams })
+            this._httpClient.get<MoviesPagination>(`@tmdb/movie/${movieId}/similar`, { params: params as HttpParams }),
+            keepState
         );
     }
 
@@ -114,17 +125,32 @@ export class MovieService {
      *
      * @param response
      */
-    private _parse(response: Observable<MoviesPagination>): Observable<Movie[]> {
+    private _parse(response: Observable<MoviesPagination>, keepState: boolean = false): Observable<Movie[]> {
+
         return response.pipe(
-            tap((moviePagination: MoviesPagination) => {
 
-                // Set movies
-                this._movies.next(moviePagination.results);
-
-                // Set pagination
-                this._pagination.next(moviePagination);
+            tap(({ page, dates, total_pages, total_results }) => {
+                this._pagination.next({ page, dates, total_pages, total_results });
             }),
-            map((moviePagination_: MoviesPagination) => moviePagination_.results)
+
+            tap((moviesPagination: MoviesPagination) => {
+
+                if (keepState) {
+
+                    const currentPage = moviesPagination.page;
+
+                    // Set movies
+                    if (currentPage === 1) {
+                        this._movies.next(moviesPagination.results);
+                    }
+                    else {
+                        this._movies.next([...this._movies.getValue(), ...moviesPagination.results]);
+                    }
+                }
+
+            }),
+
+            map(moviePagination => moviePagination.results)
         );
     }
 

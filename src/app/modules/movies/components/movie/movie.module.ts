@@ -12,10 +12,12 @@ import { MoviesGridComponent } from '../grid/grid.component';
 import { MovieBannerComponent } from './banner/banner.component';
 import { MovieCardComponent } from './card/card.component';
 import { MovieDetailComponent } from './detail/detail.component';
+import { MovieLoaderComponent } from './loader/loader.component';
 
 @NgModule({
     declarations: [
         MovieCardComponent,
+        MovieLoaderComponent,
         MovieBannerComponent,
         MoviesGridComponent,
         MovieDetailComponent
@@ -33,6 +35,7 @@ import { MovieDetailComponent } from './detail/detail.component';
     ],
     exports: [
         MovieCardComponent,
+        MovieLoaderComponent,
         MovieBannerComponent,
         MoviesGridComponent,
         MovieDetailComponent
