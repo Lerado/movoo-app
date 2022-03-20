@@ -3,4 +3,5 @@
     <ng-container *ngFor="let movie of movies; trackBy: trackByFn">
         <movie-card (selected)="onMovieSelected($event)" [movie]="movie"></movie-card>
     </ng-container>
+    <ng-content></ng-content>
 </div>

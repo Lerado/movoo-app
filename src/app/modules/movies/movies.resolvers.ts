@@ -33,7 +33,10 @@ export class NowPlayingMoviesResolver implements Resolve<Observable<Movie[]>> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Movie[]> | Observable<Observable<Movie[]>> | Promise<Observable<Movie[]>> {
-        return this._movieService.getNowPlayed();
+        return this._movieService.getNowPlayed(
+            { page: 1 },
+            true
+        );
     }
 }
 

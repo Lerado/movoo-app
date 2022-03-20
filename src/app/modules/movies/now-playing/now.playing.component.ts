@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MovieService } from 'app/shared/services/movie/movie.service';
-import { Movie } from 'app/shared/services/movie/movie.types';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Movie, MoviesPagination } from 'app/shared/services/movie/movie.types';
+import { Observable, of, Subject, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'movies-now-playing',
@@ -11,7 +12,10 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
 
     movies$: Observable<Movie[]>;
+    moviesPagination$: Observable<MoviesPagination>;
     featuredMovie: Movie;
+
+    isLoadingNext: boolean = false; // Is the component loading the next page of data
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -34,6 +38,9 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
 
         // Set movies observable
         this.movies$ = this._movieService.movies$.pipe(takeUntil(this._unsubscribeAll));
+
+        // Set movies pagination observable
+        this.moviesPagination$ = this._movieService.moviesPagination$.pipe(takeUntil(this._unsubscribeAll));
 
         this.movies$.subscribe((movies: Movie[]) => {
 
@@ -63,5 +70,47 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
      */
     showDetails(movie: Movie): void {
         this._router.navigate(['/movies', movie.id]);
+    }
+
+    /**
+     * Infinite scroll trigger
+     */
+    onContentScrolled(): void {
+
+        // Get current pagination
+        this.moviesPagination$.pipe(
+
+            take(1),
+
+            switchMap(({ page, total_pages }) => {
+
+                this.isLoadingNext = true;
+
+                // Check if we can query the next page
+                if (page + 1 > total_pages) {
+                    return of([]);
+                }
+
+                return this._movieService.getNowPlayed({ page: page + 1 }, true);
+            })
+
+        ).subscribe(() => this.isLoadingNext = false);
+    }
+
+    /**
+     * Creates an array of `times` `value`
+     *
+     * @param value
+     * @param times
+     */
+    repeat(value: any, times: number): any[] {
+
+        const result = [];
+
+        for (let index = 0; index < times; index++) {
+            result.push(value);
+        }
+
+        return result;
     }
 }

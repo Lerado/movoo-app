@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MovooScrollbarModule } from '@movoo/directives/scrollbar';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ContentLayoutComponent } from './content-layout,component';
 
 @NgModule({
@@ -7,7 +8,8 @@ import { ContentLayoutComponent } from './content-layout,component';
         ContentLayoutComponent
     ],
     imports: [
-        MovooScrollbarModule
+        MovooScrollbarModule,
+        InfiniteScrollModule,
     ],
     exports: [
         ContentLayoutComponent
