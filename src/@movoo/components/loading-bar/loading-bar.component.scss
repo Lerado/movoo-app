@@ -1,4 +1,5 @@
 $movoo-loading-bar-color: #fada49;
+$movoo-loading-bar-background: #171719;
 
 movoo-loading-bar {
     position: fixed;
@@ -7,7 +8,12 @@ movoo-loading-bar {
     width: 100%;
     height: 6px;
 
-    mat-progress-bar .mat-progress-bar-fill::after {
-        background: $movoo-loading-bar-color;
-      }
+    mat-progress-bar {
+        .mat-progress-bar-fill::after {
+            background-color: $movoo-loading-bar-color;
+        }
+        .mat-progress-bar-buffer {
+            background-color: $movoo-loading-bar-background;
+        }
+    }
 }
