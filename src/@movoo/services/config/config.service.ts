@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MOVOO_APP_CONFIG } from './config.constants';
 
@@ -7,6 +7,7 @@ import { MOVOO_APP_CONFIG } from './config.constants';
     providedIn: 'root'
 })
 export class MovooConfigService {
+
     private _config: BehaviorSubject<any>;
 
     /**

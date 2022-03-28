@@ -10,23 +10,22 @@ export class MovooConfigModule {
      */
     constructor(
         private _movooConfigService: MovooConfigService
-    ) {}
+    ) { }
 
     /**
      * forRoot method for setting user configuration
      *
      * @param config
      */
-     static forRoot(config: any): ModuleWithProviders<MovooConfigModule>
-     {
-         return {
-             ngModule : MovooConfigModule,
-             providers: [
-                 {
-                     provide : MOVOO_APP_CONFIG,
-                     useValue: config
-                 }
-             ]
-         };
-     }
+    static forRoot(config: any): ModuleWithProviders<MovooConfigModule> {
+        return {
+            ngModule: MovooConfigModule,
+            providers: [
+                {
+                    provide: MOVOO_APP_CONFIG,
+                    useValue: config
+                }
+            ]
+        };
+    }
 }

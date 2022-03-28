@@ -4,3 +4,10 @@
 /* ----------------------------------------------------------------------------------------------------- */
 
 /* You can add global styles to this file, and also import other style files */
+
+/* Custom angular tabs styles */
+.mat-tab-group.mat-primary {
+    .mat-ink-bar {
+        @apply bg-primary;
+    }
+}

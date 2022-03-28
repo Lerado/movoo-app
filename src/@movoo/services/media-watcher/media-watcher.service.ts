@@ -5,8 +5,7 @@ import { MovooConfigService } from '@movoo/services/config';
 import { fromPairs } from 'lodash';
 
 @Injectable()
-export class MovooMediaWatcherService
-{
+export class MovooMediaWatcherService {
     private _onMediaChange: ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }> = new ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }>(1);
 
     /**
@@ -15,10 +14,9 @@ export class MovooMediaWatcherService
     constructor(
         private _breakpointObserver: BreakpointObserver,
         private _movooConfigService: MovooConfigService
-    )
-    {
+    ) {
         this._movooConfigService.config$.pipe(
-            map(config => fromPairs(Object.entries(config.screens).map(([alias, screen]) => ([alias, `(min-width): ${screen}`])))),
+            map(config => fromPairs(Object.entries(config.screens).map(([alias, screen]) => ([alias, `(min-width: ${screen})`])))),
             switchMap(screens => this._breakpointObserver.observe(Object.values(screens)).pipe(
                 map((state) => {
 
@@ -28,14 +26,12 @@ export class MovooMediaWatcherService
 
                     // Get the matching breakpoints and use them to fill the subject
                     const matchingBreakpoints = Object.entries(state.breakpoints).filter(([query, matches]) => matches) ?? [];
-                    for ( const [query] of matchingBreakpoints )
-                    {
+                    for (const [query] of matchingBreakpoints) {
                         // Find the alias of the matching query
                         const matchingAlias = Object.entries(screens).find(([alias, q]) => q === query)[0];
 
                         // Add the matching query to the observable values
-                        if ( matchingAlias )
-                        {
+                        if (matchingAlias) {
                             matchingAliases.push(matchingAlias);
                             matchingQueries[matchingAlias] = query;
                         }
@@ -58,8 +54,7 @@ export class MovooMediaWatcherService
     /**
      * Getter for _onMediaChange
      */
-    get onMediaChange$(): Observable<{ matchingAliases: string[]; matchingQueries: any }>
-    {
+    get onMediaChange$(): Observable<{ matchingAliases: string[]; matchingQueries: any }> {
         return this._onMediaChange.asObservable();
     }
 
@@ -72,8 +67,7 @@ export class MovooMediaWatcherService
      *
      * @param query
      */
-    onMediaQueryChange$(query: string | string[]): Observable<BreakpointState>
-    {
+    onMediaQueryChange$(query: string | string[]): Observable<BreakpointState> {
         return this._breakpointObserver.observe(query);
     }
 }

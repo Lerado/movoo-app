@@ -1,0 +1,7 @@
+.movie-card-wrapper {
+    &:hover {
+        h3 {
+            @apply text-primary transition-colors duration-500
+        }
+    }
+}

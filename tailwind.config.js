@@ -10,7 +10,8 @@ const generatePalette = require(path.resolve(__dirname, ('src/@movoo/tailwind/ut
  * Tailwind-like color palettes automatically
  */
 const customPalettes = {
-    brand: generatePalette(colors.yellow)
+    brand: generatePalette('#fada49'),
+    white: generatePalette(colors.white)
 };
 
 /**
@@ -23,6 +24,10 @@ const themes = {
             ...customPalettes.brand,
             DEFAULT: customPalettes.brand[600]
         },
+        // secondary: {
+        //     ...customPalettes.white,
+        //     DEFAULT: customPalettes.white[600]
+        // },
         accent: {
             ...colors.slate,
             DEFAULT: colors.slate[800]
@@ -73,6 +78,7 @@ const config = {
             '10xl': '8rem'
         },
         screens: {
+            xs: '400px',
             sm: '600px',
             md: '960px',
             lg: '1280px',
@@ -89,7 +95,7 @@ const config = {
                 '0': '0 0 auto'
             },
             fontFamily: {
-                sans: `"Inter var", ${defaultTheme.fontFamily.sans.join(',')}`,
+                sans: `"Trebuchet MS", "Inter var", ${defaultTheme.fontFamily.sans.join(',')}`,
                 mono: `"IBM Plex Mono", ${defaultTheme.fontFamily.mono.join(',')}`
             },
             opacity: {

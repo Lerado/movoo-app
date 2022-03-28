@@ -1,13 +1,14 @@
 {
   "package": {
-    "productName": "movoo-app",
+    "productName": "movoo",
     "version": "0.1.0"
   },
   "build": {
     "distDir": "../dist/movoo-app",
     "devPath": "http://localhost:4200",
     "beforeDevCommand": "npm run start",
-    "beforeBuildCommand": "npm run build"
+    "beforeBuildCommand": "npm run build",
+    "withGlobalTauri": false
   },
   "tauri": {
     "bundle": {
@@ -53,11 +54,27 @@
     },
     "windows": [
       {
-        "title": "Movoo App",
-        "width": 800,
+        "title": "Movoo",
+        "width": 1000,
         "height": 600,
+        "decorations": false,
         "resizable": true,
-        "fullscreen": false
+        "focus": true,
+        "transparent": true,
+        "fullscreen": false,
+        "center": true,
+        "visible": false
+      },
+      {
+        "title": "Movoo",
+        "width": 300,
+        "height": 200,
+        "decorations": false,
+        "center": true,
+        "focus": true,
+        "transparent": true,
+        "url": "assets/html/splashscreen.html",
+        "label": "splashscreen"
       }
     ],
     "security": {

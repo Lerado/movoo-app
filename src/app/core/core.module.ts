@@ -1,7 +1,14 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { ApiModule } from 'app/api/api.module';
+import { AuthModule } from './auth/auth.module';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
-    imports: []
+    imports: [
+        ApiModule,
+        AuthModule,
+        IconsModule
+    ]
 })
 export class CoreModule {
 

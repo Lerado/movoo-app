@@ -1,6 +1,44 @@
-<!-- Content -->
-<div class="flex flex-col flex-auto">
-    <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+<!-- Loading bar -->
+<movoo-loading-bar></movoo-loading-bar>
+
+<!-- Navigation -->
+<movoo-vertical-navigation class="bg-navbar dark print:hidden" [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
+
+    <!-- Navigation header hook -->
+    <ng-container movooVerticalNavigationContentHeader>
+        <div class="flex-row px-[25px] h-[48px] items-center hidden pointer-events-none md:flex" movooTitleBarHeader>
+            <!-- Logo -->
+            <div class="w-full h-full">
+                <img class="object-cover ml-[-40px] my-2 w-full h-full" src="assets/images/logo/logo-text-inverted.png" alt="Movoo logo">
+            </div>
+            <!-- Name -->
+            <!-- <div class="flex flex-col justify-center text-[18px] font-semibold tracking-wide">
+                Movoo
+            </div> -->
+        </div>
+    </ng-container>
+
+    <!-- Navigation footer hook -->
+    <ng-container movooVerticalNavigationContentFooter>
+
+    </ng-container>
+
+</movoo-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0 pt-[48px]">
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
-    <router-outlet *ngIf="true"></router-outlet>
+        <router-outlet *ngIf="true"></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <!--<div class="relative flex items-center justify-start w-full px-4 border-t flex-0 h-14 md:px-6 z-49 bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-default text-opacity-60">Movoo &copy; {{currentYear}}</span>
+    </div>-->
+
 </div>
