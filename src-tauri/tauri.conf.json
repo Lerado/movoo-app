@@ -6,7 +6,7 @@
   "build": {
     "distDir": "../dist/movoo-app",
     "devPath": "http://localhost:4200",
-    "beforeDevCommand": "npm run start",
+    "beforeDevCommand": "npm run serve",
     "beforeBuildCommand": "npm run build",
     "withGlobalTauri": false
   },
