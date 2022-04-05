@@ -1,6 +1,4 @@
-<ng-container *ngIf="show">
-    <mat-progress-bar
-        [color]="'fada49'"
-        [mode]="mode"
-        [value]="progress"></mat-progress-bar>
+<ng-container *ngIf="show$ | async as show">
+    <mat-progress-bar *ngIf="show" [color]="'fada49'" [mode]="mode$ | async" [value]="progress$ | async">
+    </mat-progress-bar>
 </ng-container>

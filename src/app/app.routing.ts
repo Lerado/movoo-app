@@ -24,6 +24,12 @@ export const appRoutes: Route[] = [
             {
                 path: 'movies',
                 loadChildren: () => import('app/modules/movies/movies.module').then(m => m.MoviesModule)
+            },
+
+            // Coming soon
+            {
+                path: 'coming-soon',
+                loadChildren: () => import('app/modules/coming-soon/coming-soon.module').then(m => m.ComingSoonModule)
             }
         ]
     },

@@ -51,7 +51,7 @@
                                 {{ movie.budget | currency:'USD':'symbol':'1.0-0' }}
                             </div>
                         </div>
-                        <a *ngIf="movie.homepage" [href]="movie.homepage"
+                        <a *ngIf="movie.homepage" [href]="movie.homepage" target="__blank"
                             class="flex flex-row items-center text-opacity-50 transition-colors text-default text-md hover:text-primary">
                             <mat-icon [svgIcon]="'heroicons_solid:link'"
                                 class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon>
