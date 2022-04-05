@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { MovooLoadingService } from '@movoo/services/loading';
 
 @Component({
@@ -13,9 +13,11 @@ import { MovooLoadingService } from '@movoo/services/loading';
 export class MovooLoadingBarComponent implements OnChanges, OnInit, OnDestroy
 {
     @Input() autoMode: boolean = true;
-    mode: 'determinate' | 'indeterminate' | 'query';
-    progress: number = 0;
-    show: boolean = false;
+
+    mode$: Observable<'determinate' | 'indeterminate' | 'query'>;
+    progress$: Observable<number>;
+    show$: Observable<boolean>;
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -50,24 +52,11 @@ export class MovooLoadingBarComponent implements OnChanges, OnInit, OnDestroy
     ngOnInit(): void
     {
         // Subscribe to the service
-        this._movooLoadingService.mode$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((value) => {
-                this.mode = value;
-            });
+        this.mode$ = this._movooLoadingService.mode$.pipe(takeUntil(this._unsubscribeAll));
 
-        this._movooLoadingService.progress$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((value) => {
-                this.progress = value;
-            });
+        this.progress$ = this._movooLoadingService.progress$.pipe(takeUntil(this._unsubscribeAll));
 
-        this._movooLoadingService.show$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((value) => {
-                this.show = value;
-            });
-
+        this.show$ = this._movooLoadingService.show$.pipe(takeUntil(this._unsubscribeAll));
     }
 
     /**

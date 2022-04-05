@@ -30,14 +30,16 @@ export const navigation: Navigation = {
                     title: 'Movies',
                     type: 'basic',
                     icon: 'heroicons_solid:film',
-                    link: '/explore/movies'
+                    link: 'coming-soon/movies/explore'
+                    // link: '/movies/explore'
                 },
                 {
                     id: 'explore-watchlists',
                     title: 'Watchlists',
                     type: 'basic',
                     icon: 'heroicons_solid:view-grid',
-                    link: '/explore/watchlists'
+                    link: 'coming-soon/watchlists/explorer'
+                    // link: '/watchlists/explorer'
                 }
             ]
         },
@@ -61,28 +63,32 @@ export const navigation: Navigation = {
                     title: 'Upcoming',
                     type: 'basic',
                     icon: 'heroicons_solid:calendar',
-                    link: '/movies/upcoming'
+                    link: 'coming-soon/movies/upcoming'
+                    // link: '/movies/upcoming'
                 },
                 {
                     id: 'movies-popular',
                     title: 'Popular',
                     type: 'basic',
                     icon: 'heroicons_solid:trending-up',
-                    link: '/movies/popular'
+                    link: 'coming-soon/movies/popular'
+                    // link: '/movies/popular'
                 },
                 {
                     id: 'movies-top-rated',
                     title: 'Top rated',
                     type: 'basic',
                     icon: 'heroicons_solid:star',
-                    link: '/movies/top-rated'
+                    link: 'coming-soon/movies/top-rated'
+                    // link: '/movies/top-rated'
                 },
                 {
                     id: 'movies-genres',
                     title: 'Genres',
                     type: 'basic',
                     icon: 'heroicons_solid:video-camera',
-                    link: '/movies/genres'
+                    link: 'coming-soon/movies/genres'
+                    // link: '/movies/genres'
                 }
             ]
         }
