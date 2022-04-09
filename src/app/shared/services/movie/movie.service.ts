@@ -91,6 +91,18 @@ export class MovieService {
     }
 
     /**
+     * Get now played movies
+     *
+     * @param params
+     */
+    getUpcoming(params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
+        return this._parse(
+            this._httpClient.get<MoviesPagination>('@tmdb/movie/upcoming', { params: params as HttpParams }),
+            keepState
+        );
+    }
+
+    /**
      * Get movies recommended for a movie
      *
      * @param movieId

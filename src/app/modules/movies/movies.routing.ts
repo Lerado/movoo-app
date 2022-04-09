@@ -1,7 +1,8 @@
 import { Route } from '@angular/router';
 import { MovieDetailComponent } from './components/movie/detail/detail.component';
-import { MovieCreditsResolver, MovieDetailResolver, MovieImagesResolver, MovieVideosResolver, NowPlayingMoviesResolver } from './movies.resolvers';
+import { MovieDetailResolver, NowPlayingMoviesResolver, UpcomingMoviesResolver } from './movies.resolvers';
 import { MoviesNowPlayingComponent } from './now-playing/now.playing.component';
+import { MoviesUpcomingComponent } from './upcoming/upcoming.component';
 
 export const moviesRoutes: Route[] = [
     {
@@ -15,6 +16,15 @@ export const moviesRoutes: Route[] = [
         component: MoviesNowPlayingComponent,
         resolve: {
             movies: NowPlayingMoviesResolver
+        }
+    },
+
+    // Upcoming
+    {
+        path: 'upcoming',
+        component: MoviesUpcomingComponent,
+        resolve: {
+            movies: UpcomingMoviesResolver
         }
     },
 
