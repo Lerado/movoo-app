@@ -79,13 +79,25 @@ export class MovieService {
     }
 
     /**
+     * Get movies playing now
+     *
+     * @param params
+     */
+    getNowPlaying(params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
+        return this._parse(
+            this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams }),
+            keepState
+        );
+    }
+
+    /**
      * Get now played movies
      *
      * @param params
      */
-    getNowPlayed(params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
+    getUpcoming(params: GetMoviesDto = getMoviesDtoDefault, keepState: boolean = false): Observable<Movie[]> {
         return this._parse(
-            this._httpClient.get<MoviesPagination>('@tmdb/movie/now_playing', { params: params as HttpParams }),
+            this._httpClient.get<MoviesPagination>('@tmdb/movie/upcoming', { params: params as HttpParams }),
             keepState
         );
     }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { MovooLoadingBarModule } from '@movoo/components/loading-bar';
@@ -12,6 +13,7 @@ import { ClassyLayoutComponent } from './classy.component';
     ],
     imports: [
         RouterModule,
+        MatButtonModule,
         MatIconModule,
         MovooNavigationModule,
         MovooLoadingBarModule,

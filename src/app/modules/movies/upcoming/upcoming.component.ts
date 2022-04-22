@@ -6,10 +6,10 @@ import { Movie, MoviesPagination } from 'app/shared/services/movie/movie.types';
 import { Observable, of, Subject, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'movies-now-playing',
-    templateUrl: './now-playing.component.html'
+    selector: 'movies-upcoming',
+    templateUrl: './upcoming.component.html'
 })
-export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
+export class MoviesUpcomingComponent implements OnInit, OnDestroy {
 
     movies$: Observable<Movie[]>;
     moviesPagination$: Observable<MoviesPagination>;
@@ -91,7 +91,7 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
                     return of([]);
                 }
 
-                return this._movieService.getNowPlaying({ page: page + 1 }, true);
+                return this._movieService.getUpcoming({ page: page + 1 }, true);
             })
 
         ).subscribe(() => this.isLoadingNext = false);
@@ -114,3 +114,4 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
         return result;
     }
 }
+

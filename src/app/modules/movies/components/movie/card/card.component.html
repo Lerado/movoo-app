@@ -9,7 +9,7 @@
         <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-2">{{ movie.title }}</h3>
         <div class="mt-1 text-sm truncate text-default text-opacity-30">{{ getGenres(movie).join(', ') }}</div>
         <p class="mt-auto tracking-tight text-default text-opacity-60 text-md text-ellipsis line-clamp-3">
-            {{ movie.overview }}
+            {{ movie.overview || 'No description provided' }}
         </p>
         <div class="flex flex-row justify-between mt-auto h-max text-md">
             <div class="flex flex-row justify-between text-default text-opacity-60">

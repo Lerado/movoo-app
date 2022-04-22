@@ -33,7 +33,37 @@ export class NowPlayingMoviesResolver implements Resolve<Observable<Movie[]>> {
      * @param state
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Movie[]> | Observable<Observable<Movie[]>> | Promise<Observable<Movie[]>> {
-        return this._movieService.getNowPlayed(
+        return this._movieService.getNowPlaying(
+            { page: 1 },
+            true
+        );
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class UpcomingMoviesResolver implements Resolve<Observable<Movie[]>> {
+
+    /**
+     * Constructor
+     */
+    constructor(
+        private _movieService: MovieService,
+    ) { }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Use this resolver to resolve initial mock-api for the application
+     *
+     * @param route
+     * @param state
+     */
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Movie[]> | Observable<Observable<Movie[]>> | Promise<Observable<Movie[]>> {
+        return this._movieService.getUpcoming(
             { page: 1 },
             true
         );
