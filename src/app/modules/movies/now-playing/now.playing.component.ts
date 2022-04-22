@@ -91,7 +91,7 @@ export class MoviesNowPlayingComponent implements OnInit, OnDestroy {
                     return of([]);
                 }
 
-                return this._movieService.getNowPlayed({ page: page + 1 }, true);
+                return this._movieService.getNowPlaying({ page: page + 1 }, true);
             })
 
         ).subscribe(() => this.isLoadingNext = false);
