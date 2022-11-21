@@ -1,84 +1,81 @@
 {
-  "package": {
-    "productName": "movoo",
-    "version": "0.1.0"
-  },
-  "build": {
-    "distDir": "../dist/movoo-app",
-    "devPath": "http://localhost:4200",
-    "beforeDevCommand": "npm run serve",
-    "beforeBuildCommand": "npm run build",
-    "withGlobalTauri": false
-  },
-  "tauri": {
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.tauri.dev",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "",
-      "category": "DeveloperTool",
-      "shortDescription": "",
-      "longDescription": "",
-      "deb": {
-        "depends": [],
-        "useBootstrapper": false
-      },
-      "macOS": {
-        "frameworks": [],
-        "minimumSystemVersion": "",
-        "useBootstrapper": false,
-        "exceptionDomain": "",
-        "signingIdentity": null,
-        "entitlements": null
-      },
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
+    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+    "build": {
+        "beforeBuildCommand": "npm run build",
+        "beforeDevCommand": "npm run serve",
+        "devPath": "http://localhost:4200",
+        "distDir": "../dist/movoo-app"
     },
-    "updater": {
-      "active": false
+    "package": {
+        "productName": "movoo-app",
+        "version": "0.1.0"
     },
-    "allowlist": {
-      "all": true
-    },
-    "windows": [
-      {
-        "title": "Movoo",
-        "width": 1000,
-        "height": 600,
-        "decorations": false,
-        "resizable": true,
-        "focus": true,
-        "transparent": true,
-        "fullscreen": false,
-        "center": true,
-        "visible": false
-      },
-      {
-        "title": "Movoo",
-        "width": 300,
-        "height": 200,
-        "decorations": false,
-        "center": true,
-        "focus": true,
-        "transparent": true,
-        "url": "assets/html/splashscreen.html",
-        "label": "splashscreen"
-      }
-    ],
-    "security": {
-      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+    "tauri": {
+        "allowlist": {
+            "all": true
+        },
+        "bundle": {
+            "active": true,
+            "category": "DeveloperTool",
+            "copyright": "",
+            "deb": {
+                "depends": []
+            },
+            "externalBin": [],
+            "icon": [
+                "icons/32x32.png",
+                "icons/128x128.png",
+                "icons/128x128@2x.png",
+                "icons/icon.icns",
+                "icons/icon.ico"
+            ],
+            "identifier": "com.tauri.dev",
+            "longDescription": "",
+            "macOS": {
+                "entitlements": null,
+                "exceptionDomain": "",
+                "frameworks": [],
+                "providerShortName": null,
+                "signingIdentity": null
+            },
+            "resources": [],
+            "shortDescription": "",
+            "targets": "all",
+            "windows": {
+                "certificateThumbprint": null,
+                "digestAlgorithm": "sha256",
+                "timestampUrl": ""
+            }
+        },
+        "security": {
+            "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+        },
+        "updater": {
+            "active": false
+        },
+        "windows": [
+            {
+                "title": "Movoo",
+                "width": 1000,
+                "height": 600,
+                "decorations": false,
+                "resizable": true,
+                "focus": true,
+                "fullscreen": false,
+                "center": true,
+                "visible": false
+            },
+            {
+                "title": "Movoo",
+                "width": 300,
+                "height": 200,
+                "decorations": false,
+                "center": true,
+                "focus": true,
+                "transparent": true,
+                "url": "assets/html/splashscreen.html",
+                "label": "splashscreen"
+            }
+        ]
     }
-  }
 }

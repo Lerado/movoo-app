@@ -38,10 +38,6 @@ module.exports = plugin(({
                 '--tw-bg-opacity': '1 !important',
                 backgroundColor  : 'rgba(var(--movoo-bg-card-rgb), var(--tw-bg-opacity)) !important'
             },
-            '.bg-navbar'        : {
-                '--tw-bg-opacity': '1 !important',
-                backgroundColor  : 'rgba(var(--movoo-bg-nav-bar-rgb), var(--tw-bg-opacity)) !important'
-            },
             '.bg-default'     : {
                 '--tw-bg-opacity': '1 !important',
                 backgroundColor  : 'rgba(var(--movoo-bg-default-rgb), var(--tw-bg-opacity)) !important'

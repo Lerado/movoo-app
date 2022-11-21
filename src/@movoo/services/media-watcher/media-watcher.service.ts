@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { map, Observable, ReplaySubject, switchMap } from 'rxjs';
 import { MovooConfigService } from '@movoo/services/config';
-import { fromPairs } from 'lodash';
+import { fromPairs } from 'lodash-es';
 
 @Injectable()
 export class MovooMediaWatcherService {

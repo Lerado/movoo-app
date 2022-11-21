@@ -7,6 +7,7 @@ import { MoviesUpcomingComponent } from './upcoming/upcoming.component';
 export const moviesRoutes: Route[] = [
     {
         path: '',
+        pathMatch: 'full',
         redirectTo: 'now-playing'
     },
 
