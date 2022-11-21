@@ -10,7 +10,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  deploy:
+  
     name: Deploy
     
     runs-on: ubuntu-latest
@@ -42,4 +43,5 @@ jobs:
       uses: denoland/deployctl@v1
       with:
         project: movoo-app # the name of the project on Deno Deploy
-        entrypoint: server.ts # the entrypoint to deploy
+        entrypoint: https://deno.land/std/http/file_server.ts # the entrypoint to deploy
+        root: dist/movoo-app
