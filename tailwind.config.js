@@ -50,15 +50,6 @@ const config = {
     darkMode: 'class',
     content: ['./src/**/*.{html,scss,ts}'],
     important: true,
-    corePlugins: {
-        appearance: false,
-        container: false,
-        float: false,
-        clear: false,
-        placeholderColor: false,
-        placeholderOpacity: false,
-        verticalAlign: false
-    },
     theme: {
         fontSize: {
             'xs': '0.625rem',
@@ -263,6 +254,15 @@ const config = {
             })
         }
     },
+    corePlugins: {
+        appearance: false,
+        container: false,
+        float: false,
+        clear: false,
+        placeholderColor: false,
+        placeholderOpacity: false,
+        verticalAlign: false
+    },
     plugins: [
 
         // Movoo
@@ -272,7 +272,6 @@ const config = {
 
         // Other third party and/or custom plugins
         require('@tailwindcss/typography')({ modifiers: ['sm', 'lg'] }),
-        require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/line-clamp')
     ],
 }

@@ -4,16 +4,14 @@ import { MovooNavigationItem } from '@movoo/components/navigation/navigation.typ
 @Injectable({
     providedIn: 'root'
 })
-export class MovooNavigationService
-{
+export class MovooNavigationService {
     private _componentRegistry: Map<string, any> = new Map<string, any>();
     private _navigationStore: Map<string, MovooNavigationItem[]> = new Map<string, any>();
 
     /**
      * Constructor
      */
-    constructor()
-    {
+    constructor() {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -26,8 +24,7 @@ export class MovooNavigationService
      * @param name
      * @param component
      */
-    registerComponent(name: string, component: any): void
-    {
+    registerComponent(name: string, component: any): void {
         this._componentRegistry.set(name, component);
     }
 
@@ -36,8 +33,7 @@ export class MovooNavigationService
      *
      * @param name
      */
-    deregisterComponent(name: string): void
-    {
+    deregisterComponent(name: string): void {
         this._componentRegistry.delete(name);
     }
 
@@ -46,8 +42,7 @@ export class MovooNavigationService
      *
      * @param name
      */
-    getComponent<T>(name: string): T
-    {
+    getComponent<T>(name: string): T {
         return this._componentRegistry.get(name);
     }
 
@@ -57,8 +52,7 @@ export class MovooNavigationService
      * @param key
      * @param navigation
      */
-    storeNavigation(key: string, navigation: MovooNavigationItem[]): void
-    {
+    storeNavigation(key: string, navigation: MovooNavigationItem[]): void {
         // Add to the store
         this._navigationStore.set(key, navigation);
     }
@@ -68,8 +62,7 @@ export class MovooNavigationService
      *
      * @param key
      */
-    getNavigation(key: string): MovooNavigationItem[]
-    {
+    getNavigation(key: string): MovooNavigationItem[] {
         return this._navigationStore.get(key) ?? [];
     }
 
@@ -78,11 +71,9 @@ export class MovooNavigationService
      *
      * @param key
      */
-    deleteNavigation(key: string): void
-    {
+    deleteNavigation(key: string): void {
         // Check if the navigation exists
-        if ( !this._navigationStore.has(key) )
-        {
+        if (!this._navigationStore.has(key)) {
             console.warn(`Navigation with the key '${key}' does not exist in the store.`);
         }
 
@@ -97,20 +88,15 @@ export class MovooNavigationService
      * @param navigation
      * @param flatNavigation
      */
-    getFlatNavigation(navigation: MovooNavigationItem[], flatNavigation: MovooNavigationItem[] = []): MovooNavigationItem[]
-    {
-        for ( const item of navigation )
-        {
-            if ( item.type === 'basic' )
-            {
+    getFlatNavigation(navigation: MovooNavigationItem[], flatNavigation: MovooNavigationItem[] = []): MovooNavigationItem[] {
+        for (const item of navigation) {
+            if (item.type === 'basic') {
                 flatNavigation.push(item);
                 continue;
             }
 
-            if ( item.type === 'aside' || item.type === 'collapsable' || item.type === 'group' )
-            {
-                if ( item.children )
-                {
+            if (item.type === 'aside' || item.type === 'collapsable' || item.type === 'group') {
+                if (item.children) {
                     this.getFlatNavigation(item.children, flatNavigation);
                 }
             }
@@ -126,21 +112,16 @@ export class MovooNavigationService
      * @param id
      * @param navigation
      */
-    getItem(id: string, navigation: MovooNavigationItem[]): MovooNavigationItem | null
-    {
-        for ( const item of navigation )
-        {
-            if ( item.id === id )
-            {
+    getItem(id: string, navigation: MovooNavigationItem[]): MovooNavigationItem | null {
+        for (const item of navigation) {
+            if (item.id === id) {
                 return item;
             }
 
-            if ( item.children )
-            {
+            if (item.children) {
                 const childItem = this.getItem(id, item.children);
 
-                if ( childItem )
-                {
+                if (childItem) {
                     return childItem;
                 }
             }
@@ -161,21 +142,16 @@ export class MovooNavigationService
         id: string,
         navigation: MovooNavigationItem[],
         parent: MovooNavigationItem[] | MovooNavigationItem
-    ): MovooNavigationItem[] | MovooNavigationItem | null
-    {
-        for ( const item of navigation )
-        {
-            if ( item.id === id )
-            {
+    ): MovooNavigationItem[] | MovooNavigationItem | null {
+        for (const item of navigation) {
+            if (item.id === id) {
                 return parent;
             }
 
-            if ( item.children )
-            {
+            if (item.children) {
                 const childItem = this.getItemParent(id, item.children, item);
 
-                if ( childItem )
-                {
+                if (childItem) {
                     return childItem;
                 }
             }

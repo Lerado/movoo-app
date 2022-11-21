@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 import { HorizontalScrollModule } from 'app/shared/components/horizontal-scroll-container/horizontal-scroll.module';
 import { SharedModule } from 'app/shared/shared.module';
-import { EmbedVideo } from 'ngx-embed-video';
+import { EmbedVideo, EmbedVideoService } from 'ngx-embed-video';
 import { MoviesGridComponent } from '../grid/grid.component';
 import { MovieBannerComponent } from './banner/banner.component';
 import { MovieCardComponent } from './card/card.component';

@@ -1,11 +1,13 @@
+import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { MovooConfigService } from '@movoo/services/config';
-import { MovooMediaWatcherService } from '@movoo/services/media-watcher';
-import { AppConfig } from 'app/core/config/app.config';
 import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
-import { Layout } from './layout.types';
+import { MovooConfigService } from '@movoo/services/config';
+import { MovooPlatformService } from '@movoo/services/platform';
+import { MovooMediaWatcherService } from '@movoo/services/media-watcher';
+import { MOVOO_VERSION } from '@movoo/version';
+import { Layout } from 'app/layout/layout.types';
+import { AppConfig } from 'app/core/config/app.config';
 
 @Component({
     selector: 'layout',
@@ -14,7 +16,6 @@ import { Layout } from './layout.types';
     encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-
     config: AppConfig;
     layout: Layout;
     scheme: 'dark' | 'light';
@@ -27,10 +28,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
     constructor(
         private _activatedRoute: ActivatedRoute,
         @Inject(DOCUMENT) private _document: any,
+        private _renderer2: Renderer2,
         private _router: Router,
         private _movooConfigService: MovooConfigService,
-        private _movooMediaWatcherService: MovooMediaWatcherService
-    ) { }
+        private _movooMediaWatcherService: MovooMediaWatcherService,
+        private _movooPlatformService: MovooPlatformService
+    ) {
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -40,24 +44,20 @@ export class LayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-
-        // Set the thene and scheme based on the configuration
+        // Set the theme and scheme based on the configuration
         combineLatest([
             this._movooConfigService.config$,
             this._movooMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)'])
         ]).pipe(
             takeUntil(this._unsubscribeAll),
-            map(([
-                config,
-                mql
-            ]) => {
+            map(([config, mql]) => {
 
                 const options = {
                     scheme: config.scheme,
                     theme: config.theme
                 };
 
-                // If the scheme is set to 'auto'
+                // If the scheme is set to 'auto'...
                 if (config.scheme === 'auto') {
                     // Decide the scheme using the media query
                     options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
@@ -98,6 +98,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this._updateLayout();
         });
 
+        // Set the app version
+        this._renderer2.setAttribute(this._document.querySelector('[ng-version]'), 'movoo-version', MOVOO_VERSION);
+
+        // Set the OS name
+        this._renderer2.addClass(this._document.body, this._movooPlatformService.osName);
     }
 
     /**
@@ -164,7 +169,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Update the selected theme
+     * Update the selected scheme
      *
      * @private
      */
