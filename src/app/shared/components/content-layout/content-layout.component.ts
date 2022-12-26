@@ -1,9 +1,17 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MovooScrollbarModule } from '@movoo/directives/scrollbar';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @Component({
+    standalone: true,
+    imports: [
+        MovooScrollbarModule,
+        InfiniteScrollModule,
+    ],
     selector: 'content-layout',
-    templateUrl: './content-layout.component.html'
+    templateUrl: './content-layout.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentLayoutComponent implements AfterViewInit {
 

@@ -2,27 +2,27 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ContentLayoutModule } from './components/content-layout/content-layout.module';
+import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { TMDBImageUrlPipe } from './pipes/tmdb-image-url.pipe';
 
 @NgModule({
-    declarations: [
-        TMDBImageUrlPipe
-    ],
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        ContentLayoutModule
+
+        TMDBImageUrlPipe,
+        ContentLayoutComponent
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+
         TMDBImageUrlPipe,
-        ContentLayoutModule
+        ContentLayoutComponent
     ]
 })
 export class SharedModule {}

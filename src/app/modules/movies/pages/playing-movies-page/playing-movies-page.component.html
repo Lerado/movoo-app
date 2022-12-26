@@ -1,0 +1,20 @@
+<content-layout [infiniteSrollOptions]="{ infiniteScrollDistance: 0.5 }" (scrolled)="onContentScrolled()">
+
+    <div class="flex flex-col flex-auto">
+
+        <div class=" h-90 lg:h-100 xl:h-120">
+            <movie-banner [movie]="featuredMovie$ | async"></movie-banner>
+        </div>
+
+        <div class="flex flex-col items-center p-4">
+            <movies-grid (selected)="showDetails($event)" [movies]="(movies$ | async)?.slice(1)">
+                <ng-container *ngIf="isLoadingNext">
+                    <movie-loader *ngFor="let item of repeat(1, 20)"></movie-loader>
+                </ng-container>
+            </movies-grid>
+        </div>
+
+    </div>
+
+
+</content-layout>

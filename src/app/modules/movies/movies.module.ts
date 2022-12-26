@@ -1,19 +1,47 @@
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { ContentLoaderModule } from '@ngneat/content-loader';
+import { HorizontalScrollContainerComponent } from 'app/shared/components/horizontal-scroll-container/horizontal-scroll-container.component';
+import { MovieLoaderComponent } from 'app/shared/components/movie/movie-loader/movie-loader.component';
+import { MoviesGridComponent } from 'app/shared/components/movie/movies-grid/movies-grid.component';
 import { SharedModule } from 'app/shared/shared.module';
-import { MovieComponentsModule } from './components/movie/movie.module';
+import { EmbedVideo } from 'ngx-embed-video';
+import { MovieBannerComponent } from './components/movie-banner/movie-banner.component';
+import { MovieDetailsPageComponent } from './pages/movie-details-page/movie-details-page.component';
 import { moviesRoutes } from './movies.routing';
-import { MoviesNowPlayingComponent } from './now-playing/now.playing.component';
-import { MoviesUpcomingComponent } from './upcoming/upcoming.component';
+import { PlayingMoviesPageComponent } from './pages/playing-movies-page/playing-movies-page.component';
+import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcoming-movies-page.component';
+import { MovieCardComponent } from 'app/shared/components/movie/movie-card/movie-card.component';
 
 @NgModule({
     declarations: [
-        MoviesNowPlayingComponent,
-        MoviesUpcomingComponent
+        PlayingMoviesPageComponent,
+        UpcomingMoviesPageComponent,
+        MovieDetailsPageComponent,
+
+        MovieBannerComponent
     ],
     imports: [
         RouterModule.forChild(moviesRoutes),
-        MovieComponentsModule,
+
+        MatIconModule,
+        MatButtonModule,
+        MatTabsModule,
+        MatTooltipModule,
+
+        EmbedVideo.forRoot(),
+        ContentLoaderModule,
+
+        HorizontalScrollContainerComponent,
+
+        MoviesGridComponent,
+        MovieCardComponent,
+        MovieLoaderComponent,
+
         SharedModule
     ],
 })

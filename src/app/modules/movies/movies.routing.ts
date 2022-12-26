@@ -1,43 +1,25 @@
 import { Route } from '@angular/router';
-import { MovieDetailComponent } from './components/movie/detail/detail.component';
-import { MovieDetailResolver, NowPlayingMoviesResolver, UpcomingMoviesResolver } from './movies.resolvers';
-import { MoviesNowPlayingComponent } from './now-playing/now.playing.component';
-import { MoviesUpcomingComponent } from './upcoming/upcoming.component';
+import { MovieDetailsPageComponent } from './pages/movie-details-page/movie-details-page.component';
+import { PlayingMoviesPageComponent } from './pages/playing-movies-page/playing-movies-page.component';
+import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcoming-movies-page.component';
 
 export const moviesRoutes: Route[] = [
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'now-playing'
-    },
 
     // Now playing
     {
         path: 'now-playing',
-        component: MoviesNowPlayingComponent,
-        resolve: {
-            movies: NowPlayingMoviesResolver
-        }
+        component: PlayingMoviesPageComponent
     },
 
     // Upcoming
     {
         path: 'upcoming',
-        component: MoviesUpcomingComponent,
-        resolve: {
-            movies: UpcomingMoviesResolver
-        }
+        component: UpcomingMoviesPageComponent
     },
 
     // Movie detail
     {
         path: ':id',
-        component: MovieDetailComponent,
-        resolve: {
-            movie: MovieDetailResolver,
-            // credits: MovieCreditsResolver,
-            // images: MovieImagesResolver,
-            // videos: MovieVideosResolver,
-        }
+        component: MovieDetailsPageComponent
     }
 ];
