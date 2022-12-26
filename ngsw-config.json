@@ -35,7 +35,7 @@
           ],
           "version": 3,
           "cacheConfig": {
-              "maxAge": "3d",
+              "maxAge": "1d",
               "maxSize": 100,
               "strategy": "performance"
           }

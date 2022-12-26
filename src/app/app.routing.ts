@@ -6,7 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/tops'
-    { path: '', pathMatch: 'full', redirectTo: 'movies' },
+    { path: '', pathMatch: 'full', redirectTo: '/movies/now-playing' },
 
     // Routes under basic layout
     {

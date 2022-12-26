@@ -32,7 +32,8 @@
                             "crypto-js/hmac-sha256",
                             "crypto-js/enc-base64",
                             "flat",
-                            "quill"
+                            "quill",
+                            "ngx-embed-video"
                         ],
                         "assets": [
                             "src/favicon.ico",

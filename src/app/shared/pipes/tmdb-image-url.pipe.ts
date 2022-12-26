@@ -1,10 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TMDBSystemConfig, TMDBImagesConfig } from 'app/core/config/app.config';
 import { AppConfigService } from 'app/core/config/app.service';
+import { take } from 'rxjs';
 
 type ImageType = 'poster' | 'still' | 'logo' | 'profile';
 
 @Pipe({
+    standalone: true,
     name: 'tmdbImageUrl'
 })
 export class TMDBImageUrlPipe implements PipeTransform {
@@ -16,12 +18,13 @@ export class TMDBImageUrlPipe implements PipeTransform {
      * Constructor
      */
     constructor(
-        private _appConfigService: AppConfigService
+        private readonly _appConfigService: AppConfigService
     ) {
         // Loads the images informations
-        this._appConfigService.config$.subscribe((config: TMDBSystemConfig) => {
-            this.imagesConfig = config.images;
-        });
+        this._appConfigService.config$.pipe(take(1))
+            .subscribe((config: TMDBSystemConfig) => {
+                this.imagesConfig = config.images;
+            });
     }
 
     /**
@@ -35,11 +38,11 @@ export class TMDBImageUrlPipe implements PipeTransform {
         if (!value) { return ''; }
 
         const argType: ImageType = args[1] || 'poster';
-        const sizes = this.imagesConfig[`${ argType }_sizes`] || this.imagesConfig.poster_sizes;
+        const sizes = this.imagesConfig[`${argType}_sizes`] || this.imagesConfig.poster_sizes;
         const defaultSize = sizes[sizes.length - 2];
         const argSize = args[0] || defaultSize;
         const size = sizes.includes(argSize) ? argSize : defaultSize;
 
-        return `${ this.imagesConfig.secure_base_url }${ size }${ value }`;
+        return `${this.imagesConfig.secure_base_url}${size}${value}`;
     }
 }
