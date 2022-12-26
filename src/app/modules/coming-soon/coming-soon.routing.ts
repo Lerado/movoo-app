@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { ComingSoonComponent } from './coming-soon.component';
+import { ComingSoonPageComponent } from './pages/coming-soon-page/coming-soon-page.component';
 
 export const comingSoonRoutes: Route[] = [
     {
         path: '**',
-        component: ComingSoonComponent
+        component: ComingSoonPageComponent
     }
 ];

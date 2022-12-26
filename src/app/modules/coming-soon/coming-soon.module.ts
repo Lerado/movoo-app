@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { ComingSoonComponent } from './coming-soon.component';
+import { ComingSoonPageComponent } from './pages/coming-soon-page/coming-soon-page.component';
 import { comingSoonRoutes } from './coming-soon.routing';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { comingSoonRoutes } from './coming-soon.routing';
         MatButtonModule
     ],
     declarations: [
-        ComingSoonComponent
+        ComingSoonPageComponent
     ]
 })
 export class ComingSoonModule {}

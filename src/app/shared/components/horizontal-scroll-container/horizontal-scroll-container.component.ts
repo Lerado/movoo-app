@@ -1,12 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
+    standalone: true,
     selector: 'horizontal-scroll-container',
     templateUrl: './horizontal-scroll-container.component.html',
     styleUrls: ['./horizontal-scroll-container.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HorizontalScrollContainerComponent implements OnInit, AfterViewInit {
+export class HorizontalScrollContainerComponent implements AfterViewInit {
 
     @Output() containerRef: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
@@ -22,19 +23,9 @@ export class HorizontalScrollContainerComponent implements OnInit, AfterViewInit
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * On init
-     */
-    ngOnInit(): void { }
-
-    /**
      * After view init
      */
     ngAfterViewInit(): void {
         this.containerRef.emit(this.containerEl);
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
 }
