@@ -7,10 +7,10 @@
 
     <!-- Navigation header hook -->
     <ng-container movooVerticalNavigationContentHeader>
-        <div class="flex-row px-[25px] h-[48px] items-center pointer-events-none flex" movooTitleBarHeader>
+        <div class="flex-row px-[25px] h-[48px] items-end pointer-events-none flex" movooTitleBarHeader>
             <!-- Logo -->
-            <div class="w-full h-full">
-                <img class="object-cover ml-[-40px] my-2 w-full h-full" src="assets/images/logo/logo-text-inverted.png"
+            <div class="relative h-7 w-full ml-[-25px]">
+                <img class="object-contain" ngSrc="assets/images/logo/logo-text-inverted.webp" fill priority
                     alt="Movoo logo">
             </div>
             <!-- Name -->
@@ -31,7 +31,9 @@
 <div class="flex flex-col flex-auto w-full min-w-0 pt-[48px]">
 
     <!-- Navigation toggle button -->
-    <button class="absolute left-0 flex items-center justify-center px-1 py-4 shadow-lg animate-bounce hover:transition-colors hover:duration-300 hover:bg-primary md:hidden top-1/2 bg-navbar z-999" (click)="toggleNavigation('mainNavigation')">
+    <button
+        class="absolute left-0 flex items-center justify-center px-1 py-4 shadow-lg animate-bounce hover:transition-colors hover:duration-300 hover:bg-primary md:hidden top-1/2 bg-navbar z-999"
+        (click)="toggleNavigation('mainNavigation')">
         <mat-icon class="text-white" [svgIcon]="'heroicons_outline:chevron-right'"></mat-icon>
     </button>
 

@@ -66,21 +66,20 @@
                                     [svgIcon]="'heroicons_outline:video-camera'"></mat-icon>
                             </button>
                         </div>
-                        <div class="flex mt-10">
-                            <ng-container *ngFor="let company of movie.production_companies">
-                                <img *ngIf="company.logo_path; else noCompanyLogo" [matTooltip]="company.name"
-                                    [matTooltipPosition]="'above'"
-                                    class="inline-block object-contain w-20 h-10 p-1 mr-4 bg-white opacity-50 text-default hover:opacity-100 hover:transition hover:shadow hover:duration-500"
-                                    [src]="company.logo_path | tmdbImageUrl:'w92':'logo'" alt="">
-                                <ng-template #noCompanyLogo>
-                                    <div [matTooltip]="company.name" [matTooltipPosition]="'above'"
-                                        class="flex items-center justify-center w-20 h-10 p-1 mr-4 bg-white opacity-50 text-default hover:opacity-100 hover:transition hover:shadow hover:duration-500">
+                        <ul class="flex gap-4 mt-10">
+                            <li *ngFor="let company of movie.production_companies"
+                                class="w-20 h-10 bg-white opacity-50 text-default hover:opacity-100 hover:transition hover:shadow hover:duration-500">
+                                <div class="relative flex items-center justify-center w-full h-full">
+                                    <img *ngIf="company.logo_path; else noCompanyLogo" [matTooltip]="company.name"
+                                        [matTooltipPosition]="'above'" class="object-contain"
+                                        [ngSrc]="company.logo_path | tmdbImageUrl:'w92':'logo'" fill alt="">
+                                    <ng-template #noCompanyLogo>
                                         <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'" class="">
                                         </mat-icon>
-                                    </div>
-                                </ng-template>
-                            </ng-container>
-                        </div>
+                                    </ng-template>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -169,14 +168,14 @@
                         <ng-container *ngIf="movieCredits$ | async as credits; else actorsLoader">
                             <div *ngFor="let actor of credits.cast; trackBy: trackByFn" @fadeIn
                                 class="flex flex-col min-w-[185px]">
-                                <img *ngIf="actor.profile_path; else noActorProfile" class="w-full h-auto"
-                                    [src]="actor.profile_path | tmdbImageUrl:'w185':'profile'" alt="">
-                                <ng-template #noActorProfile>
-                                    <div class="flex items-center justify-center w-full h-[278px] bg-slate-600">
+                                <div class="relative flex items-center justify-center w-full h-[278px] bg-slate-600">
+                                    <img *ngIf="actor.profile_path; else noActorProfile" class="w-full h-auto"
+                                        [ngSrc]="actor.profile_path | tmdbImageUrl:'w185':'profile'" fill alt="">
+                                    <ng-template #noActorProfile>
                                         <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'" class="">
                                         </mat-icon>
-                                    </div>
-                                </ng-template>
+                                    </ng-template>
+                                </div>
                                 <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-1">{{ actor.name }}</h3>
                                 <p class="mt-1 text-md opacity-60">{{ actor.character }}</p>
                             </div>
