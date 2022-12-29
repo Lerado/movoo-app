@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { TMDBImageUrlPipe } from './pipes/tmdb-image-url.pipe';
         ReactiveFormsModule,
         HttpClientModule,
 
+        NgOptimizedImage,
+
         TMDBImageUrlPipe,
         ContentLayoutComponent
     ],
@@ -20,6 +22,8 @@ import { TMDBImageUrlPipe } from './pipes/tmdb-image-url.pipe';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+
+        NgOptimizedImage,
 
         TMDBImageUrlPipe,
         ContentLayoutComponent
