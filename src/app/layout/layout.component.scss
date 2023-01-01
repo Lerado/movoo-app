@@ -7,7 +7,7 @@ layout {
     min-width: 0;
 
     /* Base styles for individual layouts */
-    > *:not(movoo-title-bar) {
+    > *:not(movoo-title-bar, settings) {
         position: relative;
         display: flex;
         flex: 1 1 auto;

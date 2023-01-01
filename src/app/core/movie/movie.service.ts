@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie, MoviesPagination } from './movie.types';
-import { GetMoviesDto, getMoviesDtoDefault } from './movies.dtos';
+import { GetMovieDto, GetMoviesDto, getMoviesDtoDefault } from './movies.dtos';
 
 @Injectable({
     providedIn: 'root'
@@ -27,8 +27,8 @@ export class MovieService {
      *
      * @param id
      */
-    getById(movieId: number): Observable<Movie> {
-        return this._httpClient.get<Movie>(`@tmdb/movie/${movieId}`);
+    getById(movieId: number, params?: GetMovieDto): Observable<Movie> {
+        return this._httpClient.get<Movie>(`@tmdb/movie/${movieId}`, { params: { ...params } });
     }
 
     /**

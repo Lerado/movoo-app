@@ -8,6 +8,8 @@
 
         <div data-tauri-drag-region class="movoo-title-bar-content">
 
+            <ng-content select="[movooTitleBarContent]"></ng-content>
+
             <!-- Close, reduce and resize window -->
             <div *ngIf="platform !== 'browser'" class="movoo-title-bar-window-buttons">
                 <div (click)="minimizeWindow()" class="movoo-title-bar-window-button button-minimize"></div>

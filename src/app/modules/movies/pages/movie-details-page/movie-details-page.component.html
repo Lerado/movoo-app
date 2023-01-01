@@ -97,7 +97,7 @@
                     <p class="tracking-tight text-default text-opacity-60">{{ movie.overview }}</p>
                 </div>
 
-                <div class="flex flex-col w-full p-6 mt-4 sm:w-6/12 sm:mt-0 bg-navbar">
+                <div class="flex flex-col w-full p-6 mt-4 sm:w-6/12 sm:mt-0 bg-card">
                     <h2 class="text-2xl font-bold text-white">Informations</h2>
 
                     <div *ngIf="movieCredits$ | async; else movieInfosLoader" @fadeIn

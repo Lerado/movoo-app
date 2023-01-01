@@ -1,22 +1,20 @@
 <!-- Title bar -->
 <movoo-title-bar>
-
     <!-- Header -->
     <div class="flex flex-row w-40 h-full pointer-events-none md:hidden" movooTitleBarHeader>
-
         <!-- Logo -->
-        <div class="relative w-full h-7">
+        <div class="relative w-full my-auto h-7">
             <img class="object-contain" ngSrc="assets/images/logo/logo-text-inverted.webp" fill priority
                 alt="Movoo logo">
         </div>
-
-        <!-- Name -->
-        <!-- <div class="flex flex-col justify-center text-[18px] font-semibold tracking-wide">
-            Movoo
-        </div> -->
-
     </div>
-
+    <!-- Toolbar -->
+    <ng-container movooTitleBarContent>
+        <!-- Settings toggle -->
+        <button (click)="settings.toggle()" mat-icon-button>
+            <mat-icon [svgIcon]="'heroicons_solid:cog'" class="icon-size-5 text-default text-opacity-60 animate-spin-slow"></mat-icon>
+        </button>
+    </ng-container>
 </movoo-title-bar>
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
@@ -30,3 +28,8 @@
 
 <!-- Classy -->
 <classy-layout *ngIf="layout === 'classy'"></classy-layout>
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- Settings drawer - Remove this to remove the drawer and its button -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<settings #settings></settings>
