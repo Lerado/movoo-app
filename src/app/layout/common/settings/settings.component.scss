@@ -1,0 +1,20 @@
+settings {
+    position: static;
+    display: block;
+    flex: none;
+    width: auto;
+    .movoo-drawer-content > div {
+        background-color: var(--movoo-bg-nav-bar);
+    }
+
+    mat-progress-spinner svg > circle,
+    mat-spinner svg > circle {
+        @apply stroke-white;
+    }
+}
+
+@media (min-width: 1280px) {
+    empty-layout + settings .settings-cog {
+        right: 0 !important;
+    }
+}

@@ -454,7 +454,7 @@ movoo-vertical-navigation-group-item {
             color: currentColor;
 
             .movoo-vertical-navigation-item-icon {
-                @apply text-current opacity-50;
+                @apply text-secondary;
             }
 
             .movoo-vertical-navigation-item-title-wrapper {
@@ -504,8 +504,8 @@ movoo-vertical-navigation-collapsable-item {
                     // @apply bg-gray-800 bg-opacity-5 dark:bg-white dark:bg-opacity-12;s
 
                     .movoo-vertical-navigation-item-icon {
-                        @apply opacity-100 text-primary;
-                        transition: opacity 0.3s linear;
+                        @apply text-primary;
+                        transition: color 0.3s linear;
                     }
 
                     .movoo-vertical-navigation-item-title,

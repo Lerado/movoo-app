@@ -1,7 +1,12 @@
 <div (click)="onMovieSelected()"
     class="flex flex-col group w-full p-2 overflow-hidden transition-shadow cursor-pointer movie-card-wrapper hover:shadow-2xl min-h-[29rem] h-[29rem]">
     <div class="w-full h-[17rem] relative">
-        <img class="object-contain w-full h-[17rem] relative" [ngSrc]="movie.poster_path | tmdbImageUrl" fill alt="movie poster">
+        <img *ngIf="movie.poster_path, else noPosterImage;" class="object-contain w-full h-[17rem] relative" [ngSrc]="movie.poster_path | tmdbImageUrl" fill alt="movie poster">
+        <ng-template #noPosterImage>
+            <div class="flex items-center justify-center w-full h-[17rem] bg-card">
+                <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'"></mat-icon>
+            </div>
+        </ng-template>
     </div>
     <div class="flex flex-col h-full">
         <h3

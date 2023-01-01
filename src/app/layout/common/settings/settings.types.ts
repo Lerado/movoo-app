@@ -1,0 +1,3 @@
+const SETTINGS_UPDATE_DELAY: number = 3000;
+
+export { SETTINGS_UPDATE_DELAY };

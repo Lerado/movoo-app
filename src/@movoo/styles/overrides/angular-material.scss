@@ -428,7 +428,11 @@
         border-radius: 6px;
         border-width: 1px;
         border-style: solid;
-        @apply shadow-sm bg-white border-gray-300 dark:bg-black dark:bg-opacity-5 dark:border-gray-500 #{'!important'};
+        @apply shadow-sm bg-white border-gray-300 dark:bg-black dark:bg-opacity-12 #{'!important'};
+
+        & {
+            border-color: var(--movoo-border) !important;
+        }
 
         /* Adjust the top spacing and overflow when mat-label present */
         &:not(.mdc-text-field--no-label) {
@@ -960,7 +964,7 @@
                     .mdc-notched-outline__leading,
                     .mdc-notched-outline__notch,
                     .mdc-notched-outline__trailing {
-                        @apply border-slate-300 dark:border-slate-500 #{'!important'};
+                        @apply border-slate-300 dark:border #{'!important'};
                     }
                 }
             }

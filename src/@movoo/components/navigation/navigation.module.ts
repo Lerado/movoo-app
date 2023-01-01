@@ -15,7 +15,7 @@ import { MovooVerticalNavigationGroupItemComponent } from './vertical/components
     declarations: [
         MovooVerticalNavigationBasicItemComponent,
         MovooVerticalNavigationGroupItemComponent,
-        // FuseVerticalNavigationSpacerItemComponent,
+        // MovooVerticalNavigationSpacerItemComponent,
         MovooVerticalNavigationComponent
     ],
     imports     : [

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { MovieService } from 'app/core/movie/movie.service';
 import { Movie, MoviesPagination } from 'app/core/movie/movie.types';
 import { GetMoviesDto } from 'app/core/movie/movies.dtos';
-import { BehaviorSubject, filter, first, map, Observable, scan, shareReplay, switchMap, tap } from 'rxjs';
+import { SettingsService } from 'app/core/settings/settings.service';
+import { BehaviorSubject, combineLatest, filter, first, map, Observable, scan, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs';
 
 @Component({
     selector: 'upcoming-movies-page',
@@ -23,12 +24,16 @@ export class UpcomingMoviesPageComponent {
         shareReplay()
     );
     movies$: Observable<Movie[]> = this.moviesPagination$.pipe(
-        map(moviesPagination => moviesPagination.results),
-        scan((accumulator, currentPageMovies) => [...accumulator, ...currentPageMovies], []),
+        // map(moviesPagination => moviesPagination.results),
+        scan((accumulator, { page, results }) => {
+            if (page === 1) {
+                return results;
+            }
+            return [...accumulator, ...results]
+        }, []),
         shareReplay()
     );
     featuredMovie$: Observable<Movie> = this.movies$.pipe(
-        first(),
         filter(movies => !!movies.length),
         map(movies => movies[0]),
         shareReplay()
@@ -41,6 +46,7 @@ export class UpcomingMoviesPageComponent {
      */
     constructor(
         private readonly _movieService: MovieService,
+        private readonly _settingsService: SettingsService,
         private readonly _router: Router,
     ) { }
 
@@ -49,7 +55,12 @@ export class UpcomingMoviesPageComponent {
     // -----------------------------------------------------------------------------------------------------
 
     get moviesParams$(): Observable<GetMoviesDto> {
-        return this._moviesParams.asObservable();
+        return combineLatest([
+            this._moviesParams.asObservable(),
+            this._settingsService.settings$]
+        ).pipe(
+            map(([params, settings]) => ({ ...params, ...settings }))
+        );
     }
 
     set movieParams(value: GetMoviesDto) {

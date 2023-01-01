@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { MovieService } from 'app/core/movie/movie.service';
 import { Movie, MoviesPagination } from 'app/core/movie/movie.types';
 import { GetMoviesDto } from 'app/core/movie/movies.dtos';
-import { BehaviorSubject, filter, first, map, Observable, scan, shareReplay, switchMap, tap } from 'rxjs';
+import { SettingsService } from 'app/core/settings/settings.service';
+import { BehaviorSubject, filter, first, map, Observable, scan, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs';
 
 @Component({
     selector: 'playing-movies-page',
@@ -41,6 +42,7 @@ export class PlayingMoviesPageComponent {
      */
     constructor(
         private readonly _movieService: MovieService,
+        private readonly _settingsService: SettingsService,
         private readonly _router: Router
     ) { }
 
@@ -49,7 +51,10 @@ export class PlayingMoviesPageComponent {
     // -----------------------------------------------------------------------------------------------------
 
     get moviesParams$(): Observable<GetMoviesDto> {
-        return this._moviesParams.asObservable();
+        return this._moviesParams.asObservable().pipe(
+            withLatestFrom(this._settingsService.settings$),
+            map(([params, settings]) => ({ ...params, ...settings }))
+        );
     }
 
     set movieParams(value: GetMoviesDto) {

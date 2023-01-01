@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { movooAnimations } from '@movoo/animations';
 import { CreditService } from 'app/core/credits/credits.service';
 import { MovieCredit, MovieCredits } from 'app/core/credits/credits.types';
 import { GenreService } from 'app/core/genre/genre.service';
 import { MovieGenre } from 'app/core/genre/genre.types';
-import { MovieImages } from 'app/core/image/image.types';
 import { MovieService } from 'app/core/movie/movie.service';
 import { Movie } from 'app/core/movie/movie.types';
+import { SettingsService } from 'app/core/settings/settings.service';
 import { VideoService } from 'app/core/video/video.service';
 import { MovieVideo, MovieVideos } from 'app/core/video/video.types';
 import { EmbedVideoService } from 'ngx-embed-video';
-import { combineLatest, combineLatestWith, forkJoin, map, Observable, shareReplay, Subject, switchMap, take, tap } from 'rxjs';
+import { combineLatestWith, map, Observable, shareReplay, switchMap, take } from 'rxjs';
 
 @Component({
     selector: 'movie-details-page',
@@ -20,7 +20,10 @@ import { combineLatest, combineLatestWith, forkJoin, map, Observable, shareRepla
 })
 export class MovieDetailsPageComponent {
 
-    movie$: Observable<Movie> = this._movieService.getById(+this._route.snapshot.paramMap.get('id')).pipe(shareReplay());
+    movie$: Observable<Movie> = this._settingsService.settings$.pipe(
+        switchMap(({ language }) => this._movieService.getById(+this._route.snapshot.paramMap.get('id'), { language })),
+        shareReplay()
+    ) ;
     movieProductionCountries$: Observable<string> = this.movie$.pipe(
         map(movie => this._getMovieProductionCountries(movie)),
         shareReplay()
@@ -80,6 +83,7 @@ export class MovieDetailsPageComponent {
         private readonly _creditService: CreditService,
         private readonly _videoService: VideoService,
         private readonly _embedService: EmbedVideoService,
+        private readonly _settingsService: SettingsService,
         private readonly _router: Router,
         private readonly _route: ActivatedRoute,
     ) { }
