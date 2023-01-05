@@ -70,8 +70,7 @@ export const navigation: Navigation = {
                     title: 'Popular',
                     type: 'basic',
                     icon: 'heroicons_solid:trending-up',
-                    link: 'coming-soon/movies/popular'
-                    // link: '/movies/popular'
+                    link: '/movies/popular'
                 },
                 {
                     id: 'movies-top-rated',

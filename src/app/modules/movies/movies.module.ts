@@ -16,14 +16,18 @@ import { moviesRoutes } from './movies.routing';
 import { PlayingMoviesPageComponent } from './pages/playing-movies-page/playing-movies-page.component';
 import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcoming-movies-page.component';
 import { MovieCardComponent } from 'app/shared/components/movie/movie-card/movie-card.component';
+import { PopularMoviesPageComponent } from './pages/popular-movies-page/popular-movies-page.component';
+import { BaseMoviesPageComponent } from './components/base-movies-page/base-movies-page.component';
 
 @NgModule({
     declarations: [
+        BaseMoviesPageComponent,
         PlayingMoviesPageComponent,
         UpcomingMoviesPageComponent,
+        PopularMoviesPageComponent,
         MovieDetailsPageComponent,
 
-        MovieBannerComponent
+        MovieBannerComponent,
     ],
     imports: [
         RouterModule.forChild(moviesRoutes),

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MovieService } from 'app/core/movie/movie.service';
@@ -9,10 +8,10 @@ import { Observable } from 'rxjs';
 import { BaseMoviesPageComponent } from '../../components/base-movies-page/base-movies-page.component';
 
 @Component({
-    selector: 'upcoming-movies-page',
-    templateUrl: '../../components/base-movies-page/base-movies-page.component.html'
+    selector: 'popular-movies-page',
+    templateUrl: './popular-movies-page.component.html'
 })
-export class UpcomingMoviesPageComponent extends BaseMoviesPageComponent {
+export class PopularMoviesPageComponent extends BaseMoviesPageComponent {
 
     /**
      * Constructor
@@ -39,7 +38,6 @@ export class UpcomingMoviesPageComponent extends BaseMoviesPageComponent {
      * @param movieParams
      */
     loadMovies(movieParams: GetMoviesDto): Observable<MoviesPagination> {
-        return this._movieService.getUpcoming(movieParams);
+        return this._movieService.getPopular(movieParams);
     }
 }
-
