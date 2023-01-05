@@ -41,12 +41,21 @@ export class MovieService {
     }
 
     /**
-     * Get now played movies
+     * Get upcoming movies
      *
      * @param params
      */
     getUpcoming(params?: GetMoviesDto): Observable<MoviesPagination> {
         return this._httpClient.get<MoviesPagination>('@tmdb/movie/upcoming', { params: { ...getMoviesDtoDefault, ...params } });
+    }
+
+    /**
+     * Get popular movies
+     *
+     * @param params
+     */
+    getPopular(params?: GetMoviesDto): Observable<MoviesPagination> {
+        return this._httpClient.get<MoviesPagination>('@tmdb/movie/popular', { params: { ...getMoviesDtoDefault, ...params } });
     }
 
     /**
