@@ -23,6 +23,7 @@ export const appRoutes: Route[] = [
             // Movies
             {
                 path: 'movies',
+                data: { breadcrumb: 'Movies' },
                 loadChildren: () => import('app/modules/movies/movies.module').then(m => m.MoviesModule)
             },
 

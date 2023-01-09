@@ -6,27 +6,87 @@ import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcomi
 
 export const moviesRoutes: Route[] = [
 
+    // Default
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'now-playing'
+    },
+
     // Now playing
     {
         path: 'now-playing',
-        component: PlayingMoviesPageComponent
+        title: 'Playing now',
+        data: {
+            breadcrumb: 'Playing now'
+        },
+        children: [
+            {
+                path: '',
+                component: PlayingMoviesPageComponent
+            },
+            // Movie detail
+            {
+                path: ':id',
+                data: {
+                    breadcrumb: '[movie_title]'
+                },
+                component: MovieDetailsPageComponent
+            }
+        ]
     },
 
     // Upcoming
     {
         path: 'upcoming',
-        component: UpcomingMoviesPageComponent
+        title: 'Upcoming',
+        data: {
+            breadcrumb: 'Upcoming'
+        },
+        children: [
+            {
+                path: '',
+                component: UpcomingMoviesPageComponent
+            },
+            // Movie detail
+            {
+                path: ':id',
+                data: {
+                    breadcrumb: '[movie_title]'
+                },
+                component: MovieDetailsPageComponent
+            }
+        ]
     },
 
-     // Popular
-     {
+    // Popular
+    {
         path: 'popular',
-        component: PopularMoviesPageComponent
+        data: {
+            breadcrumb: 'Popular'
+        },
+        children: [
+            {
+                path: '',
+                component: PopularMoviesPageComponent
+            },
+            // Movie detail
+            {
+                path: ':id',
+                data: {
+                    breadcrumb: '[movie_title]'
+                },
+                component: MovieDetailsPageComponent
+            }
+        ]
     },
 
     // Movie detail
     {
         path: ':id',
+        data: {
+            breadcrumb: '[movie_title]'
+        },
         component: MovieDetailsPageComponent
     }
 ];

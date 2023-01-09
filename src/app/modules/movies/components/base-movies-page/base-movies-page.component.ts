@@ -64,6 +64,10 @@ export class BaseMoviesPageComponent {
         this._moviesParams.next({ ...currentValue, ...value });
     }
 
+    get currentUrl(): string {
+        return this._router.url;
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -76,13 +80,14 @@ export class BaseMoviesPageComponent {
     loadMovies(movieParams: GetMoviesDto): Observable<MoviesPagination> {
         return of();
     }
+
     /**
      * Show movie details
      *
      * @param movie
      */
     showDetails(movie: Movie): void {
-        this._router.navigate(['/movies', movie.id]);
+        this._router.navigate([this.currentUrl, movie.id]);
     }
 
     /**

@@ -9,7 +9,7 @@ import { BaseMoviesPageComponent } from '../../components/base-movies-page/base-
 
 @Component({
     selector: 'popular-movies-page',
-    templateUrl: './popular-movies-page.component.html'
+    templateUrl: '../../components/base-movies-page/base-movies-page.component.html'
 })
 export class PopularMoviesPageComponent extends BaseMoviesPageComponent {
 

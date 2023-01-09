@@ -2,5 +2,12 @@
     [immediateCheck]="true" [alwaysCallback]="true" (scrolled)="onScrolled($event)" #scrollElement
     class="absolute inset-0 flex flex-col w-full min-w-0" movooScrollbar
     [movooScrollbarOptions]="{wheelPropagation: false, suppressScrollX: true}">
+
+    <!-- Breadcrumbs -->
+    <section class="absolute w-full top-10 z-999" id="breadcrumbs">
+        <breadcrumbs class="block w-11/12 mx-auto"></breadcrumbs>
+    </section>
+
     <ng-content></ng-content>
+
 </div>

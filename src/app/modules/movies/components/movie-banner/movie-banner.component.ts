@@ -14,6 +14,8 @@ export class MovieBannerComponent {
     @OnChange('_getMovieGenresLabels')
     @Input() movie: Movie;
 
+    @Input() baseUrl: string = '/movies';
+
     movieGenresLabels$: Observable<string>;
 
     /**
