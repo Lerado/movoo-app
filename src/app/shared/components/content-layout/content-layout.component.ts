@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MovooScrollbarModule } from '@movoo/directives/scrollbar';
+import { MovooBreadcrumbsModule } from 'app/layout/common/breadcrumbs/breadcrumbs.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
@@ -7,7 +8,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     standalone: true,
     imports: [
         MovooScrollbarModule,
-        InfiniteScrollModule,
+        MovooBreadcrumbsModule,
+        InfiniteScrollModule
     ],
     selector: 'content-layout',
     templateUrl: './content-layout.component.html',

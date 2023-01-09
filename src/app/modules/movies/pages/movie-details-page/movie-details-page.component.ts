@@ -10,8 +10,9 @@ import { Movie } from 'app/core/movie/movie.types';
 import { SettingsService } from 'app/core/settings/settings.service';
 import { VideoService } from 'app/core/video/video.service';
 import { MovieVideo, MovieVideos } from 'app/core/video/video.types';
+import { BreadcrumbsService } from 'app/layout/common/breadcrumbs/breadcrumbs.service';
 import { EmbedVideoService } from 'ngx-embed-video';
-import { combineLatestWith, map, Observable, shareReplay, switchMap, take } from 'rxjs';
+import { combineLatestWith, map, Observable, shareReplay, switchMap, take, tap } from 'rxjs';
 
 @Component({
     selector: 'movie-details-page',
@@ -22,6 +23,7 @@ export class MovieDetailsPageComponent {
 
     movie$: Observable<Movie> = this._settingsService.settings$.pipe(
         switchMap(({ language }) => this._movieService.getById(+this._route.snapshot.paramMap.get('id'), { language })),
+        tap(movie => this._breadcrumbsService.setMarkers({ movie_title: movie.title })),
         shareReplay()
     ) ;
     movieProductionCountries$: Observable<string> = this.movie$.pipe(
@@ -84,6 +86,7 @@ export class MovieDetailsPageComponent {
         private readonly _videoService: VideoService,
         private readonly _embedService: EmbedVideoService,
         private readonly _settingsService: SettingsService,
+        private readonly _breadcrumbsService: BreadcrumbsService,
         private readonly _router: Router,
         private readonly _route: ActivatedRoute,
     ) { }

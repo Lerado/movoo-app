@@ -26,7 +26,7 @@
                 {{
                 movie.overview }}</p>
             <div class="flex flex-row">
-                <button [routerLink]="['/movies', movie.id]" mat-stroked-button
+                <button [routerLink]="[baseUrl, movie.id]" mat-stroked-button
                     class="border text-primary border-primary">View more</button>
             </div>
         </div>
