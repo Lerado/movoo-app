@@ -18,6 +18,7 @@ import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcomi
 import { MovieCardComponent } from 'app/shared/components/movie/movie-card/movie-card.component';
 import { PopularMoviesPageComponent } from './pages/popular-movies-page/popular-movies-page.component';
 import { BaseMoviesPageComponent } from './components/base-movies-page/base-movies-page.component';
+import { TopRatedMoviesPageComponent } from './pages/top-rated-movies-page/top-rated-movies-page.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,8 @@ import { BaseMoviesPageComponent } from './components/base-movies-page/base-movi
         PlayingMoviesPageComponent,
         UpcomingMoviesPageComponent,
         PopularMoviesPageComponent,
+        TopRatedMoviesPageComponent,
+
         MovieDetailsPageComponent,
 
         MovieBannerComponent,

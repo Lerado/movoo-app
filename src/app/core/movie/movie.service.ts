@@ -59,6 +59,15 @@ export class MovieService {
     }
 
     /**
+     * Get top rated movies
+     *
+     * @param params
+     */
+    getTopRated(params?: GetMovieDto): Observable<MoviesPagination> {
+        return this._httpClient.get<MoviesPagination>('@tmdb/movie/top_rated', { params: { ...getMoviesDtoDefault, ...params } });
+    }
+
+    /**
      * Get movies recommended for a movie
      *
      * @param movieId

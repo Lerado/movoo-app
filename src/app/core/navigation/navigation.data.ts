@@ -77,8 +77,7 @@ export const navigation: Navigation = {
                     title: 'Top rated',
                     type: 'basic',
                     icon: 'heroicons_solid:star',
-                    link: 'coming-soon/movies/top-rated'
-                    // link: '/movies/top-rated'
+                    link: '/movies/top-rated'
                 },
                 {
                     id: 'movies-genres',

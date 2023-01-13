@@ -6,6 +6,7 @@ export interface GetMoviesDto {
 
 export interface GetMovieDto {
     language?: string;
+    region?: string;
     append_to_response?: string;
 }
 

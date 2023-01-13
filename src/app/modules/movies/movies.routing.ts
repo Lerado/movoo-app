@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { MovieDetailsPageComponent } from './pages/movie-details-page/movie-details-page.component';
 import { PlayingMoviesPageComponent } from './pages/playing-movies-page/playing-movies-page.component';
 import { PopularMoviesPageComponent } from './pages/popular-movies-page/popular-movies-page.component';
+import { TopRatedMoviesPageComponent } from './pages/top-rated-movies-page/top-rated-movies-page.component';
 import { UpcomingMoviesPageComponent } from './pages/upcoming-movies-page/upcoming-movies-page.component';
 
 export const moviesRoutes: Route[] = [
@@ -69,6 +70,28 @@ export const moviesRoutes: Route[] = [
             {
                 path: '',
                 component: PopularMoviesPageComponent
+            },
+            // Movie detail
+            {
+                path: ':id',
+                data: {
+                    breadcrumb: '[movie_title]'
+                },
+                component: MovieDetailsPageComponent
+            }
+        ]
+    },
+
+    // Popular
+    {
+        path: 'top-rated',
+        data: {
+            breadcrumb: 'Top rated'
+        },
+        children: [
+            {
+                path: '',
+                component: TopRatedMoviesPageComponent
             },
             // Movie detail
             {
