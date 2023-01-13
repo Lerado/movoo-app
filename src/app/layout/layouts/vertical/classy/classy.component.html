@@ -2,11 +2,12 @@
 <movoo-loading-bar></movoo-loading-bar>
 
 <!-- Navigation -->
-<movoo-vertical-navigation class="movoo-vertical-navigation dark print:hidden z-9999 md:z-999" [mode]="isScreenSmall ? 'over' : 'side'"
-    [name]="'mainNavigation'" [navigation]="navigation.default" [opened]="!isScreenSmall">
+<movoo-vertical-navigation class="movoo-vertical-navigation dark print:hidden z-9999 md:z-999"
+    [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation.default"
+    [opened]="!isScreenSmall">
 
     <!-- Navigation header hook -->
-    <ng-container movooVerticalNavigationContentHeader>
+    <ng-container movooVerticalNavigationHeader>
         <div class="flex-row px-[25px] h-[48px] items-end pointer-events-none flex" movooTitleBarHeader>
             <!-- Logo -->
             <div class="relative h-7 my-auto w-full ml-[-25px]">
@@ -17,8 +18,29 @@
     </ng-container>
 
     <!-- Navigation footer hook -->
-    <ng-container movooVerticalNavigationContentFooter>
-
+    <ng-container movooVerticalNavigationFooter>
+        <footer class="flex items-center px-8 py-2 text-sm text-opacity-50 text-default">
+            <a target="_blank" href="https://github.com/Lerado/movoo-app" class="group">
+                <mat-icon
+                    class="text-opacity-50 flex items-center icon-size-3.5 text-default group-hover:text-primary group-hover:text-opacity-100 transition-colors"
+                    [svgIcon]="'feather:github'"></mat-icon>
+            </a>
+            <a target="_blank" href="https://www.linkedin.com/in/darel-ngogang-00b8a6223/" class="group">
+                <mat-icon
+                    class="text-opacity-50 ml-3 flex items-center icon-size-3.5 text-default group-hover:text-primary group-hover:text-opacity-100 transition-colors"
+                    [svgIcon]="'feather:linkedin'"></mat-icon>
+            </a>
+            <a target="_blank" href="https://www.buymeacoffee.com/darelngogang" class="group">
+                <mat-icon
+                    class="text-opacity-50 ml-3 flex items-center icon-size-3.5 text-default group-hover:text-primary group-hover:text-opacity-100 transition-colors"
+                    [svgIcon]="'feather:coffee'"></mat-icon>
+            </a>
+            <a target="_blank" href="https://github.com/Lerado"
+                class="ml-auto text-center transition-colors hover:text-opacity-100">
+                &copy; {{ currentYear }}
+                <!-- made with <span class="text-red-500">&hearts;</span> by Lerado -->
+            </a>
+        </footer>
     </ng-container>
 
 </movoo-vertical-navigation>
