@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="media.media_type">
+    <multi-search-bar-result-movie *ngSwitchCase="'movie'" [movie]="media"></multi-search-bar-result-movie>
+    <multi-search-bar-result-person *ngSwitchCase="'person'" [person]="media"></multi-search-bar-result-person>
+    <ng-template *ngSwitchCase="'tv'" [ngTemplateOutlet]="tv"></ng-template>
+</ng-container>
+
+<ng-template #tv>
+    {{ media.media_type }}
+</ng-template>

@@ -18,6 +18,7 @@ interface Settings {
     region?: string,
     language?: string,
     timezone?: string
+    include_adult?: boolean;
 }
 
 const defaultSettings: Settings = {

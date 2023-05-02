@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MovooTitleBarModule } from '@movoo/components/title-bar';
+import { MultiSearchBarComponent } from 'app/shared/components/search/multi-search-bar/multi-search-bar.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { MovooSettingsModule } from './common/settings/settings.module';
 import { LayoutComponent } from './layout.component';
@@ -29,6 +30,8 @@ const layoutModules = [
 
         MovooTitleBarModule,
         MovooSettingsModule,
+
+        MultiSearchBarComponent,
 
         SharedModule
     ],

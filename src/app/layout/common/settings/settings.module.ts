@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MovooConfirmationModule } from '@movoo/services/confirmation';
 
 @NgModule({
     declarations: [
@@ -20,9 +22,11 @@ import { SharedModule } from 'app/shared/shared.module';
         MatTooltipModule,
         MatFormFieldModule,
         MatSelectModule,
+        MatSlideToggleModule,
         MatButtonModule,
         MatProgressSpinnerModule,
 
+        MovooConfirmationModule,
         MovooDrawerModule,
 
         SharedModule

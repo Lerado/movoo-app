@@ -1,0 +1,59 @@
+<article class="flex w-full h-full">
+    <div class="relative w-16 h-16">
+        <img *ngIf="movie.poster_path, else noPosterImage;" class="object-contain rounded"
+            [ngSrc]="movie.poster_path | tmdbImageUrl:'w92'" fill alt="movie poster">
+        <ng-template #noPosterImage>
+            <div class="flex items-center justify-center w-full h-full bg-card">
+                <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'"></mat-icon>
+            </div>
+        </ng-template>
+    </div>
+    <div class="flex flex-col ml-2 leading-3 group-hover:transition-colors">
+        <h1 class="line-clamp-2 text-start text-ellipsis group-hover:text-primary group-hover:duration-300">
+            {{ movie.title }}
+        </h1>
+        <span *ngIf="movieGenresLabels$ | async as movieGenresLabels"
+            class="mt-1 text-sm truncate text-default group-hover:text-opacity-50 text-opacity-30">
+            {{ movieGenresLabels }}
+        </span>
+        <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
+            <div *ngIf="movieOriginalLanguage$ | async as originalLanguage" class="flex flex-row items-center gap-1">
+                <mat-icon [svgIcon]="'heroicons_solid:flag'"
+                    class="text-opacity-50 group-hover:text-opacity-100 icon-size-3 text-default"></mat-icon>
+                {{ originalLanguage }}
+            </div>
+            <div *ngIf="movie.adult" class="flex flex-row items-center gap-1">
+                <mat-icon [svgIcon]="'heroicons_solid:exclamation'"
+                    class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon>
+                Adult content
+            </div>
+        </div>
+        <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
+            <div class="flex flex-row items-center gap-1">
+                <mat-icon [svgIcon]="'heroicons_solid:heart'"
+                    class="text-opacity-50 group-hover:text-red-500 group-hover:text-opacity-100 icon-size-3 text-default"></mat-icon>
+                {{
+                movie.popularity | number:'1.0-0' }}
+            </div>
+            <div class="flex flex-row items-center gap-1">
+                <mat-icon [svgIcon]="'heroicons_solid:star'"
+                    class="text-opacity-50 group-hover:text-opacity-100 group-hover:text-yellow-500 icon-size-3 text-default"></mat-icon>
+                {{
+                movie.vote_average }}
+            </div>
+            <div class="flex flex-row items-center gap-1">
+                <mat-icon [svgIcon]="'heroicons_solid:clock'"
+                    class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon> {{
+                movie.release_date | date:'mediumDate' }}
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row items-center gap-2 pl-8 ml-auto">
+        <mat-icon *ngIf="movie.overview" [matTooltip]="movie.overview" [matTooltipClass]="'bg-card text-default'"
+            [svgIcon]="'heroicons_solid:information-circle'"
+            class="icon-size-5 hover:cursor-pointer text-secondary hover:text-default hover:transition-colors"></mat-icon>
+        <mat-icon [matTooltip]="'This item is a movie'" [matTooltipClass]="'bg-card text-default'"
+            svgIcon="heroicons_solid:video-camera"
+            class="icon-size-5 hover:cursor-pointer text-secondary hover:text-default hover:transition-colors"></mat-icon>
+    </div>
+</article>
