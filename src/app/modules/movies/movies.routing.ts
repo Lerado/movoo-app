@@ -18,13 +18,13 @@ export const moviesRoutes: Route[] = [
     {
         path: 'now-playing',
         title: 'Playing now',
-        data: {
-            breadcrumb: 'Playing now'
-        },
         children: [
             {
                 path: '',
-                component: PlayingMoviesPageComponent
+                component: PlayingMoviesPageComponent,
+                data: {
+                    breadcrumb: 'Playing now'
+                }
             },
             // Movie detail
             {
@@ -41,13 +41,13 @@ export const moviesRoutes: Route[] = [
     {
         path: 'upcoming',
         title: 'Upcoming',
-        data: {
-            breadcrumb: 'Upcoming'
-        },
         children: [
             {
                 path: '',
-                component: UpcomingMoviesPageComponent
+                component: UpcomingMoviesPageComponent,
+                data: {
+                    breadcrumb: 'Upcoming'
+                },
             },
             // Movie detail
             {
@@ -63,13 +63,13 @@ export const moviesRoutes: Route[] = [
     // Popular
     {
         path: 'popular',
-        data: {
-            breadcrumb: 'Popular'
-        },
         children: [
             {
                 path: '',
-                component: PopularMoviesPageComponent
+                component: PopularMoviesPageComponent,
+                data: {
+                    breadcrumb: 'Popular'
+                },
             },
             // Movie detail
             {
@@ -85,13 +85,13 @@ export const moviesRoutes: Route[] = [
     // Popular
     {
         path: 'top-rated',
-        data: {
-            breadcrumb: 'Top rated'
-        },
         children: [
             {
                 path: '',
-                component: TopRatedMoviesPageComponent
+                component: TopRatedMoviesPageComponent,
+                data: {
+                    breadcrumb: 'Top rated'
+                },
             },
             // Movie detail
             {
@@ -107,6 +107,7 @@ export const moviesRoutes: Route[] = [
     // Movie detail
     {
         path: ':id',
+        pathMatch: 'full',
         data: {
             breadcrumb: '[movie_title]'
         },

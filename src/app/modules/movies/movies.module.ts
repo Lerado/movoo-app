@@ -50,6 +50,6 @@ import { TopRatedMoviesPageComponent } from './pages/top-rated-movies-page/top-r
         MovieLoaderComponent,
 
         SharedModule
-    ],
+    ]
 })
 export class MoviesModule {}

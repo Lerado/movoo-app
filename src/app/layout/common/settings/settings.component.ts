@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, first, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { debounceTime, first, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { MovooConfigService } from '@movoo/services/config';
 import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
 import { Layout } from 'app/layout/layout.types';
@@ -9,6 +9,8 @@ import { SettingsService } from 'app/core/settings/settings.service';
 import { Language, Region, Settings, Timezone } from 'app/core/settings/settings.types';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { SETTINGS_UPDATE_DELAY } from './settings.types';
+import { MovooConfirmationService } from '@movoo/services/confirmation';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'settings',
@@ -39,7 +41,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     settingsControls = this._formBuilder.group({
         region: '',
         language: '',
-        timezone: ''
+        timezone: '',
+        include_adult: false
     });
     settingsUpdating: boolean = false;
 
@@ -52,6 +55,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         private readonly _settingsService: SettingsService,
         private readonly _router: Router,
         private readonly _formBuilder: NonNullableFormBuilder,
+        private readonly _movooConfirmationService: MovooConfirmationService,
         private readonly _movooConfigService: MovooConfigService
     ) { }
 
@@ -146,5 +150,44 @@ export class SettingsComponent implements OnInit, OnDestroy {
      */
     toggle(): void {
         this.drawer.toggle();
+    }
+
+    /**
+     * Get user consent for adult consent
+     *
+     * @param $event
+     */
+    getUserConsent({ checked: include_adult, source }: MatSlideToggleChange): void {
+
+        if (include_adult) {
+            // Confirmation dialog
+            const confirmationDialog = this._movooConfirmationService.open({
+                title: 'Confirmation',
+                message: 'If you are under the age of 18 years, or under the age of majority in the location from where you are accessing this website you do not have authorization or permission to perform this action or access any adult material from this website.\n If you are over the age of 18 years or over the age of majority in the location from where you are accessing this website, by validating this popup you hereby agree to comply with all the TERMS AND CONDITIONS. You also acknowledge and agree that you are not offended by nudity and explicit depictions of sexual activity.\n\n By clicking on the \"I agree\" button, you agree with all the above and certify under penalty of perjury that you are an adult.',
+                actions: {
+                    cancel: {
+                        label: 'No, I\'m okay'
+                    },
+                    confirm: {
+                        label: 'I agree'
+                    }
+                },
+                dismissible: false
+            });
+
+            confirmationDialog.afterClosed().subscribe((result) => {
+
+                if (result !== 'confirmed') {
+                    // Reset to false again
+                    source.toggle();
+                }
+                else {
+                    this.settingsControls.patchValue({ include_adult });
+                }
+            })
+        }
+        else {
+            this.settingsControls.patchValue({ include_adult });
+        }
     }
 }

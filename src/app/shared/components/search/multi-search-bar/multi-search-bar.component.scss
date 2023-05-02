@@ -1,0 +1,11 @@
+:host {
+    display: block;
+    width: 100%;
+}
+.multi-search-bar-results-container {
+    mat-option.mat-mdc-option {
+        span:has(> multi-search-bar-result) {
+            width: 100%;
+        }
+    }
+}

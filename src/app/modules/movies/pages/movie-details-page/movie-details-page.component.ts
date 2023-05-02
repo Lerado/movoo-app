@@ -21,11 +21,12 @@ import { combineLatestWith, map, Observable, shareReplay, switchMap, take, tap }
 })
 export class MovieDetailsPageComponent {
 
-    movie$: Observable<Movie> = this._settingsService.settings$.pipe(
-        switchMap(({ language }) => this._movieService.getById(+this._route.snapshot.paramMap.get('id'), { language })),
+    movie$: Observable<Movie> = this._route.paramMap.pipe(
+        combineLatestWith(this._settingsService.settings$),
+        switchMap(([routeParams, { language }]) => this._movieService.getById(+routeParams.get('id'), { language })),
         tap(movie => this._breadcrumbsService.setMarkers({ movie_title: movie.title })),
         shareReplay()
-    ) ;
+    );
     movieProductionCountries$: Observable<string> = this.movie$.pipe(
         map(movie => this._getMovieProductionCountries(movie)),
         shareReplay()
@@ -130,7 +131,7 @@ export class MovieDetailsPageComponent {
     onMovieSelected(movie: Movie): void {
         this._router.navigate(['/movies', movie.id])
             .then(() => {
-                this.mainContainer.nativeElement?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                this.mainContainer.nativeElement?.scrollTo({ top: 0, left: 0 });
             });
     }
 

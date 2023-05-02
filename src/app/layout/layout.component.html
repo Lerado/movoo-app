@@ -1,20 +1,28 @@
 <!-- Title bar -->
 <movoo-title-bar>
+
     <!-- Header -->
     <div class="flex flex-row w-40 h-full pointer-events-none md:hidden" movooTitleBarHeader>
         <!-- Logo -->
         <div class="relative w-full my-auto h-7">
-            <img class="object-contain" ngSrc="assets/images/logo/logo-text-inverted.webp" fill priority
-                alt="Movoo logo">
+            <img class="object-contain" ngSrc="assets/images/logo/logo-text-inverted.webp" fill alt="Movoo logo">
         </div>
     </div>
+
     <!-- Toolbar -->
     <ng-container movooTitleBarContent>
+
+        <!-- Multi search bar -->
+        <multi-search-bar class="w-full mr-8"></multi-search-bar>
+
         <!-- Settings toggle -->
         <button (click)="settings.toggle()" mat-icon-button>
-            <mat-icon [svgIcon]="'heroicons_solid:cog'" class="icon-size-5 text-default text-opacity-60 animate-spin-slow"></mat-icon>
+            <mat-icon [svgIcon]="'heroicons_solid:cog'"
+                class="icon-size-5 text-default text-opacity-60 animate-spin-slow"></mat-icon>
         </button>
+
     </ng-container>
+
 </movoo-title-bar>
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
