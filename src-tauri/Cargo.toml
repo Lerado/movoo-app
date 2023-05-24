@@ -1,11 +1,11 @@
 [package]
-name = "app"
-version = "1.5.0"
-description = "A Tauri App"
+name = "movoo-app"
+version = "1.5.1"
+description = "Which film will you watch next?"
 authors = ["you"]
-license = ""
-repository = ""
-default-run = "app"
+license = "Apache 2.0"
+repository = "https://github.com/Lerado/movoo-app.git"
+default-run = "movoo-app"
 edition = "2021"
 rust-version = "1.59"
 
