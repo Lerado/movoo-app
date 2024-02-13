@@ -1,17 +1,21 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
-import { Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { BreadcrumbsService } from './breadcrumbs.service';
-import { Breadcrumbs } from './breadcrumbs.types';
+import { NgTemplateOutlet } from '@angular/common';
+import { movooAnimations } from '@movoo/animations';
 
 @Component({
     selector: 'breadcrumbs',
     templateUrl: './breadcrumbs.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    animations: movooAnimations,
+    imports: [NgTemplateOutlet, RouterLink]
 })
 export class BreadcrumbsComponent {
 
-    breadcrumbs$: Observable<Breadcrumbs> = this._breadcrumbsService.breadcrumbs$;
+    breadcrumbs = toSignal(this._breadcrumbsService.breadcrumbs$, { requireSync: true });
 
     /**
      * Constructor

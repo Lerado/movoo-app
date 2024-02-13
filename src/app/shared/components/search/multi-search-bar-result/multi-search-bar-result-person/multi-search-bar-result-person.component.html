@@ -1,55 +1,62 @@
 <article class="flex w-full h-full">
-    <div class="relative w-16 h-16 rounded-full">
-        <img *ngIf="person.profile_path, else noPosterImage;" class="object-cover rounded-full"
-            [ngSrc]="person.profile_path | tmdbImageUrl:'w185':'profile'" fill alt="person profile">
-        <ng-template #noPosterImage>
-            <div class="flex items-center justify-center w-full h-full rounded-full bg-card">
-                <mat-icon [svgIcon]="'heroicons_outline:user-circle'" class="icon-size-16"></mat-icon>
-            </div>
-        </ng-template>
-    </div>
-    <div class="flex flex-col ml-2 leading-3 group-hover:transition-colors">
-        <h1 class="line-clamp-2 text-start text-ellipsis group-hover:text-primary group-hover:duration-300">
-            {{ person.name }}
-        </h1>
-        <span class="mt-1 text-sm truncate text-default group-hover:text-opacity-50 text-opacity-30">
-            {{ person.known_for_department }}
-        </span>
-        <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
-            <div class="flex flex-row items-center gap-1">
-                <mat-icon [svgIcon]="'heroicons_solid:heart'"
-                    class="text-opacity-50 group-hover:text-red-500 group-hover:text-opacity-100 icon-size-3 text-default"></mat-icon>
-                {{
-                person.popularity | number:'1.0-0' }}
-            </div>
-            <div class="flex flex-row items-center gap-1">
-                <mat-icon [svgIcon]="genderIcons[person.gender]"
-                    class="-ml-1 text-opacity-50 group-hover:text-opacity-100 icon-size-4 text-default"></mat-icon>
-                {{ genderLabels[person.gender] }}
-            </div>
-            <div *ngIf="person.adult" class="flex flex-row items-center gap-1">
-                <mat-icon [svgIcon]="'heroicons_solid:exclamation'"
-                    class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon>
-                Adult content
-            </div>
+  <div class="relative w-16 h-16 rounded-full">
+    @if (person().profile_path) {
+      <img class="object-cover rounded-full"
+        [ngSrc]="person().profile_path | tmdbImageUrl:'w185':'profile'" fill alt="person profile">
+    } @else {
+      <div class="flex items-center justify-center w-full h-full rounded-full bg-card">
+        <mat-icon [svgIcon]="'heroicons_outline:user-circle'" class="icon-size-16"></mat-icon>
+      </div>
+    }
+  </div>
+  <div class="flex flex-col ml-2 leading-3 group-hover:transition-colors">
+    <h1 class="line-clamp-2 text-start text-ellipsis group-hover:text-primary group-hover:duration-300">
+      {{ person().name }}
+    </h1>
+    <span class="mt-1 text-sm truncate text-default group-hover:text-opacity-50 text-opacity-30">
+      {{ person().known_for_department }}
+    </span>
+    <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
+      <div class="flex flex-row items-center gap-1">
+        <mat-icon [svgIcon]="'heroicons_solid:heart'"
+        class="text-opacity-50 group-hover:text-red-500 group-hover:text-opacity-100 icon-size-3 text-default"></mat-icon>
+        {{
+        person().popularity | number:'1.0-0' }}
+      </div>
+      <div class="flex flex-row items-center gap-1">
+        <mat-icon [svgIcon]="genderIcons[person().gender]"
+        class="-ml-1 text-opacity-50 group-hover:text-opacity-100 icon-size-4 text-default"></mat-icon>
+        {{ genderLabels[person().gender] }}
+      </div>
+      @if (person().adult) {
+        <div class="flex flex-row items-center gap-1">
+          <mat-icon [svgIcon]="'heroicons_solid:exclamation'"
+          class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon>
+          Adult content
         </div>
-        <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
-            <div class="flex gap-2">
-                <mat-icon [svgIcon]="'heroicons_solid:video-camera'"
-                    class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon>
-                <p class="text-ellipsis line-clamp-2">
-                    <a *ngFor="let medium of mediaKnownFor, last as last;" (click)="$event.stopPropagation()"
-                        [routerLink]="['/' + mediaRoutes[medium.media_type], medium.id]"
-                        class="transition-colors cursor-pointer group-hover:text-opacity-100 hover:text-primary">
-                        {{ medium[mediaNameAttribute[medium.media_type]] }}<ng-container *ngIf="!last">, </ng-container>
-                    </a>
-                </p>
-            </div>
-        </div>
+      }
     </div>
-    <div class="flex flex-row items-center gap-2 pl-8 ml-auto">
-        <mat-icon [matTooltip]="'This item is a person'" svgIcon="heroicons_solid:user"
-            [matTooltipClass]="'bg-card text-default'"
-            class="icon-size-5 hover:cursor-pointer text-secondary hover:text-default hover:transition-colors"></mat-icon>
+    <div class="flex flex-row gap-2 mt-auto text-sm text-opacity-50 group-hover:text-opacity-100 text-default">
+      <div class="flex gap-2">
+        <mat-icon [svgIcon]="'heroicons_solid:video-camera'"
+        class="text-opacity-50 icon-size-3 group-hover:text-opacity-100 text-default"></mat-icon>
+        <p class="text-ellipsis line-clamp-2">
+          @for (medium of mediaKnownFor(); track medium.media_type; let last = $last) {
+            <a (click)="$event.stopPropagation()"
+              [routerLink]="['/' + mediaRoutes[medium.media_type], medium.id]"
+              class="transition-colors cursor-pointer group-hover:text-opacity-100 hover:text-primary">
+              {{ medium[mediaNameAttribute[medium.media_type]] }}@if (!last) {
+              ,
+            }
+          </a>
+        }
+      </p>
     </div>
+  </div>
+</div>
+<div class="flex flex-row items-center gap-2 pl-8 ml-auto">
+  <mat-icon [matTooltip]="'This item is a person'" svgIcon="heroicons_solid:user"
+    [matTooltipClass]="'bg-card text-default'"
+  class="icon-size-5 hover:cursor-pointer text-secondary hover:text-default hover:transition-colors"></mat-icon>
+</div>
 </article>

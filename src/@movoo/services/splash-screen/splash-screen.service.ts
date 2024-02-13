@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs';
 import { MovooTauriService } from '@movoo/services/tauri/tauri.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MovooSplashScreenService {
 
     /**

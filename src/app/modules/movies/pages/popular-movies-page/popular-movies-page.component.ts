@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { MovieService } from 'app/core/movie/movie.service';
 import { MoviesPagination } from 'app/core/movie/movie.types';
-import { GetMoviesDto } from 'app/core/movie/movies.dtos';
-import { SettingsService } from 'app/core/settings/settings.service';
+import { GetMoviesDto } from 'app/core/movie/movies.dto';
 import { Observable } from 'rxjs';
-import { BaseMoviesPageComponent } from '../../components/base-movies-page/base-movies-page.component';
+import { BaseMoviesPageComponent, ShouldLoadMovies } from '../base-movies-page/base-movies-page.component';
+import { Component } from '@angular/core';
+import { ContentLayoutComponent } from 'app/shared/components/content-layout/content-layout.component';
+import { MoviesGridComponent } from 'app/shared/components/movie/movies-grid/movies-grid.component';
+import { MovieBannerComponent } from '../../components/movie-banner/movie-banner.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SettingsService } from 'app/core/settings/settings.service';
 
 @Component({
-    selector: 'popular-movies-page',
-    templateUrl: '../../components/base-movies-page/base-movies-page.component.html'
+    templateUrl: './popular-movies-page.component.html',
+    standalone: true,
+    imports: [ContentLayoutComponent, MovieBannerComponent, MoviesGridComponent]
 })
-export class PopularMoviesPageComponent extends BaseMoviesPageComponent {
+export class PopularMoviesPageComponent extends BaseMoviesPageComponent implements ShouldLoadMovies {
 
     /**
      * Constructor
@@ -19,12 +23,10 @@ export class PopularMoviesPageComponent extends BaseMoviesPageComponent {
     constructor(
         protected readonly _movieService: MovieService,
         protected readonly _settingsService: SettingsService,
-        protected readonly _router: Router
+        protected readonly _router: Router,
+        protected readonly _route: ActivatedRoute
     ) {
-        super(
-            _settingsService,
-            _router
-        );
+        super(_movieService, _settingsService, _router, _route);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -37,7 +39,7 @@ export class PopularMoviesPageComponent extends BaseMoviesPageComponent {
      * @override
      * @param movieParams
      */
-    loadMovies(movieParams: GetMoviesDto): Observable<MoviesPagination> {
+    override loadMovies(movieParams: GetMoviesDto): Observable<MoviesPagination> {
         return this._movieService.getPopular(movieParams);
     }
 }

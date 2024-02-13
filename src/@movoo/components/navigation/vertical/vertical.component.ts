@@ -8,6 +8,9 @@ import { MovooScrollbarDirective } from '@movoo/directives/scrollbar';
 import { MovooUtilsService } from '@movoo/services/utils';
 import { ReplaySubject, Subscription, Subject, merge, takeUntil, delay, filter } from 'rxjs';
 import { MovooVerticalNavigationAppearance, MovooVerticalNavigationMode, MovooNavigationItem, MovooVerticalNavigationPosition, MovooNavigationService } from '..';
+import { MovooVerticalNavigationGroupItemComponent } from './components/group/group.component';
+import { MovooVerticalNavigationBasicItemComponent } from './components/basic/basic.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
     selector: 'movoo-vertical-navigation',
@@ -16,7 +19,9 @@ import { MovooVerticalNavigationAppearance, MovooVerticalNavigationMode, MovooNa
     animations: movooAnimations,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs: 'movooVerticalNavigation'
+    exportAs: 'movooVerticalNavigation',
+    standalone: true,
+    imports: [MovooScrollbarDirective, NgFor, NgIf, MovooVerticalNavigationBasicItemComponent, MovooVerticalNavigationGroupItemComponent]
 })
 export class MovooVerticalNavigationComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy
 {

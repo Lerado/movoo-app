@@ -3,7 +3,7 @@ const plugin = require('tailwindcss/plugin');
 module.exports = plugin(
     ({
         matchUtilities,
-        theme
+        theme,
     }) =>
     {
         matchUtilities(
@@ -17,12 +17,12 @@ module.exports = plugin(
                     lineHeight: value,
                     [`svg`]   : {
                         width : value,
-                        height: value
-                    }
-                })
+                        height: value,
+                    },
+                }),
             },
             {
-                values: theme('iconSize')
+                values: theme('iconSize'),
             });
     },
     {
@@ -43,8 +43,8 @@ module.exports = plugin(
                 18 : '4.5rem',
                 20 : '5rem',
                 22 : '5.5rem',
-                24 : '6rem'
-            }
-        }
-    }
+                24 : '6rem',
+            },
+        },
+    },
 );

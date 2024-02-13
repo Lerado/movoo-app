@@ -19,23 +19,25 @@ textarea {
         @apply text-hint;
     }
 
-    &:-webkit-autofill {
-        -webkit-transition: 'background-color 9999s ease-out';
-        -webkit-transition-delay: 9999s;
-    }
-
-    &:-webkit-autofill:hover {
-        -webkit-transition: 'background-color 9999s ease-out';
-        -webkit-transition-delay: 9999s;
-    }
-
-    &:-webkit-autofill:focus {
-        -webkit-transition: 'background-color 9999s ease-out';
-        -webkit-transition-delay: 9999s;
-    }
-
+    /* Autofill color fix */
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-        -webkit-transition: 'background-color 9999s ease-out';
-        -webkit-transition-delay: 9999s;
+        -webkit-background-clip: text;
+        transition: background-color 5000s !important;
+    }
+
+    .dark & {
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.87);
+        }
+    }
+
+    [data-autocompleted] {
+        background-color: transparent !important;
     }
 }

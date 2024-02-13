@@ -4,11 +4,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { MovooVerticalNavigationComponent } from '@movoo/components/navigation/vertical/vertical.component';
 import { MovooNavigationService } from '@movoo/components/navigation/navigation.service';
 import { MovooNavigationItem } from '@movoo/components/navigation/navigation.types';
+import { MovooVerticalNavigationBasicItemComponent } from '../basic/basic.component';
+import { MatIconModule } from '@angular/material/icon';
+import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
     selector: 'movoo-vertical-navigation-group-item',
     templateUrl: './group.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgClass, NgIf, MatIconModule, NgFor, MovooVerticalNavigationBasicItemComponent]
 })
 export class MovooVerticalNavigationGroupItemComponent implements OnInit, OnDestroy {
     /* eslint-disable @typescript-eslint/naming-convention */

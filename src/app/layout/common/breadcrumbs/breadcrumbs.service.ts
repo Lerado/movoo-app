@@ -3,10 +3,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, distinctUntilChanged, filter, map, Observable, startWith, tap } from 'rxjs';
 import { Breadcrumbs } from './breadcrumbs.types';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BreadcrumbsService {
 
-    _breadcrumbs: BehaviorSubject<Breadcrumbs> = new BehaviorSubject<Breadcrumbs>([]);
+    private readonly _breadcrumbs: BehaviorSubject<Breadcrumbs> = new BehaviorSubject<Breadcrumbs>([]);
 
     breadcrumbs$: Observable<Breadcrumbs> = this._breadcrumbs.asObservable();
 
@@ -59,7 +59,7 @@ export class BreadcrumbsService {
      * @param breadcrumbs
      */
     private _buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumbs = []): Breadcrumbs {
-        //If no routeConfig is avalailable we are on the root path
+        //If no routeConfig is available we are on the root path
         let label = route.routeConfig?.data?.breadcrumb ?? '';
         let path = route.routeConfig?.path ?? '';
 
@@ -81,7 +81,7 @@ export class BreadcrumbsService {
         const newBreadcrumbs = breadcrumb.label ? [...breadcrumbs, breadcrumb] : [...breadcrumbs];
         if (route.firstChild) {
             //If we are not on our current path yet,
-            //there will be more children to look after, to build our breadcumb
+            //there will be more children to look after, to build our breadcrumb
             return this._buildBreadcrumbs(route.firstChild, nextUrl, newBreadcrumbs);
         }
         return newBreadcrumbs;

@@ -1,38 +1,50 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, DestroyRef, Inject, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { combineLatest, filter, map, Subject, takeUntil } from 'rxjs';
-import { MovooConfigService } from '@movoo/services/config';
+import { combineLatest, filter, map } from 'rxjs';
+import { MovooConfigService, MovooConfig } from '@movoo/services/config';
 import { MovooPlatformService } from '@movoo/services/platform';
 import { MovooMediaWatcherService } from '@movoo/services/media-watcher';
 import { MOVOO_VERSION } from '@movoo/version';
 import { Layout } from 'app/layout/layout.types';
-import { AppConfig } from 'app/core/config/app.config';
+import { SettingsComponent } from './common/settings/settings.component';
+import { ClassyLayoutComponent } from './layouts/vertical/classy/classy.component';
+import { EmptyLayoutComponent } from './layouts/empty/empty.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MultiSearchBarComponent } from '../shared/components/search/multi-search-bar/multi-search-bar.component';
+import { MovooTitleBarComponent } from '../../@movoo/components/title-bar/title-bar.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'layout',
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [MovooTitleBarComponent, NgOptimizedImage, MultiSearchBarComponent, MatButtonModule, MatIconModule, EmptyLayoutComponent, ClassyLayoutComponent, SettingsComponent]
 })
-export class LayoutComponent implements OnInit, OnDestroy {
-    config: AppConfig;
-    layout: Layout;
+export class LayoutComponent implements OnInit {
+
+    @ViewChild('settings') settingsComponent: SettingsComponent;
+
+    config: MovooConfig;
+    layout: string;
     scheme: 'dark' | 'light';
     theme: string;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        @Inject(DOCUMENT) private _document: any,
-        private _renderer2: Renderer2,
-        private _router: Router,
-        private _movooConfigService: MovooConfigService,
-        private _movooMediaWatcherService: MovooMediaWatcherService,
-        private _movooPlatformService: MovooPlatformService
+        private readonly _activatedRoute: ActivatedRoute,
+        @Inject(DOCUMENT) private readonly _document: Document,
+        private readonly _renderer2: Renderer2,
+        private readonly _router: Router,
+        private readonly _movooConfigService: MovooConfigService,
+        private readonly _movooMediaWatcherService: MovooMediaWatcherService,
+        private readonly _movooPlatformService: MovooPlatformService,
+        private readonly _destroyRef: DestroyRef
     ) {
     }
 
@@ -49,7 +61,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this._movooConfigService.config$,
             this._movooMediaWatcherService.onMediaQueryChange$(['(prefers-color-scheme: dark)', '(prefers-color-scheme: light)'])
         ]).pipe(
-            takeUntil(this._unsubscribeAll),
+            takeUntilDestroyed(this._destroyRef),
             map(([config, mql]) => {
 
                 const options = {
@@ -78,8 +90,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
         // Subscribe to config changes
         this._movooConfigService.config$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config: AppConfig) => {
+            .pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe((config: MovooConfig) => {
 
                 // Store the config
                 this.config = config;
@@ -91,7 +103,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         // Subscribe to NavigationEnd event
         this._router.events.pipe(
             filter(event => event instanceof NavigationEnd),
-            takeUntil(this._unsubscribeAll)
+            takeUntilDestroyed(this._destroyRef)
         ).subscribe(() => {
 
             // Update the layout
@@ -103,15 +115,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
         // Set the OS name
         this._renderer2.addClass(this._document.body, this._movooPlatformService.osName);
-    }
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
     }
 
     // -----------------------------------------------------------------------------------------------------

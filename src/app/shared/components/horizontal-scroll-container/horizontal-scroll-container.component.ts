@@ -11,12 +11,7 @@ export class HorizontalScrollContainerComponent implements AfterViewInit {
 
     @Output() containerRef: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-    @ViewChild('containerEl') containerEl;
-
-    /**
-     * Constructor
-     */
-    constructor() { }
+    @ViewChild('containerEl') containerEl: ElementRef<HTMLDivElement>;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

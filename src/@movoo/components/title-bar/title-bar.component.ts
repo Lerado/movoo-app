@@ -2,12 +2,15 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MovooPlatformWatcherService, Platform } from '@movoo/services/platform-watcher';
 import { appWindow } from '@tauri-apps/api/window';
 import { Subject, takeUntil } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'movoo-title-bar',
     templateUrl: './title-bar.component.html',
     styleUrls: ['./title-bar.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf]
 })
 export class MovooTitleBarComponent implements OnInit, OnDestroy {
 

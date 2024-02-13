@@ -8,14 +8,14 @@ const slideInTop = trigger('slideInTop',
     [
         state('void',
             style({
-                transform: 'translate3d(0, -100%, 0)'
-            })
+                transform: 'translate3d(0, -100%, 0)',
+            }),
         ),
 
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -25,11 +25,11 @@ const slideInTop = trigger('slideInTop',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -39,14 +39,14 @@ const slideInBottom = trigger('slideInBottom',
     [
         state('void',
             style({
-                transform: 'translate3d(0, 100%, 0)'
-            })
+                transform: 'translate3d(0, 100%, 0)',
+            }),
         ),
 
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -56,11 +56,11 @@ const slideInBottom = trigger('slideInBottom',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -70,14 +70,14 @@ const slideInLeft = trigger('slideInLeft',
     [
         state('void',
             style({
-                transform: 'translate3d(-100%, 0, 0)'
-            })
+                transform: 'translate3d(-100%, 0, 0)',
+            }),
         ),
 
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -87,11 +87,11 @@ const slideInLeft = trigger('slideInLeft',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -101,14 +101,14 @@ const slideInRight = trigger('slideInRight',
     [
         state('void',
             style({
-                transform: 'translate3d(100%, 0, 0)'
-            })
+                transform: 'translate3d(100%, 0, 0)',
+            }),
         ),
 
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -118,11 +118,11 @@ const slideInRight = trigger('slideInRight',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -132,14 +132,14 @@ const slideOutTop = trigger('slideOutTop',
     [
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
-                transform: 'translate3d(0, -100%, 0)'
-            })
+                transform: 'translate3d(0, -100%, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -149,11 +149,11 @@ const slideOutTop = trigger('slideOutTop',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -163,14 +163,14 @@ const slideOutBottom = trigger('slideOutBottom',
     [
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
-                transform: 'translate3d(0, 100%, 0)'
-            })
+                transform: 'translate3d(0, 100%, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -180,11 +180,11 @@ const slideOutBottom = trigger('slideOutBottom',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -194,14 +194,14 @@ const slideOutLeft = trigger('slideOutLeft',
     [
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
-                transform: 'translate3d(-100%, 0, 0)'
-            })
+                transform: 'translate3d(-100%, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -211,11 +211,11 @@ const slideOutLeft = trigger('slideOutLeft',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -225,14 +225,14 @@ const slideOutRight = trigger('slideOutRight',
     [
         state('*',
             style({
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
-                transform: 'translate3d(100%, 0, 0)'
-            })
+                transform: 'translate3d(100%, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -242,11 +242,11 @@ const slideOutRight = trigger('slideOutRight',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 export { slideInTop, slideInBottom, slideInLeft, slideInRight, slideOutTop, slideOutBottom, slideOutLeft, slideOutRight };

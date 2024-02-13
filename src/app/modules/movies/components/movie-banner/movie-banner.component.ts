@@ -1,50 +1,43 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { OnChange } from '@lib/decorators';
+import { DatePipe, DecimalPipe, NgStyle } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { movooAnimations } from '@movoo/animations';
 import { GenreService } from 'app/core/genre/genre.service';
 import { Movie } from 'app/core/movie/movie.types';
-import { map, Observable, of } from 'rxjs';
+import { TMDBImageUrlPipe } from 'app/shared/pipes/tmdb-image-url.pipe';
 
 @Component({
     selector: 'movie-banner',
+    standalone: true,
     templateUrl: './movie-banner.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    animations: movooAnimations,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink, NgStyle, MatIconModule, MatButtonModule, TMDBImageUrlPipe, DatePipe, DecimalPipe]
 })
 export class MovieBannerComponent {
 
-    @OnChange('_getMovieGenresLabels')
-    @Input() movie: Movie;
+    movie = input.required<Movie>();
 
-    @Input() baseUrl: string = '/movies';
+    baseUrl = input<string>('/movies');
 
-    movieGenresLabels$: Observable<string>;
+    genres = toSignal(this._genreService.genres$, { initialValue: [] })
+    movieGenresLabels = computed(() => {
+        if (!this.genres().length || !this.movie()) {
+            return '';
+        }
+        if (this.movie().genres) {
+            return this.movie().genres.map(genre => genre.name).join(', ');
+        }
+        return this.movie().genre_ids.map(genreId => this.genres().find(genre => genre.id === genreId).name).join(', ');
+    });
 
     /**
      * Constructor
      */
     constructor(
-        private readonly _genreService: GenreService,
+        private readonly _genreService: GenreService
     ) { }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Map genres ids to genre labels
-     *
-     * @param movie
-     */
-    private _getMovieGenresLabels(movie: Movie): void {
-
-        if (!movie) { return; }
-
-        if (movie.genres) {
-            this.movieGenresLabels$ = of(movie.genres.map(genre => genre.name).join(', '));
-        }
-        else {
-            this.movieGenresLabels$ = this._genreService.genres$.pipe(
-                map((genres) => movie.genre_ids.map(genreId => genres.find(genre => genre.id === genreId).name).join(', '))
-            );
-        }
-    }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MultiSearchDto } from './search.dtos';
+import { MultiSearchDto } from './search.dto';
 import { MultiSearchResultsPagination } from './search.types';
 
 @Injectable({

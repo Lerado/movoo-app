@@ -1,19 +1,25 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { OnChange } from '@lib/decorators';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { PersonGender } from 'app/core/people/people.types';
-import { MovieSearchResult, PersonSearchResult, TvShowSearchResult } from 'app/core/search/search.types';
+import { PersonSearchResult } from 'app/core/search/search.types';
 import { mediaNameAttribute, mediaRoutes } from '../../search.types';
+import { TMDBImageUrlPipe } from '../../../../pipes/tmdb-image-url.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { NgOptimizedImage, DecimalPipe } from '@angular/common';
 
 @Component({
     selector: 'multi-search-bar-result-person',
     templateUrl: './multi-search-bar-result-person.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgOptimizedImage, MatIconModule, RouterLink, MatTooltipModule, DecimalPipe, TMDBImageUrlPipe]
 })
 
 export class MultiSearchBarResultPersonComponent {
 
-    @OnChange('_onPersonChange')
-    @Input() person: PersonSearchResult;
+    person = input.required<PersonSearchResult>();
+    mediaKnownFor = computed(() => this.person().known_for);
 
     genderIcons: Partial<Record<PersonGender, string>> = {
         0: 'mat_solid:face_retouching_off',
@@ -27,27 +33,6 @@ export class MultiSearchBarResultPersonComponent {
         2: 'Male'
     }
 
-    mediaKnownFor: Array<MovieSearchResult | TvShowSearchResult>;
     mediaRoutes = mediaRoutes;
     mediaNameAttribute = mediaNameAttribute;
-
-    /**
-     * Constructor
-     */
-    constructor() { }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On person change
-     *
-     * @param person
-     */
-    private _onPersonChange(person: PersonSearchResult): void {
-
-        // Media known for
-        this.mediaKnownFor = person.known_for;
-    }
 }

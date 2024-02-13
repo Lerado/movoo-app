@@ -1,12 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TMDBSystemConfig, TMDBImagesConfig } from 'app/core/config/app.config';
-import { AppConfigService } from 'app/core/config/app.service';
+import { TMDBSystemConfig, TMDBImagesConfig } from 'app/core/config/config.types';
+import { AppConfigService } from 'app/core/config/config.service';
 import { take } from 'rxjs';
 
 type ImageType = 'poster' | 'still' | 'logo' | 'profile';
 
 @Pipe({
     standalone: true,
+    pure: false,
     name: 'tmdbImageUrl'
 })
 export class TMDBImageUrlPipe implements PipeTransform {
@@ -20,7 +21,7 @@ export class TMDBImageUrlPipe implements PipeTransform {
     constructor(
         private readonly _appConfigService: AppConfigService
     ) {
-        // Loads the images informations
+        // Loads the images information
         this._appConfigService.config$.pipe(take(1))
             .subscribe((config: TMDBSystemConfig) => {
                 this.imagesConfig = config.images;

@@ -1,79 +1,39 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, signal } from '@angular/core';
+import { map } from 'rxjs';
 import { MovooMediaWatcherService } from '@movoo/services/media-watcher';
 import { MovooNavigationService, MovooVerticalNavigationComponent } from '@movoo/components/navigation';
-import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
+import { RouterOutlet } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { NgOptimizedImage } from '@angular/common';
+import { MovooLoadingBarComponent } from '../../../../../@movoo/components/loading-bar/loading-bar.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector     : 'classy-layout',
-    templateUrl  : './classy.component.html',
-    styleUrls    : ['./classy.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'classy-layout',
+    templateUrl: './classy.component.html',
+    styleUrls: ['./classy.component.scss'],
+    standalone: true,
+    imports: [MovooLoadingBarComponent, MovooVerticalNavigationComponent, NgOptimizedImage, MatIconModule, RouterOutlet]
 })
-export class ClassyLayoutComponent implements OnInit, OnDestroy
-{
-    isScreenSmall: boolean;
-    navigation: Navigation;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+export class ClassyLayoutComponent {
+
+    isScreenSmall = toSignal(this._movooMediaWatcherService.onMediaChange$.pipe(
+        map(({ matchingAliases }) => !matchingAliases.includes('md'))
+    ));
+
+    navigation = toSignal(this._navigationService.navigation$);
+
+    currentYear = signal(new Date().getFullYear());
 
     /**
      * Constructor
      */
     constructor(
-        private _navigationService: NavigationService,
-        private _movooMediaWatcherService: MovooMediaWatcherService,
-        private _movooNavigationService: MovooNavigationService
-    )
-    {
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for current year
-     */
-    get currentYear(): number
-    {
-        return new Date().getFullYear();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
-        // Subscribe to navigation data
-        this._navigationService.navigation$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) => {
-                this.navigation = navigation;
-            });
-
-        // Subscribe to media changes
-        this._movooMediaWatcherService.onMediaChange$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) => {
-                // Check if the screen is small
-                this.isScreenSmall = !matchingAliases.includes('md');
-            });
-    }
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
+        private readonly _navigationService: NavigationService,
+        private readonly _movooMediaWatcherService: MovooMediaWatcherService,
+        private readonly _movooNavigationService: MovooNavigationService
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -84,13 +44,11 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
      *
      * @param name
      */
-    toggleNavigation(name: string): void
-    {
+    toggleNavigation(name: string): void {
         // Get the navigation
         const navigation = this._movooNavigationService.getComponent<MovooVerticalNavigationComponent>(name);
 
-        if ( navigation )
-        {
+        if (navigation) {
             // Toggle the opened status
             navigation.toggle();
         }

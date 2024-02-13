@@ -8,14 +8,14 @@ const fadeIn = trigger('fadeIn',
     [
         state('void',
             style({
-                opacity: 0
-            })
+                opacity: 0,
+            }),
         ),
 
         state('*',
             style({
-                opacity: 1
-            })
+                opacity: 1,
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -25,11 +25,11 @@ const fadeIn = trigger('fadeIn',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -40,15 +40,15 @@ const fadeInTop = trigger('fadeInTop',
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(0, -100%, 0)'
-            })
+                transform: 'translate3d(0, -100%, 0)',
+            }),
         ),
 
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -58,11 +58,11 @@ const fadeInTop = trigger('fadeInTop',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -73,15 +73,15 @@ const fadeInBottom = trigger('fadeInBottom',
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(0, 100%, 0)'
-            })
+                transform: 'translate3d(0, 100%, 0)',
+            }),
         ),
 
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -91,11 +91,11 @@ const fadeInBottom = trigger('fadeInBottom',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -106,15 +106,15 @@ const fadeInLeft = trigger('fadeInLeft',
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(-100%, 0, 0)'
-            })
+                transform: 'translate3d(-100%, 0, 0)',
+            }),
         ),
 
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -124,11 +124,11 @@ const fadeInLeft = trigger('fadeInLeft',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -139,15 +139,15 @@ const fadeInRight = trigger('fadeInRight',
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(100%, 0, 0)'
-            })
+                transform: 'translate3d(100%, 0, 0)',
+            }),
         ),
 
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -157,11 +157,11 @@ const fadeInRight = trigger('fadeInRight',
         transition('void => *', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -171,14 +171,14 @@ const fadeOut = trigger('fadeOut',
     [
         state('*',
             style({
-                opacity: 1
-            })
+                opacity: 1,
+            }),
         ),
 
         state('void',
             style({
-                opacity: 0
-            })
+                opacity: 0,
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -188,11 +188,11 @@ const fadeOut = trigger('fadeOut',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -203,15 +203,15 @@ const fadeOutTop = trigger('fadeOutTop',
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(0, -100%, 0)'
-            })
+                transform: 'translate3d(0, -100%, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -221,11 +221,11 @@ const fadeOutTop = trigger('fadeOutTop',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -236,15 +236,15 @@ const fadeOutBottom = trigger('fadeOutBottom',
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(0, 100%, 0)'
-            })
+                transform: 'translate3d(0, 100%, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -254,11 +254,11 @@ const fadeOutBottom = trigger('fadeOutBottom',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -269,15 +269,15 @@ const fadeOutLeft = trigger('fadeOutLeft',
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(-100%, 0, 0)'
-            })
+                transform: 'translate3d(-100%, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -287,11 +287,11 @@ const fadeOutLeft = trigger('fadeOutLeft',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 // -----------------------------------------------------------------------------------------------------
@@ -302,15 +302,15 @@ const fadeOutRight = trigger('fadeOutRight',
         state('*',
             style({
                 opacity  : 1,
-                transform: 'translate3d(0, 0, 0)'
-            })
+                transform: 'translate3d(0, 0, 0)',
+            }),
         ),
 
         state('void',
             style({
                 opacity  : 0,
-                transform: 'translate3d(100%, 0, 0)'
-            })
+                transform: 'translate3d(100%, 0, 0)',
+            }),
         ),
 
         // Prevent the transition if the state is false
@@ -320,11 +320,11 @@ const fadeOutRight = trigger('fadeOutRight',
         transition('* => void', animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.exiting} ${MovooAnimationCurves.acceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 export { fadeIn, fadeInTop, fadeInBottom, fadeInLeft, fadeInRight, fadeOut, fadeOutTop, fadeOutBottom, fadeOutLeft, fadeOutRight };

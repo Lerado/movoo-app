@@ -4,7 +4,7 @@ import { merge } from 'lodash-es';
 import { MovooConfirmationDialogComponent } from '@movoo/services/confirmation/dialog/dialog.component';
 import { MovooConfirmationConfig } from '@movoo/services/confirmation/confirmation.types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MovooConfirmationService
 {
     private _defaultConfig: MovooConfirmationConfig = {

@@ -1,28 +1,25 @@
-<ng-container *ngIf="breadcrumbs$ | async as breadcrumbs">
-    <ul *ngIf="breadcrumbs.length" class="flex gap-1 font-medium">
-        <li *ngFor="let breadcrumb of breadcrumbs; last as active">
-
-            <ng-container *ngIf="active else parentLinks">
-                <!-- Active  -->
-                <a role="button" class="pointer-events-none">
-                    <ng-container *ngTemplateOutlet="label; context: { $implicit: breadcrumb }"></ng-container>
-                </a>
-            </ng-container>
-
-            <ng-template #parentLinks>
-                <!-- Parents -->
-                <a [routerLink]="breadcrumb.url"
-                    class="transition-colors duration-300 cursor-pointer text-secondary hover:text-primary">
-                    <ng-container *ngTemplateOutlet="label; context: { $implicit: breadcrumb }"></ng-container>
-                </a>
-                <!-- Separator -->
-                <span role="separator" class="text-secondary">/</span>
-            </ng-template>
-
-        </li>
-
-    </ul>
-</ng-container>
+@if (breadcrumbs().length) {
+<ul class="flex gap-1 font-medium">
+    @for (breadcrumb of breadcrumbs(); track $index; let active = $last) {
+    <li>
+        @if (active) {
+        <!-- Active  -->
+        <a @fadeIn role="button" class="pointer-events-none">
+            <ng-container *ngTemplateOutlet="label; context: { $implicit: breadcrumb }"></ng-container>
+        </a>
+        } @else {
+        <!-- Parents -->
+        <a @fadeIn [routerLink]="breadcrumb.url"
+            class="transition-colors duration-300 cursor-pointer text-secondary hover:text-primary">
+            <ng-container *ngTemplateOutlet="label; context: { $implicit: breadcrumb }"></ng-container>
+        </a>
+        <!-- Separator -->
+        <span @fadeIn role="separator" class="text-secondary">/</span>
+        }
+    </li>
+    }
+</ul>
+}
 
 <ng-template #label let-breadcrumb>
     {{ breadcrumb.label?.includes('[') && breadcrumb.label?.includes(']') ? 'Loading...' : breadcrumb.label }}
