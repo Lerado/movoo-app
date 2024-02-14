@@ -1,39 +1,35 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Output, input } from '@angular/core';
 import { Movie } from 'app/core/movie/movie.types';
-import { SharedModule } from 'app/shared/shared.module';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { NgTemplateOutlet } from '@angular/common';
+import { MovieLoaderComponent } from '../movie-loader/movie-loader.component';
+import { movooAnimations } from '@movoo/animations';
 
 @Component({
     standalone: true,
-    imports: [MovieCardComponent, SharedModule],
+    imports: [NgTemplateOutlet, MovieCardComponent, MovieLoaderComponent],
     selector: 'movies-grid',
     templateUrl: './movies-grid.component.html',
+    styleUrl: './movies-grid.component.scss',
+    animations: movooAnimations,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesGridComponent {
 
+    @ContentChild('listEmpty') emptyListTemplate: ElementRef;
+    @ContentChild('listLoading') loadingListTemplate: ElementRef;
+
     // Inputs
-    @Input() movies: Movie[];
+    movies = input.required<Movie[]>();
+    loading = input<boolean>();
+
     @Output() selected: EventEmitter<Movie> = new EventEmitter<Movie>();
 
-    /**
-     * Constructor
-     */
-    constructor() { }
+    loadingSkeletonsIds: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
 
     /**
      * Emits when a movie is clicked

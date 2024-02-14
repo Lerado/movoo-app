@@ -1,26 +1,37 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { DatePipe, DecimalPipe, NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, input, Input, Output } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { OnChange } from '@lib/decorators';
 import { GenreService } from 'app/core/genre/genre.service';
 import { Movie } from 'app/core/movie/movie.types';
-import { SharedModule } from 'app/shared/shared.module';
+import { TMDBImageUrlPipe } from 'app/shared/pipes/tmdb-image-url.pipe';
+
 import { map, Observable, of } from 'rxjs';
 
 @Component({
     standalone: true,
-    imports: [MatIconModule, SharedModule],
+    imports: [MatIconModule, NgOptimizedImage, TMDBImageUrlPipe, DatePipe, DecimalPipe],
     selector: 'movie-card',
     templateUrl: './movie-card.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieCardComponent {
 
-    @OnChange('_getMovieGenresLabels')
-    @Input() movie: Movie;
+    movie = input.required<Movie>();
 
     @Output() selected: EventEmitter<Movie> = new EventEmitter<Movie>();
 
-    movieGenresLabels$: Observable<string>;
+    genres = toSignal(this._genreService.genres$, { initialValue: [] })
+    movieGenresLabels = computed(() => {
+        if (!this.genres().length) {
+            return '';
+        }
+        if (this.movie().genres) {
+            return this.movie().genres.map(genre => genre.name).join(', ');
+        }
+        return this.movie().genre_ids.map(genreId => this.genres().find(genre => genre.id === genreId).name).join(', ');
+    });
 
     /**
      * Constructor
@@ -37,27 +48,6 @@ export class MovieCardComponent {
      * Navigate to details for a movie
      */
     onMovieSelected(): void {
-        this.selected.emit(this.movie);
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Map genres ids to genre labels
-     *
-     * @param movie
-     */
-    private _getMovieGenresLabels(movie: Movie): void {
-
-        if (movie.genres) {
-            this.movieGenresLabels$ = of(movie.genres.map(genre => genre.name).join(', '));
-        }
-        else {
-            this.movieGenresLabels$ = this._genreService.genres$.pipe(
-                map((genres) => movie.genre_ids.map(genreId => genres.find(genre => genre.id === genreId).name).join(', '))
-            );
-        }
+        this.selected.emit(this.movie());
     }
 }

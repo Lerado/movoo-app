@@ -8,12 +8,12 @@ const expandCollapse = trigger('expandCollapse',
     [
         state('void, collapsed',
             style({
-                height: '0'
-            })
+                height: '0',
+            }),
         ),
 
         state('*, expanded',
-            style('*')
+            style('*'),
         ),
 
         // Prevent the transition if the state is false
@@ -24,11 +24,11 @@ const expandCollapse = trigger('expandCollapse',
             animate('{{timings}}'),
             {
                 params: {
-                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`
-                }
-            }
-        )
-    ]
+                    timings: `${MovooAnimationDurations.entering} ${MovooAnimationCurves.deceleration}`,
+                },
+            },
+        ),
+    ],
 );
 
 export { expandCollapse };

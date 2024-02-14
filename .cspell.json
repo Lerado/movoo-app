@@ -1,0 +1,30 @@
+{
+    "version": "0.2",
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
+    "language": "en",
+    "words": [
+        "gifs",
+        "heroicons",
+        "movoo",
+        "ngneat",
+        "ngsw",
+        "tmdb"
+    ],
+    "flagWords": [],
+    "ignorePaths": [
+        "package.json",
+        "yarn.lock",
+        "tsconfig.json",
+        "node_modules/**",
+        "src/@*",
+        "src/app/mock-api",
+        "*.config.js",
+        "*.conf.js",
+        ".*rc*",
+        ".*ignore",
+        "angular.json",
+        "CHANGELOG.md",
+        "*.json"
+    ],
+    "useGitignore": true
+}

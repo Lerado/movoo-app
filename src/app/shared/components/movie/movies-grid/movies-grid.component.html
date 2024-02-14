@@ -1,8 +1,42 @@
-<div *ngIf="movies?.length, else emptyGrid;"
-    class="grid w-full grid-rows-1 gap-y-4 gap-x-4 md:gap-x-8 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-    <movie-card *ngFor="let movie of movies; trackBy: trackByFn" (selected)="onMovieSelected($event)"
-        [movie]="movie"></movie-card>
-    <ng-content></ng-content>
-</div>
+@if (loading() === true && !movies().length) {
+<!-- Loading template -->
+<ng-content select="[list-loading]"></ng-content>
+@if (!loadingListTemplate) {
+<ng-template [ngTemplateOutlet]="defaultLoadingListTemplate"></ng-template>
+}
+}
 
-<ng-template #emptyGrid></ng-template>
+<!-- Movie cards -->
+@for (movie of movies(); track movie.id) {
+@defer (when movies().length) {
+<movie-card @fadeInBottom (selected)="onMovieSelected($event)" [movie]="movie"></movie-card>
+}
+}
+@empty {
+<ng-content select="[list-empty]"></ng-content>
+@if (!emptyListTemplate) {
+<ng-template [ngTemplateOutlet]="defaultEmptyListTemplate"></ng-template>
+}
+}
+
+<!-- Tail -->
+@if (loading() === true && movies().length) {
+<ng-content select="[list-loading]"></ng-content>
+@if (!loadingListTemplate) {
+<ng-template [ngTemplateOutlet]="defaultLoadingListTemplate"></ng-template>
+}
+}
+<ng-content select="[list-tail]"></ng-content>
+
+<!-- Default loading template -->
+<ng-template #defaultLoadingListTemplate>
+    @for (loader of loadingSkeletonsIds; track $index) {
+    @defer (when loading() === true) {
+    <movie-loader @fadeIn @fadeOut></movie-loader>
+    }
+    }
+</ng-template>
+
+<!-- Default empty list template -->
+<ng-template #defaultEmptyListTemplate>
+</ng-template>

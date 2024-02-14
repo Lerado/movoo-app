@@ -1,354 +1,360 @@
-<div *ngIf="showTrailer" @fadeIn
+@defer (when showTrailer()) {
+<div [class.hidden]="!showTrailer()" (click)="showTrailer.set(false)" @fadeIn
     class="absolute inset-0 flex flex-col w-full h-full min-w-0 bg-black z-99999 bg-opacity-60">
-    <button (click)="showTrailer = false" mat-icon-button class="absolute right-2 top-2">
+    <button (click)="showTrailer.set(false)" mat-icon-button class="absolute right-2 top-2">
         <mat-icon [svgIcon]="'heroicons_solid:x'" class="mr-1 text-white icon-size-8"></mat-icon>
     </button>
-    <div [innerHtml]="trailerEmbed" class="flex flex-col items-center justify-center w-full h-full"></div>
+    <!-- <div [innerHtml]="trailerEmbed()" class="flex flex-col items-center justify-center w-full h-full"></div> -->
+    <youtube-player (click)="$event.stopPropagation()" [videoId]="movieTrailer().key" class="m-auto"></youtube-player>
 </div>
+}
 
-<content-layout (scrollElement)="mainContainer = $event" *ngIf="movie$ | async as movie">
-
+@defer (when movie()) {
+<content-layout (scrollElement)="mainContainer = $event">
     <div class="flex flex-col flex-auto main">
-
         <!-- Header -->
         <div class=" h-90 lg:h-100 xl:h-128">
             <div class="flex flex-col w-full h-full bg-fixed bg-no-repeat bg-cover bg-card"
-                [ngStyle]="{'background-image': 'url(' + (movie.backdrop_path | tmdbImageUrl:'original':'backdrop') + ')', 'background-position': 'center top'}">
+                [ngStyle]="{'background-image': 'url(' + (movie()?.backdrop_path | tmdbImageUrl:'original':'backdrop') + ')', 'background-position': 'center top'}">
                 <div
                     class="flex backdrop-blur-[1px] flex-col items-center w-full h-full bg-opacity-50 bg-top bg-default">
                     <div class="flex flex-col w-11/12 py-6 mx-auto mt-auto">
-                        <h1 class="text-3xl font-bold text-white">{{ movie.title }}</h1>
+                        <h1 @fadeInLeft class="text-3xl font-bold text-white">{{ movie().title }}</h1>
                         <!-- Status, revenue, stats, adult, vote count, homepage, production companies -->
                         <div class="flex flex-row gap-2 text-opacity-50 text-default text-md">
-                            <div class="flex flex-row items-center">
+                            @if (movie()) {
+                            <div @fadeInLeft class="flex flex-row items-center">
                                 <mat-icon [svgIcon]="'heroicons_solid:heart'"
                                     class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon>
-                                {{ movie.popularity | number:'1.0-0' }}
+                                {{ movie().popularity | number:'1.0-0' }}
                             </div>
-                            <div class="flex flex-row items-center">
+                            <div @fadeInLeft class="flex flex-row items-center">
                                 <mat-icon [svgIcon]="'heroicons_solid:star'"
                                     class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon>
-                                {{ movie.vote_average }} / {{ movie.vote_count }}
+                                {{ movie().vote_average }} / {{ movie().vote_count }}
                             </div>
+                            }
+
                             <!-- Adult -->
-                            <div *ngIf="movie.adult" class="flex flex-row items-center">
+                            @if (movie().adult) {
+                            <div @fadeInLeft class="flex flex-row items-center">
                                 <mat-icon [svgIcon]="'heroicons_solid:exclamation'"
                                     class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon>
                                 Adult content
                             </div>
+                            }
                             <!-- Movie status component -->
-                            <div *ngIf="movie.status" class="flex flex-row items-center text-green-600 text-opacity-50">
+                            @if (movie().status) {
+                            <div @fadeInLeft class="flex flex-row items-center text-green-600 text-opacity-50">
                                 <mat-icon [svgIcon]="'heroicons_solid:clock'"
                                     class="mr-1 text-green-600 text-opacity-50 icon-size-3">
                                 </mat-icon>
-                                {{ movie.status }}
+                                {{ movie().status }}
                             </div>
+                            }
                         </div>
                         <div class="flex flex-row text-md">
-                            <div class="flex flex-row items-center mr-2 text-green-600 text-opacity-50">
+                            @if (movie()) {
+                            <div @fadeInLeft class="flex flex-row items-center mr-2 text-green-600 text-opacity-50">
                                 <mat-icon [svgIcon]="'heroicons_solid:login'"
                                     class="mr-1 text-green-600 text-opacity-50 icon-size-3">
                                 </mat-icon>
-                                <ng-container *ngIf="movie.revenue, else notProvided;">
-                                    {{ movie.revenue | currency:'USD':'symbol':'1.0-0' }}
-                                </ng-container>
+                                @if (movie().revenue) {
+                                {{ movie().revenue | currency:'USD':'symbol':'1.0-0' }}
+                                } @else {
+                                Not provided
+                                }
                             </div>
-                            <div class="flex flex-row items-center text-red-600 text-opacity-50">
+                            <div @fadeInLeft class="flex flex-row items-center text-red-600 text-opacity-50">
                                 <mat-icon [svgIcon]="'heroicons_solid:logout'"
                                     class="mr-1 text-red-600 text-opacity-50 icon-size-3">
                                 </mat-icon>
-                                <ng-container *ngIf="movie.budget, else notProvided;">
-                                    {{ movie.budget | currency:'USD':'symbol':'1.0-0' }}
-                                </ng-container>
+                                @if (movie().budget) {
+                                {{ movie().budget | currency:'USD':'symbol':'1.0-0' }}
+                                } @else {
+                                Not provided
+                                }
                             </div>
+                            }
                         </div>
-                        <a *ngIf="movie.homepage" [href]="movie.homepage" target="__blank"
+                        @if (movie().homepage) {
+                        <a @fadeInLeft [href]="movie().homepage" target="__blank"
                             class="flex flex-row items-center text-opacity-50 transition-colors text-default text-md hover:text-primary">
                             <mat-icon [svgIcon]="'heroicons_solid:link'"
                                 class="mr-1 text-opacity-50 icon-size-3 text-default"></mat-icon>
-                            {{ movie.homepage }}
+                            {{ movie().homepage }}
                         </a>
+                        }
                         <!-- Trailer button -->
-                        <div *ngIf="movieTrailer$ | async as movieTrailer" @fadeIn class="flex justify-end w-11/12">
-                            <button (click)="playTrailer()" [matTooltip]="'Watch ' + movieTrailer.name"
+                        <div @zoomIn class="flex justify-end w-11/12">
+                            <button (click)="showTrailer.set(true)" [matTooltip]="'Watch ' + movieTrailer().name"
                                 [matTooltipPosition]="'above'"
                                 class="absolute flex items-center justify-center p-4 transition-shadow bg-white rounded-full hover:shadow-xl hover:shadow-primary">
                                 <mat-icon class="text-gray-700 icon-size-8"
                                     [svgIcon]="'heroicons_outline:video-camera'"></mat-icon>
                             </button>
                         </div>
-                        <ul *ngIf="movie.production_companies?.length" class="flex gap-4 mt-10">
-                            <li *ngFor="let company of movie.production_companies"
+                        @if (movie().production_companies?.length) {
+                        <ul class="flex gap-4 mt-10">
+                            @for (company of movie().production_companies; track company) {
+                            <li @fadeInBottom
                                 class="w-20 h-10 bg-white opacity-50 text-default hover:opacity-100 hover:transition hover:shadow hover:duration-500">
                                 <div class="relative flex items-center justify-center w-full h-full">
-                                    <img *ngIf="company.logo_path; else noCompanyLogo" [matTooltip]="company.name"
-                                        [matTooltipPosition]="'above'" class="object-contain"
-                                        [ngSrc]="company.logo_path | tmdbImageUrl:'w92':'logo'" fill alt="">
-                                    <ng-template #noCompanyLogo>
-                                        <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'" class="">
-                                        </mat-icon>
-                                    </ng-template>
+                                    @if (company.logo_path) {
+                                    <img [matTooltip]="company.name" [matTooltipPosition]="'above'"
+                                        class="object-contain" [ngSrc]="company.logo_path | tmdbImageUrl:'w92':'logo'"
+                                        fill alt="">
+                                    } @else {
+                                    <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'" class="">
+                                    </mat-icon>
+                                    }
                                 </div>
                             </li>
+                            }
                         </ul>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- Main -->
         <div class="flex flex-col flex-auto p-8">
-
             <!-- Overview and infos -->
             <div class="flex flex-col sm:flex-row sm:justify-between">
-
                 <div class="flex flex-col w-full sm:w-5/12">
                     <h2 class="mb-4 text-2xl font-bold text-white">Overview</h2>
-                    <p class="mb-2 italic tracking-tight text-default text-opacity-60">{{ movie.tagline }}</p>
-                    <p class="tracking-tight text-default text-opacity-60">
-                        <ng-container *ngIf="movie.overview, else noOverview">
-                            {{ movie.overview }}
-                        </ng-container>
-                        <ng-template #noOverview>Movie overview not provided</ng-template>
+                    <p @fadeInBottom class="mb-2 italic tracking-tight text-default text-opacity-60">{{ movie().tagline
+                        }}</p>
+                    <p @fadeInBottom class="tracking-tight text-default text-opacity-60">
+                        @if (movie().overview) {
+                        {{ movie().overview }}
+                        } @else {
+                        Movie overview not provided
+                        }
                     </p>
                 </div>
-
                 <div class="flex flex-col w-full p-6 mt-4 sm:w-6/12 sm:mt-0 bg-card">
-                    <h2 class="text-2xl font-bold text-white">Informations</h2>
-
-                    <div *ngIf="movieCredits$ | async; else movieInfosLoader" @fadeIn
-                        class="grid w-full grid-cols-12 mt-4 gap-y-2">
-
+                    <h2 class="text-2xl font-bold text-white">Information</h2>
+                    @if (movieCredits()) {
+                    <div @fadeInLeft class="grid w-full grid-cols-12 mt-4 gap-y-2">
                         <div class="col-span-5">Run time</div>
                         <div class="col-span-7">
-                            <ng-container *ngIf="movie.runtime, else notProvided">
-                                {{ (movie.runtime * 60 * 1000) | date:'h \'hrs\' m \'mins\'' }}
-                            </ng-container>
+                            @if (movie().runtime) {
+                            {{ (movie().runtime * 60 * 1000) | date:'h \'hrs\' m \'mins\'' }}
+                            } @else {
+                            Not provided
+                            }
                         </div>
-
                         <div class="col-span-5">Release date</div>
                         <div class="col-span-7">
-                            <ng-container *ngIf="movie.release_date, else notProvided">
-                                {{ movie.release_date | date:'longDate' }}
-                            </ng-container>
+                            @if (movie().release_date) {
+                            {{ movie().release_date | date:'longDate' }}
+                            } @else {
+                            Not provided
+                            }
                         </div>
-
                         <div class="col-span-5">Genres</div>
                         <div class="col-span-7">
-                            <ng-container *ngIf="movieGenresLabels$ | async as movieGenresLabels, else notProvided">
-                                {{ movieGenresLabels }}
-                            </ng-container>
+                            @if (movieGenresLabels() ) {
+                            {{ movieGenresLabels() }}
+                            } @else {
+                            Not provided
+                            }
                         </div>
-
                         <div class="col-span-5">Director</div>
                         <div class="col-span-7">
-                            <ng-container *ngIf="movieDirector$ | async as movieDirector, else notProvided">
-                                {{ movieDirector.name }}
-                            </ng-container>
+                            @if (movieDirector()) {
+                            {{ movieDirector().name }}
+                            } @else {
+                            Not provided
+                            }
                         </div>
-
                         <div class="col-span-5">Production countries</div>
                         <div class="col-span-7">
-                            <ng-container
-                                *ngIf="movieProductionCountries$ | async as movieProductionCountries, else notProvided">
-                                {{ movieProductionCountries }}
-                            </ng-container>
+                            @if (movieProductionCountries()) {
+                            {{ movieProductionCountries() }}
+                            } @else {
+                            Not provided
+                            }
                         </div>
                     </div>
-
-                    <ng-template #movieInfosLoader>
-                        <content-loader class="w-full h-full mt-4" [backgroundColor]="'#fff'" [backgroundOpacity]="0.3"
-                            [foregroundColor]="'#fff'" [foregroundOpacity]="0.4" [baseUrl]="baseUrl" [animate]="true">
-                            <svg:rect x="0" y="0" rx="3" ry="3" width="30%" height="8" />
-                            <svg:rect x="40%" y="0" rx="3" ry="3" width="60%" height="8" />
-
-                            <svg:rect x="0" y="30" rx="3" ry="3" width="30%" height="8" />
-                            <svg:rect x="40%" y="30" rx="3" ry="3" width="60%" height="8" />
-
-                            <svg:rect x="0" y="60" rx="3" ry="3" width="30%" height="8" />
-                            <svg:rect x="40%" y="60" rx="3" ry="3" width="60%" height="8" />
-
-                            <svg:rect x="0" y="90" rx="3" ry="3" width="30%" height="8" />
-                            <svg:rect x="40%" y="90" rx="3" ry="3" width="60%" height="8" />
-
-                            <svg:rect x="0" y="120" rx="3" ry="3" width="30%" height="8" />
-                            <svg:rect x="40%" y="120" rx="3" ry="3" width="60%" height="8" />
-                        </content-loader>
-                    </ng-template>
-
+                    } @else {
+                    <content-loader class="w-full h-full mt-4" [backgroundColor]="'#fff'" [backgroundOpacity]="0.3"
+                        [foregroundColor]="'#fff'" [foregroundOpacity]="0.4" [baseUrl]="baseUrl" [animate]="true">
+                        <svg:rect x="0" y="0" rx="3" ry="3" width="30%" height="8" />
+                        <svg:rect x="40%" y="0" rx="3" ry="3" width="60%" height="8" />
+                        <svg:rect x="0" y="30" rx="3" ry="3" width="30%" height="8" />
+                        <svg:rect x="40%" y="30" rx="3" ry="3" width="60%" height="8" />
+                        <svg:rect x="0" y="60" rx="3" ry="3" width="30%" height="8" />
+                        <svg:rect x="40%" y="60" rx="3" ry="3" width="60%" height="8" />
+                        <svg:rect x="0" y="90" rx="3" ry="3" width="30%" height="8" />
+                        <svg:rect x="40%" y="90" rx="3" ry="3" width="60%" height="8" />
+                        <svg:rect x="0" y="120" rx="3" ry="3" width="30%" height="8" />
+                        <svg:rect x="40%" y="120" rx="3" ry="3" width="60%" height="8" />
+                    </content-loader>
+                    }
                 </div>
             </div>
-
             <!-- Actors -->
             <div class="flex flex-col w-full mt-8">
-
                 <div class="flex flex-row justify-between w-full">
                     <h2 class="text-2xl font-bold text-white">Actors</h2>
                     <div class="flex flex-row justify-between">
-                        <button (click)="scrollX(actorsContainer, -scrollStep)" mat-icon-button
+                        <button @fadeInLeft (click)="scrollX(actorsContainer, -scrollStep)" mat-icon-button
                             aria-label="Scroll left">
                             <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="text-white icon-size-6">
                             </mat-icon>
                         </button>
-
-                        <button (click)="scrollX(actorsContainer, scrollStep)" mat-icon-button
+                        <button @fadeInRight (click)="scrollX(actorsContainer, scrollStep)" mat-icon-button
                             aria-label="Scroll right">
                             <mat-icon [svgIcon]="'heroicons_solid:chevron-right'" class="text-white icon-size-6">
                             </mat-icon>
                         </button>
                     </div>
                 </div>
-
                 <horizontal-scroll-container (containerRef)="actorsContainer = $event">
                     <div class="flex flex-row gap-[16px] mt-4">
-                        <ng-container *ngIf="movieCredits$ | async as credits; else actorsLoader">
-                            <ng-container *ngIf="credits.cast?.length, else noActors">
-                                <div *ngFor="let actor of credits.cast; trackBy: trackByFn" @fadeIn
-                                    class="flex flex-col min-w-[185px]">
-                                    <div
-                                        class="relative flex items-center justify-center w-full h-[278px] bg-slate-600">
-                                        <img *ngIf="actor.profile_path; else noActorProfile" class="w-full h-auto"
-                                            [ngSrc]="actor.profile_path | tmdbImageUrl:'w185':'profile'" fill alt="">
-                                        <ng-template #noActorProfile>
-                                            <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'" class="">
-                                            </mat-icon>
-                                        </ng-template>
-                                    </div>
-                                    <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-1">{{ actor.name }}</h3>
-                                    <p class="mt-1 text-md opacity-60">{{ actor.character }}</p>
-                                </div>
-                            </ng-container>
-                            <ng-template #noActors>
-                                <p class="w-full text-lg text-center text-opacity-60 text-default">No actors provided
-                                </p>
-                            </ng-template>
-                        </ng-container>
-
-                        <ng-template #actorsLoader>
-                            <div *ngFor="let count of [0,0,0,0,0,0,0,0,0,0]" class="flex flex-col min-w-[185px] ">
-                                <content-loader class="w-full h-auto" [viewBox]="'0 0 600 900'"
-                                    [backgroundColor]="'#fff'" [backgroundOpacity]="0.3" [foregroundColor]="'#fff'"
-                                    [foregroundOpacity]="0.4" [baseUrl]="baseUrl" [animate]="true">
-                                    <svg:rect x="0" y="0" width="100%" height="100%" />
-                                </content-loader>
-                                <content-loader class="w-full h-6 mt-2 overflow-hidden" [backgroundColor]="'#fff'"
-                                    [backgroundOpacity]="0.3" [foregroundColor]="'#fff'" [foregroundOpacity]="0.4"
-                                    [baseUrl]="baseUrl" [animate]="true">
-                                    <svg:rect x="0" y="0" rx="3" ry="3" width="60%" height="10" />
-                                    <svg:rect x="0" y="30" rx="3" ry="3" width="100%" height="8" />
-                                </content-loader>
+                        @if (movieCredits()) {
+                        @for (actor of movieCredits().cast; track actor.id) {
+                        <div @fadeInBottom class="flex flex-col min-w-[185px]">
+                            <div class="relative flex items-center justify-center w-full h-[278px] bg-slate-600">
+                                @if (actor.profile_path) {
+                                <img class="w-full h-auto" [ngSrc]="actor.profile_path | tmdbImageUrl:'w185':'profile'"
+                                    fill alt="">
+                                } @else {
+                                <mat-icon [svgIcon]="'heroicons_outline:exclamation-circle'">
+                                </mat-icon>
+                                }
                             </div>
-                        </ng-template>
+                            <h3 class="mt-1 text-lg font-bold text-ellipsis line-clamp-1">{{ actor.name }}</h3>
+                            <p class="mt-1 text-md opacity-60">{{ actor.character }}</p>
+                        </div>
+                        }
+                        @empty {
+                        <p class="w-full text-lg text-center text-opacity-60 text-default">No actors provided
+                        </p>
+                        }
+                        } @else {
+                        @for (count of [0,0,0,0,0,0,0,0,0,0]; track count) {
+                        <div @fadeInBottom class="flex flex-col min-w-[185px] ">
+                            <content-loader class="w-full h-auto" [viewBox]="'0 0 600 900'" [backgroundColor]="'#fff'"
+                                [backgroundOpacity]="0.3" [foregroundColor]="'#fff'" [foregroundOpacity]="0.4"
+                                [baseUrl]="baseUrl" [animate]="true">
+                                <svg:rect x="0" y="0" width="100%" height="100%" />
+                            </content-loader>
+                            <content-loader class="w-full h-6 mt-2 overflow-hidden" [backgroundColor]="'#fff'"
+                                [backgroundOpacity]="0.3" [foregroundColor]="'#fff'" [foregroundOpacity]="0.4"
+                                [baseUrl]="baseUrl" [animate]="true">
+                                <svg:rect x="0" y="0" rx="3" ry="3" width="60%" height="10" />
+                                <svg:rect x="0" y="30" rx="3" ry="3" width="100%" height="8" />
+                            </content-loader>
+                        </div>
+                        }
+                        }
                     </div>
                 </horizontal-scroll-container>
-
             </div>
-
             <!-- Collection -->
-            <div *ngIf="movie.belongs_to_collection as movieCollection"
-                [ngStyle]="{'background-image': 'url(' + (movieCollection.backdrop_path | tmdbImageUrl:'w1280':'backdrop') + ')'}"
+            @if (movie().belongs_to_collection; as movieCollection) {
+            <div [ngStyle]="{'background-image': 'url(' + (movieCollection.backdrop_path | tmdbImageUrl:'w1280':'backdrop') + ')'}"
                 class="w-full mt-8 bg-fixed bg-black bg-no-repeat bg-cover rounded-lg shadow-lg h-60">
-
                 <div class="flex flex-col justify-center w-full h-full p-4 bg-opacity-50 backdrop-blur-sm bg-default">
                     <h2 class="text-2xl font-bold text-white">Part of the {{ movieCollection.name }}</h2>
                     <button mat-flat-button
                         class="mt-6 mr-auto text-white bg-black hover:transition-colors hover:duration-500 rounded-3xl hover:bg-primary hover:text-black">Visit
                         the collection</button>
                 </div>
-
             </div>
-
+            }
         </div>
-
         <!-- Footer -->
         <div class="flex flex-col p-8 mt-8 bg-card">
-
             <!-- Recommended and similar movies -->
-            <mat-tab-group *ngIf="(similarMovies$ | async) && (recommendedMovies$ | async)" [selectedIndex]="0"
-                mat-align-tabs="start" preserveContent dynamicHeight>
-
+            @defer (when similarMovies() && recommendedMovies()) {
+            <mat-tab-group [selectedIndex]="0" mat-align-tabs="start" preserveContent dynamicHeight>
                 <mat-tab [label]="'Recommended'" [labelClass]="'text-lg text-white text-2xl font-bold font-sans'">
-
-                    <div *ngIf="(recommendedMovies$ | async)?.length" class="flex flex-row justify-end w-full">
+                    @if (recommendedMovies().length) {
+                    <div class="flex flex-row justify-end w-full">
                         <div class="flex flex-row justify-between">
-                            <button (click)="scrollX(recommendedMoviesContainer, -226)" mat-icon-button
+                            <button @fadeInLeft (click)="scrollX(recommendedMoviesContainer, -226)" mat-icon-button
                                 aria-label="Scroll left">
                                 <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="text-white icon-size-6">
                                 </mat-icon>
                             </button>
-
-                            <button (click)="scrollX(recommendedMoviesContainer, 226)" mat-icon-button
+                            <button @fadeInRight (click)="scrollX(recommendedMoviesContainer, 226)" mat-icon-button
                                 aria-label="Scroll right">
                                 <mat-icon [svgIcon]="'heroicons_solid:chevron-right'" class="text-white icon-size-6">
                                 </mat-icon>
                             </button>
                         </div>
                     </div>
-
-                    <horizontal-scroll-container *ngIf="recommendedMovies$ | async as recommendedMovies"
-                        (containerRef)="recommendedMoviesContainer = $event">
-                        <div *ngIf="recommendedMovies.length, else noRecommendedMovie"
-                            class="flex flex-row gap-[16px] mt-4 font-sans">
-                            <ng-container *ngFor="let movie of recommendedMovies; trackBy: trackByFn">
-                                <div class="min-w-[210px] w-[210px] flex flex-col">
-                                    <movie-card (selected)="onMovieSelected($event)" [movie]="movie"></movie-card>
-                                </div>
-                            </ng-container>
+                    }
+                    @if (recommendedMovies()) {
+                    <horizontal-scroll-container (containerRef)="recommendedMoviesContainer = $event">
+                        @if (recommendedMovies().length) {
+                        @defer (when recommendedMovies().length) {
+                        <div class="flex flex-row gap-[16px] mt-4 font-sans">
+                            @for (movie of recommendedMovies(); track movie.id) {
+                            <div class="min-w-[210px] w-[210px] flex flex-col">
+                                <movie-card @fadeInBottom (selected)="onMovieSelected($event)"
+                                    [movie]="movie"></movie-card>
+                            </div>
+                            }
                         </div>
-                        <ng-template #noRecommendedMovie>
-                            <p class="w-full h-full text-center text-default text-opacity-60">Sorry, we have no recommendations
-                                for this movie now
-                            </p>
-                        </ng-template>
+                        }
+                        } @else {
+                        <p class="w-full h-full text-center text-default text-opacity-60">Sorry, we have no
+                            recommendations
+                            for this movie now
+                        </p>
+                        }
                     </horizontal-scroll-container>
+                    }
                 </mat-tab>
-
                 <mat-tab [label]="'Similar'" [labelClass]="'text-lg text-white text-2xl font-bold font-sans'">
-
-                    <div *ngIf="(similarMovies$ | async)?.length" class="flex flex-row justify-end w-full">
+                    @if (similarMovies().length) {
+                    <div class="flex flex-row justify-end w-full">
                         <div class="flex flex-row justify-between">
-                            <button (click)="scrollX(similarMoviesContainer, -226)" mat-icon-button
+                            <button @fadeInLeft (click)="scrollX(similarMoviesContainer, -226)" mat-icon-button
                                 aria-label="Scroll left">
                                 <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="text-white icon-size-6">
                                 </mat-icon>
                             </button>
-
-                            <button (click)="scrollX(similarMoviesContainer, 226)" mat-icon-button
+                            <button @fadeInRight (click)="scrollX(similarMoviesContainer, 226)" mat-icon-button
                                 aria-label="Scroll right">
                                 <mat-icon [svgIcon]="'heroicons_solid:chevron-right'" class="text-white icon-size-6">
                                 </mat-icon>
                             </button>
                         </div>
                     </div>
-
-                    <horizontal-scroll-container *ngIf="similarMovies$ | async as similarMovies"
-                        (containerRef)="similarMoviesContainer = $event">
-                        <div *ngIf="similarMovies.length, else noSimilarMovie"
-                            class="flex flex-row gap-[16px] mt-4 font-sans">
-                            <ng-container *ngFor="let movie of similarMovies; trackBy: trackByFn">
-                                <div class="min-w-[210px] w-[210px] flex flex-col">
-                                    <movie-card (selected)="onMovieSelected($event)" [movie]="movie"></movie-card>
-                                </div>
-                            </ng-container>
+                    }
+                    @if (similarMovies()) {
+                    <horizontal-scroll-container (containerRef)="similarMoviesContainer = $event">
+                        @if (similarMovies().length) {
+                        <div class="flex flex-row gap-[16px] mt-4 font-sans">
+                            @for (movie of similarMovies(); track movie.id) {
+                            <div class="min-w-[210px] w-[210px] flex flex-col">
+                                <movie-card @fadeInBottom (selected)="onMovieSelected($event)"
+                                    [movie]="movie"></movie-card>
+                            </div>
+                            }
                         </div>
-                        <ng-template #noSimilarMovie>
-                            <p class="w-full h-full text-center text-default text-opacity-60">Oups! Looks like we have no similar items
-                                for this movie
-                            </p>
-                        </ng-template>
+                        } @else {
+                        <p class="w-full h-full text-center text-default text-opacity-60">Oups! Looks like we have no
+                            similar items
+                            for this movie
+                        </p>
+                        }
                     </horizontal-scroll-container>
-
+                    }
                 </mat-tab>
-
             </mat-tab-group>
+            }
         </div>
     </div>
-
 </content-layout>
+}
 
-<ng-template #notProvided>
-    Not provided
-</ng-template>
 
 <ng-template #unknown>
     Unknown

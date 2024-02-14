@@ -12,7 +12,8 @@ import { ScrollbarGeometry, ScrollbarPosition } from '@movoo/directives/scrollba
  */
 @Directive({
     selector: '[movooScrollbar]',
-    exportAs: 'movooScrollbar'
+    exportAs: 'movooScrollbar',
+    standalone: true
 })
 export class MovooScrollbarDirective implements OnChanges, OnInit, OnDestroy
 {

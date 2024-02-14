@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { invoke } from '@tauri-apps/api/tauri';
-import { environment } from 'environments/environment';
 import { from, Observable, tap } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MovooTauriService {
 
     /**
@@ -26,7 +25,7 @@ export class MovooTauriService {
             .pipe(
                 tap((status) => {
                     // Log in dev mode
-                    if (!environment.production) {
+                    if (isDevMode()) {
                         window.console.log(status);
                     }
                 })

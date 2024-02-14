@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie, MoviesPagination } from './movie.types';
-import { GetMovieDto, GetMoviesDto, getMoviesDtoDefault } from './movies.dtos';
+import { GetMovieDto, GetMoviesDto, getMoviesDtoDefault } from './movies.dto';
 
 @Injectable({
     providedIn: 'root'

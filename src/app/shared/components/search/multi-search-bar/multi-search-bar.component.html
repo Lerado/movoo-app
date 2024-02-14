@@ -1,9 +1,11 @@
 <fieldset class="flex flex-row-reverse items-center w-full">
 
     <!-- Query input -->
+    <!-- cspell:disable -->
     <input type="text" placeholder="Harry Potter, Jennifer Aniston, ..." matInput [formControl]="queryControl"
         [matAutocomplete]="auto" spellcheck="false"
         class="w-full py-1 text-opacity-50 transition-colors duration-300 focus:text-opacity-100 text-default placeholder:text-default focus:border-primary focus:border-b peer placeholder:text-opacity-50">
+    <!-- cspell:enable -->
 
     <!-- Search icon -->
     <mat-icon svgIcon="heroicons_outline:search"
@@ -13,29 +15,32 @@
     <mat-autocomplete #auto="matAutocomplete" class="multi-search-bar-results-container">
 
         <!-- Loading mask -->
-        <mat-option *ngIf="loading$ | async" value="" class="flex items-center justify-center">
+        @if (loading()) {
+        <mat-option value="" class="flex items-center justify-center w-full">
             <mat-spinner [diameter]="32" [color]="'primary'"></mat-spinner>
         </mat-option>
+        }
 
-        <ng-container *ngIf="searchResults$ | async as searchResults">
-            <ng-container *ngIf="!(loading$ | async)">
-                <ng-container *ngIf="searchResults.length, else noResults">
-                    <!-- Results -->
-                    <a *ngFor="let result of searchResults"
-                        [routerLink]="['/' + detailsRoutes[result.media_type], result.id]">
-                        <mat-option [value]="result[mediaNameAttribute[result.media_type]]"
-                            class="py-2 border-b multi-search-bar-result group">
-                            <multi-search-bar-result [media]="result"></multi-search-bar-result>
-                        </mat-option>
-                    </a>
-                </ng-container>
-                <ng-template #noResults>
-                    <mat-option *ngIf="queryControl.value" value="" class="flex items-center justify-center">
-                        <span class="text-secondary">No results</span>
-                    </mat-option>
-                </ng-template>
-            </ng-container>
-        </ng-container>
+        @else {
+        @defer (when !loading() && searchResults()?.length; prefetch on idle) {
+        <!-- Results -->
+        @for (result of searchResults(); track result.id) {
+        <a [routerLink]="['/', detailsRoutes[result.media_type], result.id]">
+            <mat-option [value]="result[mediaNameAttribute[result.media_type]]"
+                class="py-2 border-b multi-search-bar-result group">
+                <multi-search-bar-result [media]="result"></multi-search-bar-result>
+            </mat-option>
+        </a>
+        }
+        @empty {
+        @if (queryControl.value) {
+        <mat-option value="" class="flex items-center justify-center">
+            <span class="text-secondary">No results</span>
+        </mat-option>
+        }
+        }
+        }
+        }
 
     </mat-autocomplete>
 

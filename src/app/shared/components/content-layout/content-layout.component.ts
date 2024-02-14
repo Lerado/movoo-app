@@ -1,33 +1,24 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MovooScrollbarModule } from '@movoo/directives/scrollbar';
-import { MovooBreadcrumbsModule } from 'app/layout/common/breadcrumbs/breadcrumbs.module';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild, input } from '@angular/core';
+import { MovooScrollbarDirective } from '@movoo/directives/scrollbar';
+import { BreadcrumbsComponent } from 'app/layout/common/breadcrumbs/breadcrumbs.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @Component({
     standalone: true,
-    imports: [
-        MovooScrollbarModule,
-        MovooBreadcrumbsModule,
-        InfiniteScrollModule
-    ],
+    imports: [BreadcrumbsComponent, InfiniteScrollModule, MovooScrollbarDirective],
     selector: 'content-layout',
     templateUrl: './content-layout.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContentLayoutComponent implements AfterViewInit {
 
-    @Input() infiniteSrollOptions: { [key: string]: any };
+    infiniteScrollOptions = input<Record<string, unknown>>({});
 
     @Output() scrollElement: EventEmitter<ElementRef<HTMLDivElement>> = new EventEmitter<ElementRef<HTMLDivElement>>();
     @Output() scrolled: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('scrollElement') scrollElementRef;
-
-    /**
-     * Constructor
-     */
-    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

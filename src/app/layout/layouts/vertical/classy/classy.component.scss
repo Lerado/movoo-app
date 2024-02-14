@@ -1,3 +1,8 @@
-movoo-vertical-navigation.movoo-vertical-navigation {
-    background-color: rgba(var(--movoo-bg-nav-bar-rgb), var(--tw-bg-opacity)) !important;
+:host {
+    movoo-vertical-navigation.movoo-vertical-navigation {
+        background-color: rgba(
+            var(--movoo-bg-nav-bar-rgb),
+            var(--tw-bg-opacity)
+        ) !important;
+    }
 }

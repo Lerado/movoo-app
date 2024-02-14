@@ -1,10 +1,13 @@
 <!-- Loading bar -->
+@defer {
 <movoo-loading-bar></movoo-loading-bar>
+}
 
 <!-- Navigation -->
+@defer (when navigation().default) {
 <movoo-vertical-navigation class="movoo-vertical-navigation dark print:hidden z-9999 md:z-999"
-    [mode]="isScreenSmall ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation.default"
-    [opened]="!isScreenSmall">
+    [mode]="isScreenSmall() ? 'over' : 'side'" [name]="'mainNavigation'" [navigation]="navigation().default"
+    [opened]="!isScreenSmall()">
 
     <!-- Navigation header hook -->
     <ng-container movooVerticalNavigationHeader>
@@ -37,13 +40,13 @@
             </a>
             <a title="Author's Github" target="_blank" href="https://github.com/Lerado"
                 class="ml-auto text-center transition-colors hover:text-opacity-100">
-                &copy; {{ currentYear }}
-                <!-- made with <span class="text-red-500">&hearts;</span> by Lerado -->
+                &copy; {{ currentYear() }}
             </a>
         </footer>
     </ng-container>
 
 </movoo-vertical-navigation>
+}
 
 <!-- Wrapper -->
 <div class="flex flex-col flex-auto w-full min-w-0 pt-[48px]">
@@ -58,13 +61,15 @@
     <!-- Content -->
     <div class="flex flex-col flex-auto">
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
-             Otherwise, layout changes won't be registered and the view won't be updated! -->
-        <router-outlet *ngIf="true"></router-outlet>
+    Otherwise, layout changes won't be registered and the view won't be updated! -->
+        @if (true) {
+        <router-outlet></router-outlet>
+        }
     </div>
 
     <!-- Footer -->
     <!--<div class="relative flex items-center justify-start w-full px-4 border-t flex-0 h-14 md:px-6 z-49 bg-card dark:bg-transparent print:hidden">
-        <span class="font-medium text-default text-opacity-60">Movoo &copy; {{currentYear}}</span>
-    </div>-->
+  <span class="font-medium text-default text-opacity-60">Movoo &copy; {{currentYear}}</span>
+</div>-->
 
 </div>

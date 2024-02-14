@@ -1,11 +1,14 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MovooConfirmationConfig } from '@movoo/services/confirmation/confirmation.types';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgClass } from '@angular/common';
 
 @Component({
-    selector     : 'movoo-confirmation-dialog',
-    templateUrl  : './dialog.component.html',
-    styles       : [
+    selector: 'movoo-confirmation-dialog',
+    templateUrl: './dialog.component.html',
+    styles: [
         `
             .movoo-confirmation-dialog-panel {
                 @screen md {
@@ -18,7 +21,9 @@ import { MovooConfirmationConfig } from '@movoo/services/confirmation/confirmati
             }
         `
     ],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, MatButtonModule, MatDialogModule, MatIconModule, NgClass]
 })
 export class MovooConfirmationDialogComponent
 {

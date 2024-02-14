@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, shareReplay, take, tap } from 'rxjs';
 import { MovieGenre } from './genre.types';
 
 @Injectable({
@@ -8,7 +8,11 @@ import { MovieGenre } from './genre.types';
 })
 export class GenreService {
 
-    private readonly _genres: ReplaySubject<MovieGenre[]> = new ReplaySubject<MovieGenre[]>(1);
+    genres$ = this._httpClient.get<{ genres: MovieGenre[] }>('@tmdb/genre/movie/list')
+        .pipe(
+            map(({ genres }) => genres),
+            shareReplay()
+        );
 
     /**
      * Constructor
@@ -18,17 +22,6 @@ export class GenreService {
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Getter for genres
-     */
-    get genres$(): Observable<MovieGenre[]> {
-        return this._genres.asObservable();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
@@ -36,11 +29,6 @@ export class GenreService {
      * Get movies genres
      */
     getAll(): Observable<MovieGenre[]> {
-        return this._httpClient.get<{ genres: MovieGenre[] }>('@tmdb/genre/movie/list').pipe(
-            map(response => response.genres),
-            tap((genres: MovieGenre[]) => {
-                this._genres.next(genres);
-            })
-        );
+        return this.genres$.pipe(take(1));
     }
 }

@@ -1,15 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { IsActiveMatchOptions } from '@angular/router';
+import { IsActiveMatchOptions, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { MovooVerticalNavigationComponent } from '@movoo/components/navigation/vertical/vertical.component';
 import { MovooNavigationService } from '@movoo/components/navigation/navigation.service';
 import { MovooNavigationItem } from '@movoo/components/navigation/navigation.types';
 import { MovooUtilsService } from '@movoo/services/utils/utils.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
-    selector       : 'movoo-vertical-navigation-basic-item',
-    templateUrl    : './basic.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'movoo-vertical-navigation-basic-item',
+    templateUrl: './basic.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule]
 })
 export class MovooVerticalNavigationBasicItemComponent implements OnInit, OnDestroy
 {

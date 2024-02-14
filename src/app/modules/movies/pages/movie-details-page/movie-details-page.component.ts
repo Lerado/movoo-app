@@ -1,79 +1,95 @@
-import { Component, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { CurrencyPipe, DatePipe, DecimalPipe, NgOptimizedImage, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { Component, ElementRef, computed, input, numberAttribute, signal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { movooAnimations } from '@movoo/animations';
+import { ContentLoaderModule } from '@ngneat/content-loader';
 import { CreditService } from 'app/core/credits/credits.service';
-import { MovieCredit, MovieCredits } from 'app/core/credits/credits.types';
 import { GenreService } from 'app/core/genre/genre.service';
-import { MovieGenre } from 'app/core/genre/genre.types';
 import { MovieService } from 'app/core/movie/movie.service';
 import { Movie } from 'app/core/movie/movie.types';
 import { SettingsService } from 'app/core/settings/settings.service';
 import { VideoService } from 'app/core/video/video.service';
-import { MovieVideo, MovieVideos } from 'app/core/video/video.types';
 import { BreadcrumbsService } from 'app/layout/common/breadcrumbs/breadcrumbs.service';
-import { EmbedVideoService } from 'ngx-embed-video';
-import { combineLatestWith, map, Observable, shareReplay, switchMap, take, tap } from 'rxjs';
+import { ContentLayoutComponent } from 'app/shared/components/content-layout/content-layout.component';
+import { HorizontalScrollContainerComponent } from 'app/shared/components/horizontal-scroll-container/horizontal-scroll-container.component';
+import { TMDBImageUrlPipe } from 'app/shared/pipes/tmdb-image-url.pipe';
+import { combineLatestWith, map, shareReplay, switchMap, tap } from 'rxjs';
+import { MovieCardComponent } from 'app/shared/components/movie/movie-card/movie-card.component';
+import { YouTubePlayer } from '@angular/youtube-player';
 
 @Component({
     selector: 'movie-details-page',
     templateUrl: './movie-details-page.component.html',
-    animations: movooAnimations
+    animations: movooAnimations,
+    standalone: true,
+    imports: [NgTemplateOutlet, NgStyle, MatIconModule, MatTooltipModule, MatTabsModule, NgOptimizedImage, YouTubePlayer, ContentLayoutComponent, HorizontalScrollContainerComponent, MovieCardComponent, ContentLoaderModule, DecimalPipe, DatePipe, CurrencyPipe, TMDBImageUrlPipe]
 })
 export class MovieDetailsPageComponent {
 
-    movie$: Observable<Movie> = this._route.paramMap.pipe(
+    movieId = input(undefined, { transform: numberAttribute });
+    movieId$ = toObservable(this.movieId);
+
+    movie = toSignal(this.movieId$.pipe(
         combineLatestWith(this._settingsService.settings$),
-        switchMap(([routeParams, { language }]) => this._movieService.getById(+routeParams.get('id'), { language })),
+        switchMap(([movieId, { language }]) => this._movieService.getById(movieId, { language })),
         tap(movie => this._breadcrumbsService.setMarkers({ movie_title: movie.title })),
         shareReplay()
-    );
-    movieProductionCountries$: Observable<string> = this.movie$.pipe(
-        map(movie => this._getMovieProductionCountries(movie)),
-        shareReplay()
-    );
+    ));
 
-    movieVideos$: Observable<MovieVideos> = this.movie$.pipe(
-        switchMap(movie => this._videoService.getByMovieId(movie.id)),
-        shareReplay()
-    );
-    movieTrailer$: Observable<MovieVideo> = this.movieVideos$.pipe(
-        map(videos => this._getTrailer(videos)),
-        shareReplay()
-    );
+    movieProductionCountries = computed(() => this.movie().production_countries.map(country => country.name).join(', '));
 
-    movieCredits$: Observable<MovieCredits> = this.movie$.pipe(
-        switchMap(movie => this._creditService.getByMovieId(movie.id)),
-        shareReplay()
-    );
-    movieDirector$: Observable<MovieCredit> = this.movieCredits$.pipe(
-        map(credits => this._getMovieDirector(credits)),
-        shareReplay()
-    );
+    movieVideos = toSignal(this.movieId$.pipe(
+        switchMap(movieId => this._videoService.getByMovieId(movieId)),
+        map(({ results }) => results)
+    ), { initialValue: [] });
+    movieTrailer = computed(() => {
+        const availableTrailers = this.movieVideos().filter(video => video.official && video.type === 'Trailer');
+        if (!availableTrailers.length) { return null; }
+        const officialTrailer = availableTrailers.find(video => video.name === 'Official Trailer');
+        if (officialTrailer) { return officialTrailer; }
+        return availableTrailers[0];
+    });
 
-    similarMovies$: Observable<Movie[]> = this.movie$.pipe(
-        switchMap(movie => this._movieService.getSimilar(movie.id)),
-        map(pagination => pagination.results),
-        shareReplay()
-    );
-    recommendedMovies$: Observable<Movie[]> = this.movie$.pipe(
-        switchMap(movie => this._movieService.getRecommended(movie.id)),
-        map(pagination => pagination.results),
-        shareReplay()
-    );
+    movieCredits = toSignal(this.movieId$.pipe(
+        switchMap(movieId => this._creditService.getByMovieId(movieId))
+    ));
+    movieDirector = computed(() => this.movieCredits().crew.find(member => member.department === 'Directing' && member.job === 'Director'));
 
-    movieGenresLabels$: Observable<string> = this.movie$.pipe(
-        combineLatestWith(this._genreService.genres$),
-        map(([movie, genres]) => this._getMovieGenresLabels(movie, genres)),
-        shareReplay()
-    );
+    similarMovies = toSignal(this.movieId$.pipe(
+        switchMap(movieId => this._movieService.getSimilar(movieId)),
+        map(pagination => pagination.results)
+    ), { initialValue: [] });
+
+    recommendedMovies = toSignal(this.movieId$.pipe(
+        switchMap(movieId => this._movieService.getRecommended(movieId)),
+        map(pagination => pagination.results)
+    ), { initialValue: [] });
+
+    movieGenres = toSignal(this._genreService.genres$, { initialValue: [] });
+    movieGenresLabels = computed(() => {
+        if (!this.movieGenres().length) {
+            return '';
+        }
+        if (this.movie().genres) {
+            return this.movie().genres.map(genre => genre.name).join(', ');
+        }
+        else {
+            return this.movie().genre_ids.map(genreId => this.movieGenres().find(genre => genre.id === genreId).name).join(', ');
+        }
+    });
 
     mainContainer: ElementRef<HTMLElement>;
     actorsContainer: ElementRef<HTMLElement>;
     similarMoviesContainer: ElementRef<HTMLElement>;
     recommendedMoviesContainer: ElementRef<HTMLElement>;
 
-    trailerEmbed: string;
-    showTrailer: boolean = false;
+    trailerEmbed = signal<string>('');
+    showTrailer = signal(false);
+
     scrollStep: number = 200;
     baseUrl: string = window.location.pathname;
 
@@ -85,35 +101,14 @@ export class MovieDetailsPageComponent {
         private readonly _genreService: GenreService,
         private readonly _creditService: CreditService,
         private readonly _videoService: VideoService,
-        private readonly _embedService: EmbedVideoService,
         private readonly _settingsService: SettingsService,
         private readonly _breadcrumbsService: BreadcrumbsService,
-        private readonly _router: Router,
-        private readonly _route: ActivatedRoute,
+        private readonly _router: Router
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Play trailer
-     */
-    playTrailer(): void {
-
-        this.movieTrailer$.pipe(take(1)).subscribe((movieTrailer) => {
-
-            if (!this.trailerEmbed) {
-                this.trailerEmbed = this._embedService[`embed_${movieTrailer.site.toLowerCase()}`](movieTrailer.key, {
-                    attr: {
-                        style: 'width:80%;height:80%;'
-                    }
-                });
-            }
-
-            this.showTrailer = true;
-        });
-    }
 
     /**
      * Scroll element horizontally
@@ -133,69 +128,5 @@ export class MovieDetailsPageComponent {
             .then(() => {
                 this.mainContainer.nativeElement?.scrollTo({ top: 0, left: 0 });
             });
-    }
-
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Get trailer video for this movie
-     *
-     * @param movieVideos
-     */
-    private _getTrailer(movieVideos: MovieVideos): MovieVideo {
-
-        const availableTrailers = movieVideos.results.filter(video => video.official && video.type === 'Trailer');
-
-        if (!availableTrailers.length) { return null; }
-
-        const officialTrailer = availableTrailers.find(video => video.name === 'Official Trailer');
-
-        if (officialTrailer) { return officialTrailer; }
-
-        return availableTrailers[0];
-    }
-
-    /**
-     * Map genres ids to genre labels
-     *
-     * @param movie
-     */
-    private _getMovieGenresLabels(movie: Movie, genres: MovieGenre[]): string {
-
-        if (movie.genres) {
-            return movie.genres.map(genre => genre.name).join(', ');
-        }
-        else {
-            return movie.genre_ids.map(genreId => genres.find(genre => genre.id === genreId).name).join(', ');
-        }
-    }
-
-    /**
-     * Get production director name
-     */
-    private _getMovieDirector(credits: MovieCredits): MovieCredit {
-        // Get director object
-        return credits.crew.find(member => member.department === 'Directing' && member.job === 'Director');
-    }
-
-    /**
-     * Map production countries to their labels
-     *
-     * @param movie
-     */
-    private _getMovieProductionCountries(movie: Movie): string {
-        return movie.production_countries.map(country => country.name).join(', ');
     }
 }

@@ -1,33 +1,26 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { SharedModule } from 'app/shared/shared.module';
+import { Component, Signal, signal, ViewEncapsulation } from '@angular/core';
+
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from "@angular/material/input";
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { debounceTime, distinctUntilChanged, filter, finalize, iif, map, Observable, of, switchMap, tap, withLatestFrom } from 'rxjs';
-import { MultiSearchDto, multiSearchDtoDefault } from "app/core/search/search.dtos";
+import { MultiSearchDto, multiSearchDtoDefault } from "app/core/search/search.dto";
 import { SettingsService } from 'app/core/settings/settings.service';
 import { MediaType, MultiSearchResult } from 'app/core/search/search.types';
 import { SearchService } from 'app/core/search/search.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MultiSearchBarResultModule } from '../multi-search-bar-result/multi-search-bar-result.module';
-import { RouterModule } from '@angular/router';
+
+import { RouterLink, RouterModule } from '@angular/router';
 import { mediaNameAttribute } from '../search.types';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { MultiSearchBarResultComponent } from '../multi-search-bar-result/multi-search-bar-result.component';
 
 @Component({
     selector: 'multi-search-bar',
     standalone: true,
-    imports: [
-        RouterModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        MatAutocompleteModule,
-        MatProgressSpinnerModule,
-        MultiSearchBarResultModule,
-        SharedModule
-    ],
+    imports: [RouterLink, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatAutocompleteModule, MatProgressSpinnerModule, MultiSearchBarResultComponent],
     templateUrl: './multi-search-bar.component.html',
     styleUrls: ['./multi-search-bar.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -36,7 +29,7 @@ export class MultiSearchBarComponent {
 
     queryControl: FormControl<string> = new FormControl<string>('');
 
-    loading$: Observable<boolean> = of(false);
+    loading = signal(false);
 
     searchParams$: Observable<MultiSearchDto> = this.queryControl.valueChanges.pipe(
         debounceTime(500),
@@ -47,17 +40,17 @@ export class MultiSearchBarComponent {
         map(([query, settings]) => ({ query, ...settings, ...multiSearchDtoDefault }))
     );
 
-    searchResults$: Observable<MultiSearchResult[]> = this.searchParams$.pipe(
-        tap(() => this.loading$ = of(true)),
+    searchResults: Signal<MultiSearchResult[]> = toSignal(this.searchParams$.pipe(
+        tap(() => this.loading.set(true)),
         switchMap(params => iif(
             () => params.query !== '',
             this._searchService.search(params),
             of({ results: [] as MultiSearchResult[] })
         )
-            .pipe(finalize(() => this.loading$ = of(false)))
+            .pipe(finalize(() => this.loading.set(false)))
         ),
         map(pagination => pagination.results.filter(result => result.media_type !== MediaType.Tv))
-    );
+    ));
 
     detailsRoutes: Record<MediaType, string> = {
         'movie': 'movies',

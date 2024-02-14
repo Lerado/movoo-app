@@ -4,7 +4,7 @@ import { map, Observable, ReplaySubject, switchMap } from 'rxjs';
 import { MovooConfigService } from '@movoo/services/config';
 import { fromPairs } from 'lodash-es';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MovooMediaWatcherService {
     private _onMediaChange: ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }> = new ReplaySubject<{ matchingAliases: string[]; matchingQueries: any }>(1);
 

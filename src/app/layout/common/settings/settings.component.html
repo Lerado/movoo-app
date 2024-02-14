@@ -5,9 +5,10 @@
         <div class="flex flex-row items-center h-20 px-6 text-white min-h-20 bg-primary">
             <mat-icon class="text-current icon-size-7" [svgIcon]="'heroicons_solid:cog'"></mat-icon>
             <div class="ml-3 text-2xl font-semibold tracking-tight">Settings</div>
-            <mat-spinner *ngIf="settingsUpdating" [diameter]="24" [mode]="'indeterminate'" [color]="'accent'"
-                class="ml-auto"></mat-spinner>
-            <button [ngClass]="{ 'ml-2': settingsUpdating }" class="ml-auto" mat-icon-button
+            @if (settingsUpdating()) {
+            <mat-spinner [diameter]="24" [mode]="'indeterminate'" [color]="'accent'" class="ml-auto"></mat-spinner>
+            }
+            <button [ngClass]="{ 'ml-2': settingsUpdating() }" class="ml-auto" mat-icon-button
                 (click)="settingsDrawer.close()">
                 <mat-icon class="text-current" [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </button>
@@ -18,16 +19,16 @@
             <!-- Theme -->
             <div class="font-semibold text-md text-secondary">THEME</div>
             <div class="grid grid-cols-2 gap-3 mt-6 sm:grid-cols-3">
-                <ng-container *ngFor="let theme of config.themes">
-                    <div class="flex items-center justify-center px-4 py-3 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
-                        [class.ring-2]="config.theme === theme.id" [ngClass]="theme.id" (click)="setTheme(theme.id)">
-                        <div class="w-3 h-3 rounded-full flex-0 bg-primary"></div>
-                        <div class="ml-2.5 font-medium leading-5 truncate"
-                            [class.text-secondary]="config.theme !== theme.id">
-                            {{theme.name}}
-                        </div>
+                @for (theme of config().themes; track $index) {
+                <div class="flex items-center justify-center px-4 py-3 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
+                    [class.ring-2]="config().theme === theme.id" [ngClass]="theme.id" (click)="setTheme(theme.id)">
+                    <div class="w-3 h-3 rounded-full flex-0 bg-primary"></div>
+                    <div class="ml-2.5 font-medium leading-5 truncate"
+                        [class.text-secondary]="config().theme !== theme.id">
+                        {{theme.name}}
                     </div>
-                </ng-container>
+                </div>
+                }
             </div>
 
             <hr class="my-8">
@@ -44,37 +45,43 @@
                             class="ml-2 icon-size-4"></mat-icon>
                     </mat-label>
                     <mat-select [formControl]="settingsControls.get('region')">
-                        <mat-option *ngFor="let region of regions$ | async" [value]="region.iso_3166_1">
+                        @for (region of regions(); track region.iso_3166_1) {
+                        <mat-option [value]="region.iso_3166_1">
                             {{ region.english_name }}
                         </mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
                 <!-- Language -->
-                <!-- <mat-form-field>
+                <mat-form-field>
                     <mat-label>Preferred language</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let lang of languages$ | async" [value]="lang.iso_3166_1">
-                            {{ lang.english_name }}
+                        @for (language of languages(); track language.iso_639_1) {
+                        <mat-option [value]="language.iso_639_1">
+                            {{ language.english_name }}
                         </mat-option>
+                        }
                     </mat-select>
-                </mat-form-field> -->
+                </mat-form-field>
                 <!-- Timezone -->
-                <!-- <mat-form-field>
+                <mat-form-field>
                     <mat-label>Timezone</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let timezone of timezones$ | async" [value]="timezone.iso_3166_1">
+                        @for (timezone of timezones(); track timezone.iso_3166_1) {
+                        <mat-option [value]="timezone.iso_3166_1">
                             {{ timezone.zones.join(', ') }}
                         </mat-option>
+                        }
                     </mat-select>
-                </mat-form-field> -->
+                </mat-form-field>
             </div>
 
             <hr class="my-8">
 
             <!-- Content restriction -->
             <div class="font-semibold text-md text-secondary">CONTENT RESTRICTION</div>
-            <mat-slide-toggle (change)="getUserConsent($event)"
-                [checked]="settingsControls.get('include_adult').value" class="mt-6" color="primary">
+            <mat-slide-toggle (change)="getUserConsent($event)" [checked]="settingsControls.get('include_adult').value"
+                class="mt-6" color="primary">
                 Include adult content
             </mat-slide-toggle>
 

@@ -3,7 +3,7 @@ import { platform } from '@tauri-apps/api/os';
 import { from, Observable, ReplaySubject } from 'rxjs';
 import { Platform } from '@movoo/services/platform-watcher/platform-watcher.types';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MovooPlatformWatcherService {
 
     private _platform: ReplaySubject<Platform> = new ReplaySubject<Platform>(1);

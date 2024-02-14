@@ -1,12 +1,13 @@
+@defer {
 <!-- Title bar -->
 <movoo-title-bar>
 
     <!-- Header -->
-    <div class="flex flex-row w-40 h-full pointer-events-none md:hidden" movooTitleBarHeader>
+    <div class="flex h-full pointer-events-none" movooTitleBarHeader>
         <!-- Logo -->
-        <div class="relative w-full my-auto h-7">
+        <!-- <div class="relative flex w-40 my-auto md:hidden h-7">
             <img class="object-contain" ngSrc="assets/images/logo/logo-text-inverted.webp" fill alt="Movoo logo">
-        </div>
+        </div> -->
     </div>
 
     <!-- Toolbar -->
@@ -16,7 +17,7 @@
         <multi-search-bar class="w-full mr-8"></multi-search-bar>
 
         <!-- Settings toggle -->
-        <button (click)="settings.toggle()" mat-icon-button>
+        <button (click)="settingsComponent.toggle()" mat-icon-button>
             <mat-icon [svgIcon]="'heroicons_solid:cog'"
                 class="icon-size-5 text-default text-opacity-60 animate-spin-slow"></mat-icon>
         </button>
@@ -24,20 +25,31 @@
     </ng-container>
 
 </movoo-title-bar>
+}
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- Empty layout -->
 <!-- ----------------------------------------------------------------------------------------------------- -->
-<empty-layout *ngIf="layout === 'empty'"></empty-layout>
+@if (layout === 'empty') {
+@defer (when layout === 'empty') {
+<empty-layout></empty-layout>
+}
+}
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- Layouts with vertical navigation -->
 <!-- ----------------------------------------------------------------------------------------------------- -->
 
 <!-- Classy -->
-<classy-layout *ngIf="layout === 'classy'"></classy-layout>
+@if (layout === 'classy') {
+@defer (when layout === 'classy') {
+<classy-layout></classy-layout>
+}
+}
 
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- Settings drawer - Remove this to remove the drawer and its button -->
 <!-- ----------------------------------------------------------------------------------------------------- -->
+@defer {
 <settings #settings></settings>
+}

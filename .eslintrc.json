@@ -1,39 +1,23 @@
 {
     "root": true,
-    "env": {
-        "es6": true
-    },
-    "parserOptions": {
-        "ecmaVersion": 2018
-    },
     "ignorePatterns": [
-        "projects/**/*"
+        "projects/**/*",
+        "src/@*/**/*",
+        "src/app/mock-api",
+        "*.config.js"
     ],
     "overrides": [
         {
             "files": [
                 "*.ts"
             ],
-            "parserOptions": {
-                "project": [
-                    "tsconfig.json"
-                ],
-                "createDefaultProgram": true
-            },
             "extends": [
-                "plugin:@angular-eslint/ng-cli-compat",
-                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
-                "@angular-eslint/component-selector": [
-                    "error",
-                    {
-                        "type": "element",
-                        "prefix": "",
-                        "style": "kebab-case"
-                    }
-                ],
                 "@angular-eslint/directive-selector": [
                     "error",
                     {
@@ -42,15 +26,15 @@
                         "style": "camelCase"
                     }
                 ],
-                "@typescript-eslint/dot-notation": "off",
-                "@typescript-eslint/explicit-function-return-type": "error",
-                "@typescript-eslint/explicit-member-accessibility": [
-                    "off",
+                "@angular-eslint/component-selector": [
+                    "error",
                     {
-                        "accessibility": "explicit"
+                        "type": "element",
+                        "prefix": "",
+                        "style": "kebab-case"
                     }
                 ],
-                "@typescript-eslint/no-inferrable-types": "off",
+                "@typescript-eslint/explicit-function-return-type": "error",
                 "arrow-parens": [
                     "error",
                     "as-needed",
@@ -58,20 +42,14 @@
                         "requireForBlockBody": true
                     }
                 ],
-                "brace-style": [
-                    "off",
-                    "off"
-                ],
-                "import/order": "off",
                 "max-len": [
                     "error",
                     {
-                        "ignorePattern": "^import |^export | implements",
+                        "ignorePattern": "^import |^export | implements |^\\s*imports\\s*:",
                         "code": 180
                     }
                 ],
-                "no-underscore-dangle": "off",
-                "object-shorthand": "off",
+                "semi": "error",
                 "quote-props": [
                     "error",
                     "consistent"

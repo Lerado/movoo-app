@@ -2,13 +2,17 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEnca
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { MovooLoadingService } from '@movoo/services/loading';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-    selector     : 'movoo-loading-bar',
-    templateUrl  : './loading-bar.component.html',
-    styleUrls    : ['./loading-bar.component.scss'],
+    selector: 'movoo-loading-bar',
+    templateUrl: './loading-bar.component.html',
+    styleUrls: ['./loading-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    exportAs     : 'movooLoadingBar'
+    exportAs: 'movooLoadingBar',
+    standalone: true,
+    imports: [NgIf, MatProgressBarModule, AsyncPipe]
 })
 export class MovooLoadingBarComponent implements OnChanges, OnInit, OnDestroy
 {

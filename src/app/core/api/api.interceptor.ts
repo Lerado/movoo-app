@@ -1,57 +1,28 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { EnvironmentLoaderService } from '@lib/services/environment-loader/environment-loader.service';
 import { Observable } from 'rxjs';
 
-@Injectable()
-export class TMDBApiInterceptor implements HttpInterceptor {
+export const tmdbApiInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
 
-    /**
-     * Constructor
-     */
-    constructor() { }
+    const environmentLoaderService = inject(EnvironmentLoaderService);
 
-    /**
-     * Intercept
-     *
-     * @param req
-     * @param next
-     */
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Clone the request object
+    let newRequest = req.clone();
 
-        // Clone the request object
-        let newRequest = req.clone();
-
-        // Request
-        //
-        // We assume that a request url starting with 'api' is intented to be handled by MockApi
-        // So nothing is performed in that case
-        // Otherwise, request prefixed bu @tmdb are forwarded to the TMDB API
-        // In that case, replace that pattern by TMDB API path
-        if (!req.url.indexOf('@tmdb/')) {
-            newRequest = req.clone({
-                url: req.url.replace('@tmdb', this._buildTMDBApiPath())
-            });
-        }
-
-        // Response
-        return next.handle(newRequest);
+    // Request
+    //
+    // We assume that a request url starting with 'api' is intended to be handled by MockApi
+    // So nothing is performed in that case
+    // Otherwise, request prefixed bu @tmdb are forwarded to the TMDB API
+    // In that case, replace that pattern by TMDB API path
+    if (!req.url.indexOf('@tmdb/')) {
+        const { path: base, defaultVersion: version } = (environmentLoaderService.environment.api as Record<string, Record<string, unknown>>).tmdb;
+        newRequest = req.clone({
+            url: req.url.replace('@tmdb', `${base}${version}`)
+        });
     }
 
-    /**
-     * Builds TMDB API path
-     *
-     * @private
-     */
-    private _buildTMDBApiPath(): string {
-
-        let base = environment.api?.tmdb?.path;
-        const version = environment.api?.tmdb?.defaultVersion;
-
-        if (!base.endsWith('/')) {
-            base += '/';
-        }
-
-        return `${ base }${ version }`;
-    }
+    // Response
+    return next(newRequest);
 }

@@ -1,1 +1,1 @@
-export * from './movoo.module';
+export * from './movoo.provider';

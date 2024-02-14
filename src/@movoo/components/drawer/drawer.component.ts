@@ -6,11 +6,12 @@ import { MovooUtilsService } from '@movoo/services/utils/utils.service';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
-    selector     : 'movoo-drawer',
-    templateUrl  : './drawer.component.html',
-    styleUrls    : ['./drawer.component.scss'],
+    selector: 'movoo-drawer',
+    templateUrl: './drawer.component.html',
+    styleUrls: ['./drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    exportAs     : 'movooDrawer'
+    exportAs: 'movooDrawer',
+    standalone: true
 })
 export class MovooDrawerComponent implements OnChanges, OnInit, OnDestroy
 {

@@ -40,7 +40,8 @@ type SearchPersonResultAttributes =
 type PersonSearchResult = Pick<Person, SearchPersonResultAttributes> & { media_type: MediaType };
 
 type SearchTvShowResultAttribute =
-    'name';
+    'name' |
+    'id';
 
 type TvShowSearchResult = Pick<TvShow, SearchTvShowResultAttribute> & { media_type: MediaType };
 

@@ -1,42 +1,48 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, OnInit, ViewChild, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime, first, map, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { MovooConfigService } from '@movoo/services/config';
-import { AppConfig, Scheme, Theme, Themes } from 'app/core/config/app.config';
-import { Layout } from 'app/layout/layout.types';
+import { debounceTime, first, map, tap } from 'rxjs';
+import { MovooConfigService, Scheme, Theme } from '@movoo/services/config';
 import { MatDrawer } from "@angular/material/sidenav";
 import { SettingsService } from 'app/core/settings/settings.service';
-import { Language, Region, Settings, Timezone } from 'app/core/settings/settings.types';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SETTINGS_UPDATE_DELAY } from './settings.types';
 import { MovooConfirmationService } from '@movoo/services/confirmation';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgClass } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MovooDrawerComponent } from '../../../../@movoo/components/drawer/drawer.component';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    standalone: true,
+    imports: [MovooDrawerComponent, MatIconModule, MatProgressSpinnerModule, MatButtonModule, NgClass, MatFormFieldModule, MatTooltipModule, MatSelectModule, ReactiveFormsModule, MatOptionModule, MatSlideToggleModule]
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
 
     @ViewChild('settingsDrawer') drawer: MatDrawer;
 
-    regions$: Observable<Region[]> = this._settingsService.regions$.pipe(
+    regions = toSignal(this._settingsService.regions$.pipe(
         map(regions => regions.sort((a, b) => a.english_name.localeCompare(b.english_name)))
-    );
-    languages$: Observable<Language[]> = this._settingsService.languages$.pipe(
-        map(regions => regions.sort((a, b) => a.english_name.localeCompare(b.english_name)))
-    );
-    timezones$: Observable<Timezone[]> = this._settingsService.timezones$.pipe(
-        map(regions => regions.sort((a, b) => a.iso_639_1.localeCompare(b.iso_639_1)))
-    );
+    ), { initialValue: [] });
 
-    config: AppConfig;
-    layout: Layout;
-    scheme: 'dark' | 'light';
-    theme: string;
-    themes: Themes;
+    languages = toSignal(this._settingsService.languages$.pipe(
+        map(regions => regions.sort((a, b) => a.english_name.localeCompare(b.english_name)))
+    ), { initialValue: [] });
+
+    timezones = toSignal(this._settingsService.timezones$.pipe(
+        map(regions => regions.sort((a, b) => a.iso_3166_1.localeCompare(b.iso_3166_1)))
+    ), { initialValue: [] });
+
+    config = toSignal(this._movooConfigService.config$);
 
     settingsControls = this._formBuilder.group({
         region: '',
@@ -44,9 +50,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         timezone: '',
         include_adult: false
     });
-    settingsUpdating: boolean = false;
 
-    private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
+    settingsUpdating = signal(false);
 
     /**
      * Constructor
@@ -56,7 +61,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
         private readonly _router: Router,
         private readonly _formBuilder: NonNullableFormBuilder,
         private readonly _movooConfirmationService: MovooConfirmationService,
-        private readonly _movooConfigService: MovooConfigService
+        private readonly _movooConfigService: MovooConfigService,
+        private readonly _destroyRef: DestroyRef
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -67,41 +73,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Subscribe to config changes
-        this._movooConfigService.config$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config: AppConfig) => {
-
-                // Store the config
-                this.config = config;
-            });
 
         // Subscribe to settings changes
         this._settingsService.settings$
-            .pipe(first())
-            .subscribe((settings: Settings) => {
-
+            .pipe(
+                first(),
                 // Store the settings
-                this.settingsControls.patchValue(settings);
-            })
+                tap(settings => this.settingsControls.patchValue(settings))
+            ).subscribe()
 
         // Trigger settings update
         this.settingsControls.valueChanges.pipe(
-            takeUntil(this._unsubscribeAll),
-            tap(() => this.settingsUpdating = true),
+            takeUntilDestroyed(this._destroyRef),
+            tap(() => this.settingsUpdating.set(true)),
             debounceTime(SETTINGS_UPDATE_DELAY),
             tap(settings => this._settingsService.updateSettings(settings)),
-            tap(() => this.settingsUpdating = false)
+            tap(() => this.settingsUpdating.set(false))
         ).subscribe();
-    }
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
     }
 
     // -----------------------------------------------------------------------------------------------------
