@@ -86,6 +86,7 @@
                         </a>
                         }
                         <!-- Trailer button -->
+                        @if (movieTrailer()) {
                         <div @zoomIn class="flex justify-end w-11/12">
                             <button (click)="showTrailer.set(true)" [matTooltip]="'Watch ' + movieTrailer().name"
                                 [matTooltipPosition]="'above'"
@@ -94,6 +95,7 @@
                                     [svgIcon]="'heroicons_outline:video-camera'"></mat-icon>
                             </button>
                         </div>
+                        }
                         @if (movie().production_companies?.length) {
                         <ul class="flex gap-4 mt-10">
                             @for (company of movie().production_companies; track company) {
