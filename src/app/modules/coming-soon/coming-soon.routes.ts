@@ -3,7 +3,7 @@ import { ComingSoonPageComponent } from './pages/coming-soon-page/coming-soon-pa
 
 export default [
     {
-        path: '',
+        path: '**',
         title: 'Feature coming soon',
         component: ComingSoonPageComponent
     }
