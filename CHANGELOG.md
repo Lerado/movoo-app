@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.5](https://github.com/Lerado/movoo-app/compare/v1.5.4...v1.5.5) (2024-02-19)
+
+
+### Bug Fixes
+
+* **coming-soon:** navigation to coming soon page broken after #f596ec6 ([a96369c](https://github.com/Lerado/movoo-app/commit/a96369c75e87009cdfda113ab30ec5aa3b1a06c4)), closes [#f596ec6](https://github.com/Lerado/movoo-app/issues/f596ec6)
+* **movies:** check null safety for movie trailer ([1ee2bcc](https://github.com/Lerado/movoo-app/commit/1ee2bcc1594efbeb92a22b8e59b04951cb72c331))
+
 ### [1.5.4](https://github.com/Lerado/movoo-app/compare/v1.5.3...v1.5.4) (2024-02-14)
 
 ### [1.5.3](https://github.com/Lerado/movoo-app/compare/v1.5.2...v1.5.3) (2024-02-14)
